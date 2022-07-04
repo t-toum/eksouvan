@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "518124026923",
+    "project_id": "eksouvan",
+    "storage_bucket": "eksouvan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518124026923:android:983f641b6d199c2100be6e",
+        "android_client_info": {
+          "package_name": "com.eksouvan.eksouvan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518124026923-rqgsbhpfdq7pcfv58b8bp0u2krcs4cnb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-jwcNRYI7gVLtJC4He2DcJRw8mv69ZYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518124026923-rqgsbhpfdq7pcfv58b8bp0u2krcs4cnb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "518124026923-a2safr8i2821kc2846bjpo40hglpdkmr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eksouvan"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

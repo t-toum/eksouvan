@@ -1,0 +1,6 @@
+package com.eksouvan.eksouvan
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
