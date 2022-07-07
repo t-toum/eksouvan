@@ -20,3 +20,7 @@ class DatabaseInfo {
   static const String DATABASE_URL =
       "mongodb+srv://toum:Toum123@cluster0.uy45j.mongodb.net/eksouvan_db?retryWrites=true&w=majority";
 }
+
+class AppImages {
+  static const String brannerImg = "assets/images/branner.png";
+}

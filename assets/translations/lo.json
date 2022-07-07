@@ -1,3 +1,7 @@
 {
-    "kAppTitle":"ເອກສຸວັນ"
+    "kAppTitle":"ເອກສຸວັນ",
+    "kLoginLabel": "ເຂົ້າສູ່ລະບົບ",
+    "kUsernameLabel": "Username",
+    "kPasswordLabel":"Password",
+    "kRequiredField":"This field is required"
 }

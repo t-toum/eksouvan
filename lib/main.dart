@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart';
 
 import 'core/utils/app_navigator.dart';
 import 'core/utils/custom_theme.dart';
@@ -25,15 +24,23 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'Eksouvan',
-      theme: buildTheme(),
-      navigatorKey: AppNavigator.navigatorKey,
-      onGenerateRoute: AppRoute.generateRoute,
-      initialRoute: AppRoute.homeRoute,
+    return Listener(
+      onPointerDown: (_) {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.focusedChild?.unfocus();
+        }
+      },
+      child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        title: 'Eksouvan',
+        theme: buildTheme(),
+        navigatorKey: AppNavigator.navigatorKey,
+        onGenerateRoute: AppRoute.generateRoute,
+        initialRoute: AppRoute.loginRoute,
+      ),
     );
   }
 }

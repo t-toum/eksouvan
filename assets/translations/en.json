@@ -1,3 +1,7 @@
 {
-    "kAppTitle":"eksouvan"
+    "kAppTitle":"eksouvan",
+    "kLoginLabel": "Login",
+    "kUsernameLabel": "Username",
+    "kPasswordLabel":"Password",
+    "kRequiredField":"This field is required"
 }

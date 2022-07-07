@@ -1,5 +1,5 @@
-
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
@@ -13,4 +13,6 @@ abstract class InjectionModule {
   InternetConnectionChecker get internetConnectionChecker =>
       InternetConnectionChecker();
   Logger get logger => Logger();
+  @lazySingleton
+  FirebaseAuth get auth => FirebaseAuth.instance;
 }
