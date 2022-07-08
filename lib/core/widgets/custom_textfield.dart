@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final String? initialValue;
   final bool enabled;
   final bool resdOnly;
+  final String name;
   const CustomTextField({
     Key? key,
     this.controller,
@@ -25,6 +26,7 @@ class CustomTextField extends StatelessWidget {
     this.enabled = true,
     this.initialValue,
     this.resdOnly = false,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,7 @@ class CustomTextField extends StatelessWidget {
             obscureText: obscureText,
             controller: controller,
             name: 'username',
+            key: key,
             decoration: InputDecoration(
               border: const OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),

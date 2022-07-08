@@ -1,4 +1,3 @@
-import 'package:eksouvan/core/error/exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,7 +12,7 @@ class AuthService {
           email: email, password: password);
       return credential;
     } on FirebaseAuthException catch (error) {
-      throw ServerException(msg: error.message ?? "Firebase  auth");
+      throw error.message??"Firebase Auth";
     }
   }
 }

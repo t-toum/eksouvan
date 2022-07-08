@@ -1,4 +1,6 @@
+import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
+import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +22,11 @@ class AppRoute {
           // ]
         );
       case loginRoute:
-        return _materialRoute(LoginPage());
+        return _materialRoute(LoginPage(), providers: [
+          BlocProvider<LoginCubit>(
+            create: (context) => getIt<LoginCubit>(),
+          )
+        ]);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

@@ -15,11 +15,11 @@ ThemeData buildTheme() {
       primaryColorLight: AppColors.primaryColor,
       valueIndicatorTextStyle: const TextStyle(),
     ),
-    textTheme: const TextTheme().copyWith(
-      headline1: const TextStyle(
-          color: AppColors.primaryColor,
-          fontSize: 14,
-          fontFamily: 'NotoSansLao'),
-    ),
+    // textTheme: const TextTheme().copyWith(
+    //   headline1: const TextStyle(
+    //       color: AppColors.primaryColor,
+    //       fontSize: 14,
+    //       fontFamily: 'NotoSansLao'),
+    // ),
   );
 }
