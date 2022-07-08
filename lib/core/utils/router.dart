@@ -16,7 +16,7 @@ class AppRoute {
     switch (settings.name) {
       case homeRoute:
         return _materialRoute(
-          const MyHomePage(),
+          const HomePage(),
           // providers: [
 
           // ]

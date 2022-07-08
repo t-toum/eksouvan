@@ -1,66 +1,76 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eksouvan/core/services/cloud_firestore_service.dart';
+import 'package:eksouvan/core/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:mongo_dart/mongo_dart.dart';
 
-import '../../../../core/utils/constants.dart';
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({
-    Key? key,
-  }) : super(key: key);
-
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // getData();
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              width: 8,
-            ),
-            Text(tr('kAppTitle')),
-          ],
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: Container(
+          height: 100,
+          width: double.infinity,
+          color: AppColors.primaryColor,
+          child: const Image(
+            image: AssetImage(AppImages.branner_outline),
+          ),
         ),
       ),
-      body: FutureBuilder(
-        future: getUses(),
-        builder: (context, snapshort) {
-          if (!snapshort.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            List data = snapshort.data as List;
-            return Container(
-              padding: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                  child: Column(
-                children: List.generate(data.length, (index) {
-                  return ListTile(
-                    leading: const Icon(Icons.person),
-                    title: Text(
-                      data[index]['name'],
-                      style: const TextStyle(fontSize: 20, color: Colors.black),
-                    ),
-                    subtitle: Text(
-                      data[index]['age'].toString(),
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
-                    ),
-                  );
-                }),
-              )),
-            );
-          }
-        },
-      ),
+      body: Container(
+          child: GridView.count(
+        primary: false,
+        padding: const EdgeInsets.all(20),
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        crossAxisCount: 2,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.teal[100],
+            child: const Text("He'd have you all unravel at the"),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.teal[200],
+            child: const Text('Heed not the rabble'),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.teal[300],
+            child: const Text('Sound of screams but the'),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.teal[400],
+            child: const Text('Who scream'),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.teal[500],
+            child: const Text('Revolution is coming...'),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.teal[600],
+            child: const Text('Revolution, they...'),
+          ),
+        ],
+      )),
     );
   }
 
-  Future<dynamic> getUses() async {
-    final db = await Db.create(DatabaseInfo.DATABASE_URL);
-    await db.open();
-    var coll = db.collection('Users');
-    return coll.find().toList();
+  void getData() async {
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    try {
+      final response = await firebaseFirestore.collection('users').doc().get();
+      print(response.metadata);
+    } on FirebaseException catch (error) {
+      throw error.message ?? "";
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 @module
 abstract class InjectionModule {
@@ -15,4 +16,7 @@ abstract class InjectionModule {
   Logger get logger => Logger();
   @lazySingleton
   FirebaseAuth get auth => FirebaseAuth.instance;
+
+  @lazySingleton
+  FirebaseFirestore get fireStore => FirebaseFirestore.instance;
 }
