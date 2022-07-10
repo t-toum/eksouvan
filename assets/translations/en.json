@@ -3,5 +3,17 @@
     "kLoginLabel": "Login",
     "kUsernameLabel": "Username",
     "kPasswordLabel":"Password",
-    "kRequiredField":"This field is required"
+    "kRequiredField":"This field is required",
+    "kNewRegisterLabel":"Register",
+    "kHistoryLabel":"History",
+    "kDailyDiagnoseLabel":"Daily Diagnose",
+    "kAppointment":"Appointment",
+    "kDailyPatient":"Daily Patient",
+    "kReport":"Report",
+    "kNameLabel":"Name",
+    "kLastName":"Lastname",
+    "kDateOfBirth":"Date of Birth",
+    "kPhone":"Phone",
+    "kCurrentAddress":"Current Address",
+    "kSearch":"Search"
 }

@@ -32,6 +32,7 @@ dependencies:
   cloud_firestore: ^3.2.1
   flutter_form_builder: ^7.3.1
   firebase_auth: ^3.4.1
+  date_time_picker: ^2.1.0
 
 dev_dependencies:
   flutter_test:

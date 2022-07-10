@@ -3,5 +3,17 @@
     "kLoginLabel": "ເຂົ້າສູ່ລະບົບ",
     "kUsernameLabel": "Username",
     "kPasswordLabel":"Password",
-    "kRequiredField":"This field is required"
+    "kRequiredField":"This field is required",
+    "kNewRegisterLabel":"ລົງທະບຽນຄົນເຈັບໃຫມ່",
+    "kHistoryLabel":"ປະຫວັດຄົນເຈັບ",
+    "kDailyDiagnoseLabel":"ລົງທະບຽນກວດປະຈຳວັນ",
+    "kAppointment":"ມື້ນັດກວດຄືນ",
+    "kDailyPatient":"ລາຍຊື່ຄົນເຈັບປະຈຳວັນ",
+    "kReport":"ລາຍງານ",
+    "kNameLabel":"ຊື່",
+    "kLastName":"ນາມສະກຸນ",
+    "kDateOfBirth":"ວັນ, ເດືອນ, ປີເກີດ",
+    "kPhone":"ເບີໂທຕິດຕໍ່",
+    "kCurrentAddress":"ທີ່ຢູ່ປະຈຸບັນ",
+    "kSearch":"ຄົ້ນຫາ"
 }

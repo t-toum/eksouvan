@@ -53,15 +53,17 @@ class CustomTextField extends StatelessWidget {
           FormBuilderTextField(
             obscureText: obscureText,
             controller: controller,
-            name: 'username',
+            name: name,
             key: key,
             decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(18),
               ),
               focusColor: AppColors.primaryColor,
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.primaryColor),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: AppColors.primaryColor),
+                borderRadius: BorderRadius.circular(18),
               ),
               isDense: true,
               hintText: hintText,

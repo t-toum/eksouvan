@@ -103,7 +103,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             if (_formKey.currentState!.saveAndValidate()) {
                               context.read<LoginCubit>().login(
-                                  email: emailController.text,
+                                  email: emailController.text + '@eksouvan.com',
                                   password: passwordController.text);
                             } else {
                               print("validation failed");
