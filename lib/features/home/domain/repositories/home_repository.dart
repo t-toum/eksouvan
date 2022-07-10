@@ -5,4 +5,5 @@ import '../../../../core/error/failures.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, List<Todo>>> getTodos();
+  Future<Either<Failure, bool>> logOut();
 }

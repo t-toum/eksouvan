@@ -1,6 +1,7 @@
 import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
+import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,11 @@ class AppRoute {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeRoute:
-        return _materialRoute(
-          const HomePage(),
-          // providers: [
-
-          // ]
-        );
+        return _materialRoute(const HomePage(), providers: [
+          BlocProvider<HomeCubit>(
+            create: (context) => getIt<HomeCubit>(),
+          )
+        ]);
       case loginRoute:
         return _materialRoute(LoginPage(), providers: [
           BlocProvider<LoginCubit>(

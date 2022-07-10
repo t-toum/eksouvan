@@ -2,21 +2,27 @@
 // import 'package:trakref/core/services/cached_api_service.dart';
 // import 'package:trakref/core/services/database_service.dart';
 
-// abstract class HomeLocalDatasource {
-//   Future<DropdownListModel?> fetchCachedDropdowns();
-// }
+import 'package:eksouvan/core/services/shared_preferences_service.dart';
+import 'package:injectable/injectable.dart';
 
-// class HomeLocalDatasourceImpl extends HomeLocalDatasource {
-//   final CachingAPIService cachingAPIService;
-//   final DatabaseService databaseService;
-//   HomeLocalDatasourceImpl({
-//     required this.cachingAPIService,
-//     required this.databaseService,
-//   });
-//   @override
-//   Future<DropdownListModel> fetchCachedDropdowns() async {
-//     DropdownListModel? accounts =
-//         await cachingAPIService.fetchCachedDropdowns();
-//     return accounts;
-//   }
-// }
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/utils/constants.dart';
+
+abstract class HomeLocalDatasource {
+  Future<bool> logOut();
+}
+
+@LazySingleton(as: HomeLocalDatasource)
+class HomeLocalDatasourceImpl extends HomeLocalDatasource {
+  final SharedPreferencesService preferencesService;
+
+  HomeLocalDatasourceImpl(this.preferencesService);
+  @override
+  Future<bool> logOut() async {
+    try {
+      return preferencesService.logOut(key: SharedPreferenceKey.uidKey);
+    } catch (error) {
+      throw CacheException(msg: error.toString());
+    }
+  }
+}

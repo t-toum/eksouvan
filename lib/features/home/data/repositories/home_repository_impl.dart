@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:eksouvan/features/home/data/datasources/home_local_datasource.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/entities/todo.dart';
@@ -12,8 +13,11 @@ import '../datasources/home_remote_datasourec.dart';
 class HomeRepositoryImpl extends HomeRepository {
   final NetworkInfo networkInfo;
   final HomeRemoteDatasource homeRemoteDatasource;
+  final HomeLocalDatasource homeLocalDatasource;
   HomeRepositoryImpl(
-      {required this.networkInfo, required this.homeRemoteDatasource});
+      {required this.networkInfo,
+      required this.homeRemoteDatasource,
+      required this.homeLocalDatasource});
 
   @override
   Future<Either<Failure, List<Todo>>> getTodos() async {
@@ -26,6 +30,16 @@ class HomeRepositoryImpl extends HomeRepository {
       }
     } on ServerException catch (e) {
       return Left(ServerFailure(msg: e.msg));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> logOut() async {
+    try {
+      final result = await homeLocalDatasource.logOut();
+      return Right(result);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(msg: e.msg));
     }
   }
 }

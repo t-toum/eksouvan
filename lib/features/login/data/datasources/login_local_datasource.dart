@@ -6,6 +6,7 @@ import '../../../../core/utils/constants.dart';
 
 abstract class LoginLocalDataSource {
   Future<String?> getUserLogin();
+  // Future<bool> logOut();
 }
 
 @LazySingleton(as: LoginLocalDataSource)
@@ -21,4 +22,13 @@ class LoginLocalDatasourecImpl extends LoginLocalDataSource {
       throw CacheException(msg: error.toString());
     }
   }
+
+  // @override
+  // Future<bool> logOut() async {
+  //   try {
+  //     return preferencesService.logOut(key: SharedPreferenceKey.uidKey);
+  //   } catch (error) {
+  //     throw CacheException(msg: error.toString());
+  //   }
+  // }
 }

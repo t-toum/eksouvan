@@ -2,7 +2,7 @@ import 'package:eksouvan/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class WidgetBuilders {
-  static AppBar customAppbar() {
+  static AppBar customAppbar({VoidCallback? onPressed}) {
     return AppBar(
       toolbarHeight: 100,
       centerTitle: true,
@@ -14,6 +14,14 @@ class WidgetBuilders {
           image: AssetImage(AppImages.branner_outline),
         ),
       ),
+      actions: [
+        (onPressed != null)
+            ? IconButton(
+                onPressed: onPressed,
+                icon: const Icon(Icons.logout, size: 30),
+              )
+            : Container(),
+      ],
     );
   }
 }

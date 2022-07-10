@@ -8,10 +8,14 @@ class SharedPreferencesService {
 
   Future<bool> setValueString(
       {required String key, required String? value}) async {
-    return await sharedPreferences.setString(key, value??'');
+    return await sharedPreferences.setString(key, value ?? '');
   }
 
   Future<String?> getString({required String key}) async {
     return sharedPreferences.getString(key);
+  }
+
+  Future<bool> logOut({required String key}) async {
+    return sharedPreferences.remove(key);
   }
 }
