@@ -25,3 +25,9 @@ class AppImages {
   static const String brannerImg = "assets/images/branner.png";
   static const String branner_outline = "assets/images/branner_outline21.png";
 }
+
+//SharedPreferences
+class SharedPreferenceKey {
+  static const String uidKey = "uid";
+  static const String email = "email";
+}

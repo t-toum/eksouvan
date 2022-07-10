@@ -28,7 +28,7 @@ class AppRoute {
       case loginRoute:
         return _materialRoute(LoginPage(), providers: [
           BlocProvider<LoginCubit>(
-            create: (context) => getIt<LoginCubit>(),
+            create: (context) => getIt<LoginCubit>()..initialLogin(),
           )
         ]);
       case registerPatientRoute:

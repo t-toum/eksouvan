@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/router.dart';
+import 'package:eksouvan/core/widgets/custom_button.dart';
 import 'package:eksouvan/core/widgets/custom_textfield.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
@@ -21,7 +22,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? _errorMessage;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -30,7 +30,6 @@ class LoginPage extends StatelessWidget {
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state.dataStatus == DataStatus.failure) {
-                  _errorMessage = state.error;
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -45,7 +44,9 @@ class LoginPage extends StatelessWidget {
                         );
                       });
                 } else if (state.dataStatus == DataStatus.success) {
-                  AppNavigator.pushAndRemoveUntil(AppRoute.homeRoute);
+                  if (state.uid != null || state.uid == '') {
+                    AppNavigator.pushAndRemoveUntil(AppRoute.homeRoute);
+                  }
                 }
               },
               builder: (context, state) {
@@ -99,19 +100,19 @@ class LoginPage extends StatelessWidget {
                             ],
                           ),
                         ),
-                        ElevatedButton(
+                        CusttomButton(
                           onPressed: () {
+                            final String email =
+                                "${emailController.text}@eksouvan.com";
                             if (_formKey.currentState!.saveAndValidate()) {
                               context.read<LoginCubit>().login(
-                                  email: emailController.text + '@eksouvan.com',
+                                  email: email,
                                   password: passwordController.text);
                             } else {
                               print("validation failed");
                             }
                           },
-                          child: Text(
-                            tr("kLoginLabel"),
-                          ),
+                          title: "kLoginLabel",
                         )
                       ],
                     ),
