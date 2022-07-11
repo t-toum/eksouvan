@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register_patient/presentation/pages/register_patient_page.dart';
 
 class AppRoute {
@@ -32,7 +33,11 @@ class AppRoute {
           )
         ]);
       case registerPatientRoute:
-        return _materialRoute(const RegisterPatientPage());
+        return _materialRoute(const RegisterPatientPage(), providers: [
+          BlocProvider<RegisterPatientCubit>(
+            create: (context) => getIt<RegisterPatientCubit>(),
+          )
+        ]);
       case historyRoute:
         return _materialRoute(const HistoryPage());
       default:

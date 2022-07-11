@@ -5,6 +5,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
 
 @module
 abstract class InjectionModule {
@@ -14,6 +15,7 @@ abstract class InjectionModule {
   InternetConnectionChecker get internetConnectionChecker =>
       InternetConnectionChecker();
   Logger get logger => Logger();
+  Uuid get uuid => Uuid();
   @lazySingleton
   FirebaseAuth get auth => FirebaseAuth.instance;
 

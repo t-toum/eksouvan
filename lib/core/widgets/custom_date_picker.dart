@@ -1,11 +1,16 @@
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
+// ignore: must_be_immutable
 class CustomDatePicker extends StatelessWidget {
   final String title;
-  const CustomDatePicker({Key? key, required this.title}) : super(key: key);
+  final String name;
+  FormFieldValidator<DateTime>? validator;
+  CustomDatePicker(
+      {Key? key, required this.title, this.validator, required this.name})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +31,9 @@ class CustomDatePicker extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          DateTimePicker(
-            type: DateTimePickerType.date,
+          FormBuilderDateTimePicker(
+            name: name,
+            inputType: InputType.date,
             firstDate: DateTime(1900),
             lastDate: DateTime.now(),
             decoration: InputDecoration(
@@ -35,8 +41,33 @@ class CustomDatePicker extends StatelessWidget {
                 borderSide: const BorderSide(color: AppColors.primaryColor),
                 borderRadius: BorderRadius.circular(18),
               ),
+              contentPadding: const EdgeInsets.only(
+                left: 20,
+                top: 10,
+                bottom: 10,
+                right: 10,
+              ),
             ),
+            validator: validator,
           ),
+          // DateTimePicker(
+          //   type: DateTimePickerType.date,
+          //   firstDate: DateTime(1900),
+          //   lastDate: DateTime.now(),
+          //   decoration: InputDecoration(
+          //     border: OutlineInputBorder(
+          //       borderSide: const BorderSide(color: AppColors.primaryColor),
+          //       borderRadius: BorderRadius.circular(18),
+          //     ),
+          //     contentPadding: const EdgeInsets.only(
+          //       left: 20,
+          //       top: 10,
+          //       bottom: 10,
+          //       right: 10,
+          //     ),
+          //   ),
+          //   validator: validator,
+          // ),
         ],
       ),
     );

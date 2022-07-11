@@ -13,7 +13,7 @@ class CustomTextField extends StatelessWidget {
   final void Function(dynamic)? onChanged;
   final String? initialValue;
   final bool enabled;
-  final bool resdOnly;
+  final bool readOnly;
   final String name;
   const CustomTextField({
     Key? key,
@@ -25,14 +25,14 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.enabled = true,
     this.initialValue,
-    this.resdOnly = false,
+    this.readOnly = false,
     required this.name,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -67,14 +67,20 @@ class CustomTextField extends StatelessWidget {
               ),
               isDense: true,
               hintText: hintText,
+              contentPadding: const EdgeInsets.only(
+                left: 20,
+                top: 10,
+                bottom: 10,
+                right: 10,
+              ),
             ),
             style: const TextStyle(
-                fontSize: 20, fontFamily: 'NotoSansLao', color: Colors.black),
+                fontSize: 18, fontFamily: 'NotoSansLao', color: Colors.black),
             validator: validator,
             onChanged: onChanged,
             initialValue: initialValue,
             enabled: enabled,
-            readOnly: resdOnly,
+            readOnly: readOnly,
           )
         ],
       ),
