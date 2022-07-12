@@ -6,6 +6,7 @@ import 'package:eksouvan/features/histories/presentation/pages/patient_detail_pa
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
+import 'package:eksouvan/features/settings/presentation/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,7 @@ class AppRoute {
   static const String registerPatientRoute = "/registerPatient";
   static const String historyRoute = "/history";
   static const String patientDetailRoute = "/patientDetal";
+  static const String settingRoute = "/setting";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -53,6 +55,13 @@ class AppRoute {
             create: (context) => getIt<HistoryCubit>()
               ..getPatient(patientId: settings.arguments as String),
           )
+        ]);
+      case settingRoute:
+        return _materialRoute(const SettingPage(), providers: [
+          // BlocProvider<HistoryCubit>(
+          //   create: (context) => getIt<HistoryCubit>()
+          //     ..getPatient(patientId: settings.arguments as String),
+          // )
         ]);
       default:
         return MaterialPageRoute(

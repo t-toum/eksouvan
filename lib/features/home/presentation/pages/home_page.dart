@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
         }
         return Scaffold(
           appBar: WidgetBuilders.customAppbar(onPressed: () {
-            context.read<HomeCubit>().getLogOut();
+            AppNavigator.navigateTo(AppRoute.settingRoute);
           }),
           body: Container(
             padding: const EdgeInsets.all(30),

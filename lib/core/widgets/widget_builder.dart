@@ -16,9 +16,12 @@ class WidgetBuilders {
       ),
       actions: [
         (onPressed != null)
-            ? IconButton(
-                onPressed: onPressed,
-                icon: const Icon(Icons.logout, size: 30),
+            ? Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: IconButton(
+                  onPressed: onPressed,
+                  icon: const Icon(Icons.settings, size: 30),
+                ),
               )
             : Container(),
       ],
