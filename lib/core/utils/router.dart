@@ -1,6 +1,8 @@
 import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
+import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
+import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
@@ -17,6 +19,7 @@ class AppRoute {
   static const String loginRoute = "/login";
   static const String registerPatientRoute = "/registerPatient";
   static const String historyRoute = "/history";
+  static const String patientDetailRoute = "/patientDetal";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -39,7 +42,18 @@ class AppRoute {
           )
         ]);
       case historyRoute:
-        return _materialRoute(const HistoryPage());
+        return _materialRoute(const HistoryPage(), providers: [
+          BlocProvider<HistoryCubit>(
+            create: (context) => getIt<HistoryCubit>()..getAllPatient(),
+          )
+        ]);
+      case patientDetailRoute:
+        return _materialRoute(const PatientDetailPage(), providers: [
+          BlocProvider<HistoryCubit>(
+            create: (context) => getIt<HistoryCubit>()
+              ..getPatient(patientId: settings.arguments as String),
+          )
+        ]);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

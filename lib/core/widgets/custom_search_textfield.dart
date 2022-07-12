@@ -3,11 +3,13 @@ import 'package:eksouvan/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({Key? key}) : super(key: key);
+  final TextEditingController? controller;
+  const CustomSearchTextField({Key? key,this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderSide: const BorderSide(color: AppColors.primaryColor),
