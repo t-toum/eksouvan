@@ -21,12 +21,9 @@ class CloudFireStoreService {
   Future<String> addNewPatient({required PatientModel patientModel}) async {
     final String uid = uuid.v4();
     Map<String, dynamic> body = patientModel.toJson();
-    body['uid'] = uid;
+    body['patientId'] = uid;
     try {
-      await firebaseFirestore
-          .collection('patients')
-          .doc(uid)
-          .set(patientModel.toJson());
+      await firebaseFirestore.collection('patients').doc(uid).set(body);
       return uid;
     } on FirebaseException catch (error) {
       throw error.message ?? "add new patient";

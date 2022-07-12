@@ -39,7 +39,7 @@ class CustomDatePicker extends StatelessWidget {
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColors.primaryColor),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(8),
               ),
               contentPadding: const EdgeInsets.only(
                 left: 20,
@@ -50,24 +50,6 @@ class CustomDatePicker extends StatelessWidget {
             ),
             validator: validator,
           ),
-          // DateTimePicker(
-          //   type: DateTimePickerType.date,
-          //   firstDate: DateTime(1900),
-          //   lastDate: DateTime.now(),
-          //   decoration: InputDecoration(
-          //     border: OutlineInputBorder(
-          //       borderSide: const BorderSide(color: AppColors.primaryColor),
-          //       borderRadius: BorderRadius.circular(18),
-          //     ),
-          //     contentPadding: const EdgeInsets.only(
-          //       left: 20,
-          //       top: 10,
-          //       bottom: 10,
-          //       right: 10,
-          //     ),
-          //   ),
-          //   validator: validator,
-          // ),
         ],
       ),
     );

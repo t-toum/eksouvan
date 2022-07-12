@@ -9,6 +9,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import '../../../../core/widgets/app_template.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_date_picker.dart';
+import '../../../../core/widgets/loading_widget.dart';
 import '../cubit/register_patient_cubit.dart';
 import '../cubit/register_patient_state.dart';
 
@@ -18,12 +19,17 @@ class RegisterPatientPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<RegisterPatientCubit>();
-    return AppTemplate(
-      titleKey: "kNewRegisterLabel",
-      body: BlocBuilder<RegisterPatientCubit, RegisterPatientState>(
-        builder: (context, state) {
-          if (state.dataStatus == DataStatus.loading) {}
-          return Center(
+    return BlocBuilder<RegisterPatientCubit, RegisterPatientState>(
+      builder: (context, state) {
+        if (state.dataStatus == DataStatus.loading) {
+          return const LoadingWidget(
+            showImage: false,
+            title: 'Saving..',
+          );
+        }
+        return AppTemplate(
+          titleKey: "kNewRegisterLabel",
+          body: Center(
             child: Column(
               children: [
                 //Form Input
@@ -89,9 +95,9 @@ class RegisterPatientPage extends StatelessWidget {
                 ),
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:eksouvan/core/utils/app_navigator.dart';
+import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:eksouvan/features/register_patient/domain/usecases/add_new_patient_usecase.dart';
 import 'package:eksouvan/features/register_patient/presentation/cubit/register_patient_state.dart';
@@ -16,6 +18,7 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
 
   Future<void> addNewPatient() async {
     if (formKey.currentState!.saveAndValidate()) {
+      emit(state.copyWith(dataStatus: DataStatus.loading));
       Map<String, dynamic> formValue = {};
       formKey.currentState?.value.forEach((key, value) {
         formValue[key] = value;
@@ -23,15 +26,15 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
           formValue[key] = value.toString();
         }
       });
-      print(formValue);
-      PatientModel patientModel =
-          PatientModel.fromJson(formValue);
+      PatientModel patientModel = PatientModel.fromJson(formValue);
       final result = await addNewPatientUsecase(
           AddNewPatientParams(patientModel: patientModel));
       result.fold((error) {
-        print(error);
+        emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
       }, (success) {
-        print(success);
+        emit(
+            state.copyWith(dataStatus: DataStatus.success, patientId: success));
+        AppNavigator.goBack();
       });
     } else {
       print("Form invalid validation");

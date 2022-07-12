@@ -3,36 +3,45 @@ import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
   final String? title;
-  const LoadingWidget({Key? key, this.title}) : super(key: key);
+  final bool showImage;
+  const LoadingWidget({Key? key, this.title, this.showImage = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Expanded(
-          child: Image(
-            image: AssetImage(AppImages.brannerImg),
-            width: 300,
-          ),
-        ),
-        Expanded(
+    return Scaffold(
+      body: Center(
+          child: Column(
+        children: [
+          (showImage == false)
+              ? Container()
+              : const Expanded(
+                  child: Image(
+                    image: AssetImage(AppImages.brannerImg),
+                    width: 300,
+                  ),
+                ),
+          Expanded(
             child: Column(
-          children: [
-            const CircularProgressIndicator(
-              color: AppColors.primaryColor,
+              mainAxisAlignment: (showImage == false)
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
+              children: [
+                const CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  title ?? '',
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                )
+              ],
             ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              title ?? '',
-              style: const TextStyle(fontSize: 20, color: Colors.black),
-            )
-          ],
-        ))
-      ],
-    ));
+          )
+        ],
+      )),
+    );
   }
 }
