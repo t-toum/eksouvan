@@ -42,7 +42,7 @@ class CustomTextField extends StatelessWidget {
                   tr(labelText!).toUpperCase(),
                   style: const TextStyle(
                     color: Colors.grey,
-                    fontSize: 25,
+                    fontSize: 20,
                     fontFamily: 'NotoSansLao',
                     fontWeight: FontWeight.bold,
                   ),
@@ -57,7 +57,9 @@ class CustomTextField extends StatelessWidget {
             key: key,
             decoration: InputDecoration(
               border: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.grey),
+                borderSide: const BorderSide(
+                  color: Colors.grey,
+                ),
                 borderRadius: BorderRadius.circular(8),
               ),
               focusColor: AppColors.primaryColor,
@@ -68,7 +70,7 @@ class CustomTextField extends StatelessWidget {
               isDense: true,
               hintText: hintText,
               contentPadding: const EdgeInsets.only(
-                left: 20,
+                left: 10,
                 top: 10,
                 bottom: 10,
                 right: 10,

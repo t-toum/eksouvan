@@ -16,7 +16,7 @@ class CusttomButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(AppColors.primaryColor),
           padding: MaterialStateProperty.all(
-            const EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
+            const EdgeInsets.only(left: 30, right: 30, top: 5, bottom: 5),
           ),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
@@ -27,7 +27,7 @@ class CusttomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           tr(title),
-          style:const TextStyle(fontSize: 25),
+          style: const TextStyle(fontSize: 25),
         ),
       ),
     );
