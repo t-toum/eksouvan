@@ -13,6 +13,7 @@ class PatientModel extends Patient {
     String? address,
     String? tel,
     DateTime? birthday,
+    String? user,
     List<DiagnoseModel?>? diagnoses,
   }) : super(
           patientId: patientId,
@@ -22,6 +23,7 @@ class PatientModel extends Patient {
           tel: tel,
           birthday: birthday,
           diagnoses: diagnoses ?? const [],
+          user: user,
         );
   factory PatientModel.fromJson(Map<String, dynamic> json) =>
       _$PatientModelFromJson(json);

@@ -32,7 +32,6 @@ class RegisterPatientPage extends StatelessWidget {
           body: Center(
             child: Column(
               children: [
-                //Form Input
                 FormBuilder(
                   key: cubit.formKey,
                   child: SingleChildScrollView(
@@ -41,14 +40,19 @@ class RegisterPatientPage extends StatelessWidget {
                         CustomTextField(
                           name: 'firstname',
                           labelText: "kNameLabel",
+                          hintText: tr('kPatientName'),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: tr("kRequiredField"))
                           ]),
                         ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         CustomTextField(
                           name: 'lastname',
                           labelText: "kLastName",
+                          hintText: tr("kPatientLastName"),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: tr("kRequiredField"))
@@ -57,6 +61,7 @@ class RegisterPatientPage extends StatelessWidget {
                         CustomDatePicker(
                           name: "birthday",
                           title: "kDateOfBirth",
+                          hintText: tr("kPatientBirtDay"),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: tr("kRequiredField"))
@@ -65,14 +70,19 @@ class RegisterPatientPage extends StatelessWidget {
                         CustomTextField(
                           name: 'tel',
                           labelText: "kPhone",
+                          hintText: tr("kPhoneNumber"),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: tr("kRequiredField"))
                           ]),
                         ),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         CustomTextField(
                           name: 'address',
                           labelText: "kCurrentAddress",
+                          hintText: tr("kCurrentAddress"),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(
                                 errorText: tr("kRequiredField"))
