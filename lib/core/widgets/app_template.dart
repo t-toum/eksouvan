@@ -22,10 +22,12 @@ class AppTemplate extends StatelessWidget {
               tr(titleKey ?? "Title"),
               style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
-              child: body,
-            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
+                child: body,
+              ),
+            )
           ],
         ),
       ),

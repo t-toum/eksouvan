@@ -42,4 +42,14 @@ class HomeRepositoryImpl extends HomeRepository {
       return Left(CacheFailure(msg: e.msg));
     }
   }
+
+  @override
+  Future<Either<Failure, String?>> getCurrentUser() async {
+    try {
+      final result = await homeLocalDatasource.getCurrentUser();
+      return Right(result);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(msg: e.msg));
+    }
+  }
 }

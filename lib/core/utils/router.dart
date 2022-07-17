@@ -1,6 +1,8 @@
 import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
+import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
+import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register_patient/presentation/pages/register_patient_page.dart';
+import '../widgets/success_widget.dart';
 
 class AppRoute {
   static const String homeRoute = "/";
@@ -17,6 +20,8 @@ class AppRoute {
   static const String loginRoute = "/login";
   static const String registerPatientRoute = "/registerPatient";
   static const String historyRoute = "/history";
+  static const String patientDetailRoute = "/patientDetal";
+  static const String successRoute = "/success";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -35,11 +40,26 @@ class AppRoute {
       case registerPatientRoute:
         return _materialRoute(const RegisterPatientPage(), providers: [
           BlocProvider<RegisterPatientCubit>(
-            create: (context) => getIt<RegisterPatientCubit>(),
+            create: (context) =>
+                getIt<RegisterPatientCubit>()..getCurrentUser(),
           )
         ]);
       case historyRoute:
-        return _materialRoute(const HistoryPage());
+        return _materialRoute(const HistoryPage(), providers: [
+          BlocProvider<HistoryCubit>(
+            create: (context) => getIt<HistoryCubit>()..getAllPatient(),
+          )
+        ]);
+      case patientDetailRoute:
+        return _materialRoute(const PatientDetailPage(), providers: [
+          BlocProvider<HistoryCubit>(
+            create: (context) => getIt<HistoryCubit>()
+              ..getPatient(patientId: settings.arguments as String),
+          )
+        ]);
+      case successRoute:
+        final String? title = settings.arguments as String?;
+        return _materialRoute(SuccessWidget(title: title), providers: []);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

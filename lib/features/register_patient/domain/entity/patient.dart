@@ -8,6 +8,7 @@ class Patient extends Equatable {
   final String? address;
   final String? tel;
   final DateTime? birthday;
+  final String? user;
   final List<DiagnoseModel?>? diagnoses;
 
   const Patient({
@@ -18,6 +19,7 @@ class Patient extends Equatable {
     this.tel,
     this.birthday,
     this.diagnoses = const [],
+    this.user,
   });
 
   @override

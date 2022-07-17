@@ -7,15 +7,20 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class CustomDatePicker extends StatelessWidget {
   final String title;
   final String name;
+  final String? hintText;
   FormFieldValidator<DateTime>? validator;
   CustomDatePicker(
-      {Key? key, required this.title, this.validator, required this.name})
+      {Key? key,
+      required this.title,
+      this.validator,
+      required this.name,
+      this.hintText})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 25, right: 20, bottom: 10, top: 10),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,7 +28,7 @@ class CustomDatePicker extends StatelessWidget {
             tr(title),
             style: const TextStyle(
               color: Colors.grey,
-              fontSize: 25,
+              fontSize: 20,
               fontFamily: 'NotoSansLao',
               fontWeight: FontWeight.bold,
             ),
@@ -41,12 +46,8 @@ class CustomDatePicker extends StatelessWidget {
                 borderSide: const BorderSide(color: AppColors.primaryColor),
                 borderRadius: BorderRadius.circular(8),
               ),
-              contentPadding: const EdgeInsets.only(
-                left: 20,
-                top: 10,
-                bottom: 10,
-                right: 10,
-              ),
+              contentPadding: const EdgeInsets.all(10),
+              hintText: hintText,
             ),
             validator: validator,
           ),

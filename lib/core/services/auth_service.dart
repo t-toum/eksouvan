@@ -12,7 +12,16 @@ class AuthService {
           email: email, password: password);
       return credential;
     } on FirebaseAuthException catch (error) {
-      throw error.message??"Firebase Auth";
+      throw error.message ?? "Firebase Auth";
+    }
+  }
+
+  Future<dynamic> signOut() async {
+    try {
+      await firebaseAuth.signOut();
+      return true;
+    } on FirebaseAuthException catch (error) {
+      throw error.message ?? "Firebase Auth";
     }
   }
 }

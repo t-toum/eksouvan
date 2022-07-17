@@ -31,3 +31,8 @@ class SharedPreferenceKey {
   static const String uidKey = "uid";
   static const String email = "email";
 }
+
+class ColectionName {
+  static const String users = "users";
+  static const String patient = "patients";
+}

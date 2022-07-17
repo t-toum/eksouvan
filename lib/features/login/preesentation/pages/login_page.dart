@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../core/utils/form_builder_validator.dart';
+import '../../../../core/widgets/widget_builder.dart';
 import '../widgets/branner_widget.dart';
 
 class LoginPage extends StatelessWidget {
@@ -26,100 +27,94 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Center(
-            child: BlocConsumer<LoginCubit, LoginState>(
-              listener: (context, state) {
-                if (state.dataStatus == DataStatus.failure) {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Login failed'),
-                          content: Text(state.error ?? ''),
-                          actions: [
-                            TextButton(
-                                onPressed: () => AppNavigator.goBack(),
-                                child: const Text('OK'))
-                          ],
-                        );
-                      });
-                } else if (state.dataStatus == DataStatus.success) {
-                  if (state.uid != null || state.uid == '') {
-                    AppNavigator.pushAndRemoveUntil(AppRoute.homeRoute);
-                  }
+          child: BlocConsumer<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state.dataStatus == DataStatus.failure) {
+                WidgetBuilders.customDialog(
+                    title: 'Login',
+                    context: context,
+                    content: state.error ?? '');
+              } else if (state.dataStatus == DataStatus.success) {
+                if (state.uid != null || state.uid == '') {
+                  AppNavigator.pushAndRemoveUntil(AppRoute.homeRoute);
                 }
-              },
-              builder: (context, state) {
-                if (state.dataStatus == DataStatus.loading) {
-                  return const LoadingWidget();
-                } else {
-                  return SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const BrannerWidget(),
-                        Container(
-                          padding: const EdgeInsets.only(top: 50, bottom: 20),
-                          child: Text(
-                            tr("kLoginLabel"),
-                            style: const TextStyle(
-                              fontSize: 40,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'NotoSansLao',
+              }
+            },
+            builder: (context, state) {
+              if (state.dataStatus == DataStatus.loading) {
+                return const LoadingWidget();
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const BrannerWidget(),
+                      Container(
+                        padding: const EdgeInsets.only(top: 50, bottom: 20),
+                        child: Text(
+                          tr("kLoginLabel"),
+                          style: const TextStyle(
+                            fontSize: 40,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'NotoSansLao',
+                          ),
+                        ),
+                      ),
+                      //Form Login
+                      FormBuilder(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomTextField(
+                              controller: emailController,
+                              key: const Key("Username"),
+                              name: 'Username',
+                              hintText: 'Input your username',
+                              labelText: 'kUsernameLabel',
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                    errorText: tr("kRequiredField"))
+                              ]),
                             ),
-                          ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            CustomTextField(
+                              name: 'Password',
+                              key: const Key('Password'),
+                              hintText: 'Input your Password',
+                              obscureText: true,
+                              controller: passwordController,
+                              labelText: 'kPasswordLabel',
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                    errorText: tr("kRequiredField"))
+                              ]),
+                            ),
+                          ],
                         ),
-                        //Form Login
-                        FormBuilder(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomTextField(
-                                controller: emailController,
-                                key: const Key("Username"),
-                                name: 'Username',
-                                labelText: 'kUsernameLabel',
-                                validator: FormBuilderValidators.compose([
-                                  FormBuilderValidators.required(
-                                      errorText: tr("kRequiredField"))
-                                ]),
-                              ),
-                              CustomTextField(
-                                name: 'Password',
-                                key: const Key('Password'),
-                                obscureText: true,
-                                controller: passwordController,
-                                labelText: 'kPasswordLabel',
-                                validator: FormBuilderValidators.compose([
-                                  FormBuilderValidators.required(
-                                      errorText: tr("kRequiredField"))
-                                ]),
-                              ),
-                            ],
-                          ),
-                        ),
-                        CusttomButton(
-                          onPressed: () {
-                            final String email =
-                                "${emailController.text}@eksouvan.com";
-                            if (_formKey.currentState!.saveAndValidate()) {
-                              context.read<LoginCubit>().login(
-                                  email: email,
-                                  password: passwordController.text);
-                            } else {
-                              print("validation failed");
-                            }
-                          },
-                          title: "kLoginLabel",
-                        )
-                      ],
-                    ),
-                  );
-                }
-              },
-            ),
+                      ),
+                      CusttomButton(
+                        onPressed: () {
+                          final String email =
+                              "${emailController.text}@eksouvan.com";
+                          if (_formKey.currentState!.saveAndValidate()) {
+                            context.read<LoginCubit>().login(
+                                email: email,
+                                password: passwordController.text);
+                          } else {
+                            print("validation failed");
+                          }
+                        },
+                        title: "kLoginLabel",
+                      )
+                    ],
+                  ),
+                );
+              }
+            },
           ),
         ),
       ),
