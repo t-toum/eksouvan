@@ -9,6 +9,7 @@ import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register_patient/presentation/pages/register_patient_page.dart';
@@ -22,6 +23,7 @@ class AppRoute {
   static const String historyRoute = "/history";
   static const String patientDetailRoute = "/patientDetal";
   static const String successRoute = "/success";
+  static const String dailyDiagnoseRoute = "/dialyDiagnose";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -60,6 +62,8 @@ class AppRoute {
       case successRoute:
         final String? title = settings.arguments as String?;
         return _materialRoute(SuccessWidget(title: title), providers: []);
+      case dailyDiagnoseRoute:
+        return _materialRoute(const DialyDiagnosePage(), providers: []);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

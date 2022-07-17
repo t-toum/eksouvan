@@ -20,7 +20,8 @@ class MenuItems extends StatelessWidget {
               borderRadius: BorderRadius.circular(15)),
           child: Center(
             child: Text(
-              tr(labelKey),
+              tr(labelKey).toUpperCase(),
+              textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 30,
