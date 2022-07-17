@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register_patient/presentation/pages/register_patient_page.dart';
+import '../widgets/success_widget.dart';
 
 class AppRoute {
   static const String homeRoute = "/";
@@ -22,6 +23,7 @@ class AppRoute {
   static const String historyRoute = "/history";
   static const String patientDetailRoute = "/patientDetal";
   static const String settingRoute = "/setting";
+  static const String successRoute = "/success";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -40,7 +42,8 @@ class AppRoute {
       case registerPatientRoute:
         return _materialRoute(const RegisterPatientPage(), providers: [
           BlocProvider<RegisterPatientCubit>(
-            create: (context) => getIt<RegisterPatientCubit>(),
+            create: (context) =>
+                getIt<RegisterPatientCubit>()..getCurrentUser(),
           )
         ]);
       case historyRoute:
@@ -63,6 +66,9 @@ class AppRoute {
           //     ..getPatient(patientId: settings.arguments as String),
           // )
         ]);
+      case successRoute:
+        final String? title = settings.arguments as String?;
+        return _materialRoute(SuccessWidget(title: title), providers: []);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

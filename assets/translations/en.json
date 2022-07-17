@@ -4,7 +4,7 @@
     "kUsernameLabel": "Username",
     "kPasswordLabel":"Password",
     "kRequiredField":"This field is required",
-    "kNewRegisterLabel":"Register",
+    "kNewRegisterLabel":"New Register",
     "kHistoryLabel":"History",
     "kDailyDiagnoseLabel":"Daily Diagnose",
     "kAppointment":"Appointment",
@@ -15,5 +15,10 @@
     "kDateOfBirth":"Date of Birth",
     "kPhone":"Phone",
     "kCurrentAddress":"Current Address",
-    "kSearch":"Search"
+    "kSearch":"Search",
+    "kPatientName":"Patient name",
+    "kPatientLastName":"Patient lastname",
+    "kPatientBirtDay":"Patient Birth day",
+    "kPhoneNumber":"Phone number",
+    "kAddNewPatientSuccess":"Add new patient has successfully"
 }
