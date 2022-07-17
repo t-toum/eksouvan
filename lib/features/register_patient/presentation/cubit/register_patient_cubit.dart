@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:eksouvan/features/register_patient/domain/usecases/add_new_patient_usecase.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
+import 'package:json_serializable/type_helper.dart';
 
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
 
@@ -42,13 +44,17 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
       Map<String, dynamic> formValue = {};
       formValue.addAll({
         "user": currentUserId,
+        "createDate": DateTime.now().toString(),
+        "updateDate": DateTime.now().toString(),
       });
-      formKey.currentState?.value.forEach((key, value) {
-        formValue[key] = value;
-        if (value is DateTime) {
-          formValue[key] = value.toString();
-        }
-      });
+      // formKey.currentState?.value.forEach((key, value) {
+      //   formValue[key] = value;
+      //   if (value is DateTime) {
+      //     formValue[key] = value.toString();
+      //   }
+      // });
+      formValue = ConvertDatas.convertMapData(
+          mapData: formKey.currentState?.value ?? {});
       PatientModel patientModel = PatientModel.fromJson(formValue);
       final result = await addNewPatientUsecase(
           AddNewPatientParams(patientModel: patientModel));

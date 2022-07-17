@@ -6,9 +6,12 @@ import 'package:eksouvan/features/histories/presentation/pages/patient_detail_pa
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
+import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
+import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
@@ -24,6 +27,7 @@ class AppRoute {
   static const String patientDetailRoute = "/patientDetal";
   static const String successRoute = "/success";
   static const String dailyDiagnoseRoute = "/dialyDiagnose";
+  static const String dialyDiagnoseDetailRoute = "/dialyDiagnoseDetail";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -63,7 +67,22 @@ class AppRoute {
         final String? title = settings.arguments as String?;
         return _materialRoute(SuccessWidget(title: title), providers: []);
       case dailyDiagnoseRoute:
-        return _materialRoute(const DialyDiagnosePage(), providers: []);
+        return _materialRoute(const DialyDiagnosePage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>()..getAllPatient(),
+          )
+        ]);
+      case dialyDiagnoseDetailRoute:
+        final patient = settings.arguments as Patient?;
+        return _materialRoute(
+            DailyDiagnoseDetailPage(
+              patient: patient,
+            ),
+            providers: [
+              BlocProvider<DiagnoseCubit>(
+                create: (context) => getIt<DiagnoseCubit>(),
+              )
+            ]);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

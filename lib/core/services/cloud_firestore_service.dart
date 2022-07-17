@@ -60,4 +60,17 @@ class CloudFireStoreService {
       throw error.message ?? "Get all patient";
     }
   }
+
+  Future<bool> addDiagnose(
+      {required String doc, required PatientModel patientModel}) async {
+    try {
+      await firebaseFirestore
+          .collection(ColectionName.patient)
+          .doc(doc)
+          .update(patientModel.toJson());
+      return true;
+    } on FirebaseException catch (error) {
+      throw error.message ?? "Get all patient";
+    }
+  }
 }

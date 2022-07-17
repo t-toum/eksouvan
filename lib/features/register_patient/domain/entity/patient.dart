@@ -1,6 +1,7 @@
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Patient extends Equatable {
   final String? patientId;
   final String? firstname;
@@ -9,9 +10,11 @@ class Patient extends Equatable {
   final String? tel;
   final DateTime? birthday;
   final String? user;
-  final List<DiagnoseModel?>? diagnoses;
+  final List<DiagnoseModel>? diagnoses;
+  final DateTime? createDate;
+  DateTime? updateDate;
 
-  const Patient({
+  Patient({
     this.patientId,
     this.firstname,
     this.lastname,
@@ -20,9 +23,20 @@ class Patient extends Equatable {
     this.birthday,
     this.diagnoses = const [],
     this.user,
+    this.createDate,
+    this.updateDate,
   });
 
   @override
-  List<Object?> get props =>
-      [patientId, firstname, lastname, address, tel, birthday, diagnoses];
+  List<Object?> get props => [
+        patientId,
+        firstname,
+        lastname,
+        address,
+        tel,
+        birthday,
+        diagnoses,
+        createDate,
+        updateDate
+      ];
 }

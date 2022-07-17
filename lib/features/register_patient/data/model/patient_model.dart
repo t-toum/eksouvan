@@ -5,8 +5,9 @@ import '../../../diagnose/data/model/diagnose_model.dart';
 part 'patient_model.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class PatientModel extends Patient {
-  const PatientModel({
+  PatientModel({
     String? patientId,
     String? firstname,
     String? lastname,
@@ -14,7 +15,9 @@ class PatientModel extends Patient {
     String? tel,
     DateTime? birthday,
     String? user,
-    List<DiagnoseModel?>? diagnoses,
+    List<DiagnoseModel>? diagnoses,
+    DateTime? createDate,
+    DateTime? updateDate,
   }) : super(
           patientId: patientId,
           firstname: firstname,
@@ -24,6 +27,8 @@ class PatientModel extends Patient {
           birthday: birthday,
           diagnoses: diagnoses ?? const [],
           user: user,
+          createDate: createDate,
+          updateDate: updateDate,
         );
   factory PatientModel.fromJson(Map<String, dynamic> json) =>
       _$PatientModelFromJson(json);
