@@ -11,6 +11,7 @@ class PatientDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTemplate(
+      titleKey: 'kPatientHistory',
       body: BlocBuilder<HistoryCubit,HistoryState>(
         builder: (context, state) {
           return Container();

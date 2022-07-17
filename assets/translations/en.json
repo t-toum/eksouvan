@@ -20,5 +20,6 @@
     "kPatientLastName":"Patient lastname",
     "kPatientBirtDay":"Patient Birth day",
     "kPhoneNumber":"Phone number",
-    "kAddNewPatientSuccess":"Add new patient has successfully"
+    "kAddNewPatientSuccess":"Add new patient has successfully",
+    "kPatientHistory":"Patient History"
 }
