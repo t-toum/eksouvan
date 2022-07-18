@@ -1,7 +1,5 @@
 import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../diagnose/data/model/diagnose_model.dart';
 part 'patient_model.g.dart';
 
 @JsonSerializable()
@@ -15,7 +13,6 @@ class PatientModel extends Patient {
     String? tel,
     DateTime? birthday,
     String? user,
-    List<DiagnoseModel>? diagnoses,
     DateTime? createDate,
     DateTime? updateDate,
   }) : super(
@@ -25,7 +22,6 @@ class PatientModel extends Patient {
           address: address,
           tel: tel,
           birthday: birthday,
-          diagnoses: diagnoses ?? const [],
           user: user,
           createDate: createDate,
           updateDate: updateDate,

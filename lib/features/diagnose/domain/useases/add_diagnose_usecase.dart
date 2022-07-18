@@ -1,8 +1,8 @@
 import 'package:eksouvan/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:eksouvan/core/usecases/usecase.dart';
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:eksouvan/features/diagnose/domain/repositories/diagnose_repository.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,17 +13,15 @@ class AddDiagnoseUsecase implements UseCase<bool, AddDiagnoseParams> {
   AddDiagnoseUsecase(this.diagnoseRepository);
   @override
   Future<Either<Failure, bool>> call(AddDiagnoseParams params) async {
-    return await diagnoseRepository.addDiagnose(
-        doc: params.doc, patient: params.patientModel);
+    return await diagnoseRepository.addDiagnose(model: params.diagnoseModel);
   }
 }
 
 class AddDiagnoseParams extends Equatable {
-  final String doc;
-  final PatientModel patientModel;
+  final DiagnoseModel diagnoseModel;
 
-  const AddDiagnoseParams({required this.doc, required this.patientModel});
+  const AddDiagnoseParams({required this.diagnoseModel});
 
   @override
-  List<Object?> get props => [doc, patientModel];
+  List<Object?> get props => [ diagnoseModel];
 }

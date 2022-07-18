@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
-import 'package:json_serializable/type_helper.dart';
 
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
 
@@ -47,14 +46,14 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
         "createDate": DateTime.now().toString(),
         "updateDate": DateTime.now().toString(),
       });
-      // formKey.currentState?.value.forEach((key, value) {
-      //   formValue[key] = value;
-      //   if (value is DateTime) {
-      //     formValue[key] = value.toString();
-      //   }
-      // });
-      formValue = ConvertDatas.convertMapData(
-          mapData: formKey.currentState?.value ?? {});
+      formKey.currentState?.value.forEach((key, value) {
+        formValue[key] = value;
+        if (value is DateTime) {
+          formValue[key] = value.toString();
+        }
+      });
+      // formValue = ConvertDatas.convertMapData(
+      //     mapData: formKey.currentState?.value ?? {});
       PatientModel patientModel = PatientModel.fromJson(formValue);
       final result = await addNewPatientUsecase(
           AddNewPatientParams(patientModel: patientModel));

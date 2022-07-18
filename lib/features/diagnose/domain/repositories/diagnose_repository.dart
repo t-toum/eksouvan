@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:eksouvan/core/error/failures.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 
 abstract class DiagnoseRepository {
-  Future<Either<Failure, bool>> addDiagnose({required String doc,required PatientModel patient});
+  Future<Either<Failure, bool>> addDiagnose({required DiagnoseModel model});
 }

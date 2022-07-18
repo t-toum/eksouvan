@@ -6,6 +6,7 @@ import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_state.dart';
 import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -30,7 +31,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
           );
         }
         return AppTemplate(
-          titleKey: 'kDiagnoseDetail',
+          title: LocaleKeys.kDiagnoseDetail.tr(),
           body: SingleChildScrollView(
             child: FormBuilder(
               key: cubit.formKey,
@@ -98,7 +99,9 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     child: CusttomButton(
                       title: 'kNewRegisterLabel',
                       onPressed: () {
-                        context.read<DiagnoseCubit>().addPatientDiagnose(patient: patient);
+                        context
+                            .read<DiagnoseCubit>()
+                            .addPatientDiagnose(patient: patient);
                       },
                     ),
                   ),

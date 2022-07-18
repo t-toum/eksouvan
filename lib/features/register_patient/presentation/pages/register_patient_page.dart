@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/form_builder_validator.dart';
 import 'package:eksouvan/core/widgets/custom_textfield.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -28,7 +29,7 @@ class RegisterPatientPage extends StatelessWidget {
           );
         }
         return AppTemplate(
-          titleKey: "kNewRegisterLabel",
+          title: LocaleKeys.kNewRegisterLabel.tr(),
           body: Center(
             child: Column(
               children: [

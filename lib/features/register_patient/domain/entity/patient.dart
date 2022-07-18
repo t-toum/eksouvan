@@ -10,7 +10,6 @@ class Patient extends Equatable {
   final String? tel;
   final DateTime? birthday;
   final String? user;
-  final List<DiagnoseModel>? diagnoses;
   final DateTime? createDate;
   DateTime? updateDate;
 
@@ -21,7 +20,6 @@ class Patient extends Equatable {
     this.address,
     this.tel,
     this.birthday,
-    this.diagnoses = const [],
     this.user,
     this.createDate,
     this.updateDate,
@@ -35,7 +33,6 @@ class Patient extends Equatable {
         address,
         tel,
         birthday,
-        diagnoses,
         createDate,
         updateDate
       ];

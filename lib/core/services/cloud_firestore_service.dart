@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
@@ -61,16 +62,15 @@ class CloudFireStoreService {
     }
   }
 
-  Future<bool> addDiagnose(
-      {required String doc, required PatientModel patientModel}) async {
+  Future<bool> addDiagnose({required DiagnoseModel model}) async {
     try {
       await firebaseFirestore
-          .collection(ColectionName.patient)
-          .doc(doc)
-          .update(patientModel.toJson());
+          .collection(ColectionName.diagnose)
+          .doc(model.diagnoseId)
+          .set(model.toJson());
       return true;
-    } on FirebaseException catch (error) {
-      throw error.message ?? "Get all patient";
+    } catch (error) {
+      throw error;
     }
   }
 }

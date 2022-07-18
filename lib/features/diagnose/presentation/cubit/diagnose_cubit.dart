@@ -1,4 +1,3 @@
-import 'package:eksouvan/core/models/deases_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
@@ -39,12 +38,12 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
     if (formKey.currentState!.saveAndValidate()) {
       Map<String, dynamic> formValue = ConvertDatas.convertMapData(
           mapData: formKey.currentState?.value ?? {});
-      patient?.updateDate = DateTime.now();
-      DiagnoseModel deases = DiagnoseModel.fromJson(formValue);
+      DiagnoseModel diagnose = DiagnoseModel.fromJson(formValue);
       PatientModel patientModel = patient as PatientModel;
-      patientModel.diagnoses?.add(deases);
+      // patientModel.diagnoses?.add(diagnose);
       // final result = await addDiagnoseUsecase(AddDiagnoseParams(
       //     doc: patient.patientId ?? '', patientModel: patientModel));
+
     } else {
       print("validate form");
     }

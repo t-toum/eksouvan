@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/presentation/widgets/list_patient_item.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +28,7 @@ class DialyDiagnosePage extends StatelessWidget {
           );
         }
         return AppTemplate(
-          titleKey: "kDailyDiagnoseLabel",
+          title: LocaleKeys.kDailyDiagnoseLabel.tr(),
           body: Column(
             children: [
               CustomSearchTextField(
