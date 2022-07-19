@@ -23,6 +23,16 @@
     "kAddNewPatientSuccess": "Add new patient has successfully",
     "kPatientHistory": "Patient History",
     "kDiagnoseDetail": "Diagnose detail",
-    "kDescription":"Description"
+    "kDescription":"Description",
+    "kGender":"Gender",
+    "kSelectGender":"Select gender",
+    "kMale":"Male",
+    "kFemale":"Female",
+    "kWeight":"Weight",
+    "KHeight":"Height",
+    "kKg":"Kg",
+    "kCm":"cm",
+    "kCongenitalDeases":"Congenital Deases",
+    "kSaving":"Saving..."
     
 }

@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -15,19 +14,21 @@ class CustomTextField extends StatelessWidget {
   final bool enabled;
   final bool readOnly;
   final String name;
-  const CustomTextField({
-    Key? key,
-    this.controller,
-    this.labelText,
-    this.hintText,
-    this.obscureText = false,
-    this.validator,
-    this.onChanged,
-    this.enabled = true,
-    this.initialValue,
-    this.readOnly = false,
-    required this.name,
-  }) : super(key: key);
+  final TextInputType? textInputType;
+  const CustomTextField(
+      {Key? key,
+      this.controller,
+      this.labelText,
+      this.hintText,
+      this.obscureText = false,
+      this.validator,
+      this.onChanged,
+      this.enabled = true,
+      this.initialValue,
+      this.readOnly = false,
+      required this.name,
+      this.textInputType})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class CustomTextField extends StatelessWidget {
           (labelText == null)
               ? Container()
               : Text(
-                  tr(labelText!).toUpperCase(),
+                  labelText!.toUpperCase(),
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
@@ -53,6 +54,7 @@ class CustomTextField extends StatelessWidget {
           FormBuilderTextField(
             obscureText: obscureText,
             controller: controller,
+            keyboardType: textInputType,
             name: name,
             key: key,
             decoration: InputDecoration(
@@ -83,6 +85,7 @@ class CustomTextField extends StatelessWidget {
             initialValue: initialValue,
             enabled: enabled,
             readOnly: readOnly,
+            
           )
         ],
       ),

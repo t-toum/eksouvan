@@ -3,18 +3,21 @@ import 'package:json_annotation/json_annotation.dart';
 part 'patient_model.g.dart';
 
 @JsonSerializable()
-// ignore: must_be_immutable
 class PatientModel extends Patient {
-  PatientModel({
+  const PatientModel({
     String? patientId,
     String? firstname,
     String? lastname,
     String? address,
     String? tel,
     DateTime? birthday,
-    String? user,
+    String? userId,
     DateTime? createDate,
     DateTime? updateDate,
+    int? gender,
+    double? height,
+    double? weight,
+    String? congnitialDeases,
   }) : super(
           patientId: patientId,
           firstname: firstname,
@@ -22,9 +25,13 @@ class PatientModel extends Patient {
           address: address,
           tel: tel,
           birthday: birthday,
-          user: user,
+          userId: userId,
           createDate: createDate,
           updateDate: updateDate,
+          gender: gender,
+          height: height,
+          weight: weight,
+          congenitalDeases: congnitialDeases,
         );
   factory PatientModel.fromJson(Map<String, dynamic> json) =>
       _$PatientModelFromJson(json);

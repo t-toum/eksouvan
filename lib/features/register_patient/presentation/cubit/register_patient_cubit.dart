@@ -3,6 +3,7 @@ import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:eksouvan/features/register_patient/domain/usecases/add_new_patient_usecase.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/utils/dropdown_item.dart';
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
 
 @injectable
@@ -24,6 +26,11 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
   final TextEditingController nameController = TextEditingController();
 
   String? currentUserId;
+
+  List<DropdwonItems> genderList = [
+    DropdwonItems(id: 1, name: 'Meal'),
+    DropdwonItems(id: 2, name: "Female")
+  ];
 
   Future<void> getCurrentUser() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
@@ -39,21 +46,17 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
 
   Future<void> addNewPatient() async {
     if (formKey.currentState!.saveAndValidate()) {
-      emit(state.copyWith(dataStatus: DataStatus.loading));
+      // emit(state.copyWith(dataStatus: DataStatus.loading));
+      Map<String, dynamic> formData = {};
       Map<String, dynamic> formValue = {};
-      formValue.addAll({
-        "user": currentUserId,
-        "createDate": DateTime.now().toString(),
-        "updateDate": DateTime.now().toString(),
+      formData.addAll({
+        FieldKeys.kUserId: currentUserId,
+        FieldKeys.kCreateDate: DateTime.now().toString(),
+        FieldKeys.kUpdateDate: DateTime.now().toString(),
+        ...formKey.currentState?.value ?? {}
       });
-      formKey.currentState?.value.forEach((key, value) {
-        formValue[key] = value;
-        if (value is DateTime) {
-          formValue[key] = value.toString();
-        }
-      });
-      // formValue = ConvertDatas.convertMapData(
-      //     mapData: formKey.currentState?.value ?? {});
+
+      formValue = ConvertDatas.convertMapData(mapData: formData);
       PatientModel patientModel = PatientModel.fromJson(formValue);
       final result = await addNewPatientUsecase(
           AddNewPatientParams(patientModel: patientModel));
