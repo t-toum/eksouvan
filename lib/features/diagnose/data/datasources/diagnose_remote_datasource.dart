@@ -1,6 +1,5 @@
 import 'package:eksouvan/core/services/cloud_firestore_service.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exceptions.dart';

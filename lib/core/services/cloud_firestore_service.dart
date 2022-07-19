@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../features/register/data/model/patient_model.dart';
 import '../utils/constants.dart';
 
 @injectable

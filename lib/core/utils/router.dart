@@ -6,7 +6,6 @@ import 'package:eksouvan/features/histories/presentation/pages/patient_detail_pa
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,8 +13,9 @@ import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
-import '../../features/register_patient/presentation/pages/register_patient_page.dart';
+import '../../features/register/domain/entity/patient.dart';
+import '../../features/register/presentation/cubit/register_patient_cubit.dart';
+import '../../features/register/presentation/pages/register_patient_page.dart';
 import '../widgets/success_widget.dart';
 
 class AppRoute {

@@ -1,10 +1,10 @@
 import 'package:eksouvan/core/error/exceptions.dart';
 import 'package:eksouvan/features/histories/data/datasources/history_remote_datasource.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 
 import 'package:eksouvan/core/error/failures.dart';
 
 import 'package:dartz/dartz.dart';
+import 'package:eksouvan/features/register/domain/entity/patient.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/repositories/history_repository.dart';

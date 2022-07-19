@@ -1,10 +1,10 @@
 import 'package:eksouvan/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:eksouvan/core/usecases/usecase.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../register/domain/entity/patient.dart';
 import '../repositories/history_repository.dart';
 
 @lazySingleton

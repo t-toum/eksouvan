@@ -1,5 +1,6 @@
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import '../../domain/entity/patient.dart';
 part 'patient_model.g.dart';
 
 @JsonSerializable()

@@ -2,14 +2,14 @@ import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
+import 'package:eksouvan/features/register/data/model/patient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../histories/domain/usecases/get_all_patient_usecase.dart';
+import '../../../register/domain/entity/patient.dart';
 import '../../domain/useases/add_diagnose_usecase.dart';
 import 'diagnose_state.dart';
 

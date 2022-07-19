@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/utils/constants.dart';
-import '../../../register_patient/domain/entity/patient.dart';
+import '../../../register/domain/entity/patient.dart';
 
 class HistoryState extends Equatable {
   const HistoryState({

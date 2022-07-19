@@ -1,4 +1,4 @@
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
+import 'package:eksouvan/features/register/domain/entity/patient.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../core/utils/constants.dart';

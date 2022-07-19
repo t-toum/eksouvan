@@ -5,7 +5,6 @@ import 'package:eksouvan/core/widgets/custom_textfield.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_state.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +14,7 @@ import '../../../../core/utils/convert_datas.dart';
 import '../../../../core/utils/form_builder_validator.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_textfield_area.dart';
+import '../../../register/domain/entity/patient.dart';
 
 class DailyDiagnoseDetailPage extends StatelessWidget {
   final Patient? patient;

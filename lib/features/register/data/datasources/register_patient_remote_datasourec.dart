@@ -1,6 +1,6 @@
 import 'package:eksouvan/core/error/exceptions.dart';
 import 'package:eksouvan/core/services/cloud_firestore_service.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
+import 'package:eksouvan/features/register/data/model/patient_model.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class RegisterPatientRemoteDatasource {
