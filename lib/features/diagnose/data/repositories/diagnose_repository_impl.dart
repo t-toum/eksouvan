@@ -13,14 +13,13 @@ class DiagnoseRepositoryImpl extends DiagnoseRepository {
   DiagnoseRepositoryImpl(this.datasource);
 
   @override
-  Future<Either<Failure, bool>> addDiagnose({required DiagnoseModel model})async {
-   try {
-      final result =
-          await datasource.addDiagnose(diagnoseModel: model);
+  Future<Either<Failure, String>> addDiagnose(
+      {required DiagnoseModel model}) async {
+    try {
+      final result = await datasource.addDiagnose(diagnoseModel: model);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(msg: error.msg));
     }
   }
-  
 }

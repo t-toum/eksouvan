@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/error/exceptions.dart';
 
 abstract class DiagnoseRemoteDatasource {
-  Future<bool> addDiagnose({required DiagnoseModel diagnoseModel});
+  Future<String> addDiagnose({required DiagnoseModel diagnoseModel});
 }
 
 @LazySingleton(as: DiagnoseRemoteDatasource)
@@ -15,7 +15,7 @@ class DiagnoseRemoteDatasourceImpl extends DiagnoseRemoteDatasource {
   DiagnoseRemoteDatasourceImpl(this.cloudFireStoreService);
   
   @override
-  Future<bool> addDiagnose({required DiagnoseModel diagnoseModel})async {
+  Future<String> addDiagnose({required DiagnoseModel diagnoseModel})async {
    try {
       final result = await cloudFireStoreService.addDiagnose(model: diagnoseModel);
       return result;

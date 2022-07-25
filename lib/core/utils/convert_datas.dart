@@ -8,7 +8,10 @@ class ConvertDatas {
     mapData.forEach((key, value) {
       if (value is DateTime) {
         newValue[key] = value.toString();
-      } else if (key == FieldKeys.kWeight || key == FieldKeys.kHeight) {
+      } else if (key == FieldKeys.kWeight ||
+          key == FieldKeys.kHeight ||
+          key == FieldKeys.kBloodPressure ||
+          key == FieldKeys.kTemperature) {
         newValue[key] = double.parse(value);
       } else {
         newValue[key] = value;

@@ -1,3 +1,4 @@
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:equatable/equatable.dart';
 
 class Patient extends Equatable {
@@ -14,21 +15,24 @@ class Patient extends Equatable {
   final double? height;
   final double? weight;
   final String? congenitalDeases;
+  final List<DiagnoseModel>? diagnoses;
 
-  const Patient(
-      {this.patientId,
-      this.firstname,
-      this.lastname,
-      this.address,
-      this.tel,
-      this.birthday,
-      this.userId,
-      this.createDate,
-      this.updateDate,
-      this.gender,
-      this.height,
-      this.weight,
-      this.congenitalDeases});
+  const Patient({
+    this.patientId,
+    this.firstname,
+    this.lastname,
+    this.address,
+    this.tel,
+    this.birthday,
+    this.userId,
+    this.createDate,
+    this.updateDate,
+    this.gender,
+    this.height,
+    this.weight,
+    this.congenitalDeases,
+    this.diagnoses,
+  });
 
   @override
   List<Object?> get props => [
@@ -43,6 +47,7 @@ class Patient extends Equatable {
         gender,
         height,
         weight,
-        congenitalDeases
+        congenitalDeases,
+        diagnoses,
       ];
 }

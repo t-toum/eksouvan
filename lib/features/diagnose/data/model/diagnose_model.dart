@@ -9,13 +9,21 @@ class DiagnoseModel extends Diagnose {
     DateTime? diagnoseDate,
     String? description,
     String? patientId,
-    String? user,
+    String? userId,
+    double? bloodPressure,
+    double? weight,
+    double? temperature,
+    String? allergic,
   }) : super(
           diagnoseId: diagnoseId,
           diagnoseDate: diagnoseDate,
           description: description,
           patientId: patientId,
-          user: user,
+          userId: userId,
+          bloodPressure: bloodPressure,
+          weight: weight,
+          temperature: temperature,
+          allergic: allergic,
         );
 
   factory DiagnoseModel.fromJson(Map<String, dynamic> json) =>

@@ -4,7 +4,7 @@
     "kUsernameLabel": "Username",
     "kPasswordLabel": "Password",
     "kRequiredField": "This field is required",
-    "kNewRegisterLabel": "New Register",
+    "kNewRegisterLabel": "Register Patient",
     "kHistoryLabel": "History",
     "kDailyDiagnoseLabel": "Register daily diagnose",
     "kAppointment": "Appointment",
@@ -33,6 +33,11 @@
     "kKg":"Kg",
     "kCm":"cm",
     "kCongenitalDeases":"Congenital Deases",
-    "kSaving":"Saving..."
+    "kSaving":"Saving...",
+    "kDate":"Date",
+    "kBloodPressure":"Blood pressure",
+    "kTemperature":"Temperature",
+    "kAllergic":"Allergic",
+    "kDescriptionHint":"What do you feel to day?"
     
 }

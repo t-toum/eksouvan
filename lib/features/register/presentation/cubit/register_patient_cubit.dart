@@ -46,7 +46,7 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
 
   Future<void> addNewPatient() async {
     if (formKey.currentState!.saveAndValidate()) {
-      // emit(state.copyWith(dataStatus: DataStatus.loading));
+      emit(state.copyWith(dataStatus: DataStatus.loading));
       Map<String, dynamic> formData = {};
       Map<String, dynamic> formValue = {};
       formData.addAll({

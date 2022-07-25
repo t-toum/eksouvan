@@ -26,7 +26,10 @@ class CloudFireStoreService {
     Map<String, dynamic> body = patientModel.toJson();
     body['patientId'] = uid;
     try {
-      await firebaseFirestore.collection('patients').doc(uid).set(body);
+      await firebaseFirestore
+          .collection(ColectionName.patient)
+          .doc(uid)
+          .set(body);
       return uid;
     } on FirebaseException catch (error) {
       throw error.message ?? "add new patient";
@@ -61,15 +64,21 @@ class CloudFireStoreService {
     }
   }
 
-  Future<bool> addDiagnose({required DiagnoseModel model}) async {
+  Future<String> addDiagnose({required DiagnoseModel model}) async {
+    String patientId = 'aa326fe4-6b0b-4fc7-be99-490f383d70cc';
     try {
+      final String diagnoseId = uuid.v4();
+      Map<String, dynamic> body = model.toJson();
+      body['diagnoseId'] = diagnoseId;
       await firebaseFirestore
-          .collection(ColectionName.diagnose)
-          .doc(model.diagnoseId)
-          .set(model.toJson());
-      return true;
+          .collection(ColectionName.patient)
+          .doc(patientId)
+          .update({
+        "diagnoses": FieldValue.arrayUnion([body])
+      });
+      return diagnoseId;
     } catch (error) {
-      throw error;
+      throw error.toString();
     }
   }
 }

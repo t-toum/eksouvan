@@ -80,7 +80,7 @@ class AppRoute {
             ),
             providers: [
               BlocProvider<DiagnoseCubit>(
-                create: (context) => getIt<DiagnoseCubit>(),
+                create: (context) => getIt<DiagnoseCubit>()..getCurrentUser(),
               )
             ]);
       default:

@@ -7,12 +7,12 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-class AddDiagnoseUsecase implements UseCase<bool, AddDiagnoseParams> {
+class AddDiagnoseUsecase implements UseCase<String, AddDiagnoseParams> {
   final DiagnoseRepository diagnoseRepository;
 
   AddDiagnoseUsecase(this.diagnoseRepository);
   @override
-  Future<Either<Failure, bool>> call(AddDiagnoseParams params) async {
+  Future<Either<Failure, String>> call(AddDiagnoseParams params) async {
     return await diagnoseRepository.addDiagnose(model: params.diagnoseModel);
   }
 }
@@ -23,5 +23,5 @@ class AddDiagnoseParams extends Equatable {
   const AddDiagnoseParams({required this.diagnoseModel});
 
   @override
-  List<Object?> get props => [ diagnoseModel];
+  List<Object?> get props => [diagnoseModel];
 }
