@@ -1,11 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:eksouvan/core/widgets/widget_builder.dart';
 import 'package:flutter/material.dart';
 
 class AppTemplate extends StatelessWidget {
   final Widget body;
-  final String? titleKey;
-  const AppTemplate({Key? key, required this.body, this.titleKey})
+  final String? title;
+  const AppTemplate({Key? key, required this.body, this.title})
       : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class AppTemplate extends StatelessWidget {
               height: 40,
             ),
             Text(
-              tr(titleKey ?? "Title"),
+              title?? "Title",
               style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
             Expanded(

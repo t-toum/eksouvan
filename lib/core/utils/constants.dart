@@ -35,4 +35,5 @@ class SharedPreferenceKey {
 class ColectionName {
   static const String users = "users";
   static const String patient = "patients";
+  static const String diagnose = "diagnoses";
 }

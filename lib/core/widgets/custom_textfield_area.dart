@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../utils/constants.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomTextFieldArea extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool obscureText;
@@ -14,21 +15,19 @@ class CustomTextField extends StatelessWidget {
   final bool enabled;
   final bool readOnly;
   final String name;
-  final TextInputType? textInputType;
-  const CustomTextField(
-      {Key? key,
-      this.controller,
-      this.labelText,
-      this.hintText,
-      this.obscureText = false,
-      this.validator,
-      this.onChanged,
-      this.enabled = true,
-      this.initialValue,
-      this.readOnly = false,
-      required this.name,
-      this.textInputType})
-      : super(key: key);
+  const CustomTextFieldArea({
+    Key? key,
+    this.controller,
+    this.labelText,
+    this.hintText,
+    this.obscureText = false,
+    this.validator,
+    this.onChanged,
+    this.enabled = true,
+    this.initialValue,
+    this.readOnly = false,
+    required this.name,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class CustomTextField extends StatelessWidget {
           (labelText == null)
               ? Container()
               : Text(
-                  labelText!.toUpperCase(),
+                  tr(labelText!).toUpperCase(),
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
@@ -54,10 +53,10 @@ class CustomTextField extends StatelessWidget {
           FormBuilderTextField(
             obscureText: obscureText,
             controller: controller,
-            keyboardType: textInputType,
             name: name,
             key: key,
             decoration: InputDecoration(
+              constraints: const BoxConstraints(maxHeight: 200),
               border: OutlineInputBorder(
                 borderSide: const BorderSide(
                   color: Colors.grey,
@@ -85,7 +84,9 @@ class CustomTextField extends StatelessWidget {
             initialValue: initialValue,
             enabled: enabled,
             readOnly: readOnly,
-            
+            keyboardType: TextInputType.multiline,
+            maxLines: 50,
+            textAlignVertical: TextAlignVertical.top,
           )
         ],
       ),

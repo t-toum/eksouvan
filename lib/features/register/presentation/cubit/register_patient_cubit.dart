@@ -1,17 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
+import 'package:eksouvan/core/usecases/success_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
-import 'package:eksouvan/features/register_patient/domain/usecases/add_new_patient_usecase.dart';
-import 'package:eksouvan/features/register_patient/presentation/cubit/register_patient_state.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/utils/dropdown_item.dart';
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
+import '../../data/model/patient_model.dart';
+import '../../domain/usecases/add_new_patient_usecase.dart';
+import 'register_patient_state.dart';
 
 @injectable
 class RegisterPatientCubit extends Cubit<RegisterPatientState> {
@@ -23,6 +28,11 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
   final TextEditingController nameController = TextEditingController();
 
   String? currentUserId;
+
+  List<DropdwonItems> genderList = [
+    DropdwonItems(id: 1, name: 'Meal'),
+    DropdwonItems(id: 2, name: "Female")
+  ];
 
   Future<void> getCurrentUser() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
@@ -39,16 +49,16 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
   Future<void> addNewPatient() async {
     if (formKey.currentState!.saveAndValidate()) {
       emit(state.copyWith(dataStatus: DataStatus.loading));
+      Map<String, dynamic> formData = {};
       Map<String, dynamic> formValue = {};
-      formValue.addAll({
-        "user": currentUserId,
+      formData.addAll({
+        FieldKeys.kUserId: currentUserId,
+        FieldKeys.kCreateDate: DateTime.now().toString(),
+        FieldKeys.kLastUpdate: DateTime.now().toString(),
+        ...formKey.currentState?.value ?? {}
       });
-      formKey.currentState?.value.forEach((key, value) {
-        formValue[key] = value;
-        if (value is DateTime) {
-          formValue[key] = value.toString();
-        }
-      });
+
+      formValue = ConvertDatas.convertMapData(mapData: formData);
       PatientModel patientModel = PatientModel.fromJson(formValue);
       final result = await addNewPatientUsecase(
           AddNewPatientParams(patientModel: patientModel));
@@ -57,8 +67,17 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
       }, (success) {
         emit(
             state.copyWith(dataStatus: DataStatus.success, patientId: success));
-        AppNavigator.navigateTo(AppRoute.successRoute,
-            params: tr("kAddNewPatientSuccess"));
+        AppNavigator.navigateTo(
+          AppRoute.successRoute,
+          params: SuccessParams(
+            title: LocaleKeys.kAddNewPatientSuccess.tr(),
+            buttonTitle: LocaleKeys.kNextToDiagnoseLabel,
+            onPressed: () {
+              AppNavigator.navigateTo(AppRoute.dialyDiagnoseDetailRoute,
+                  params: success);
+            },
+          ),
+        );
       });
     } else {
       print("Form invalid validation");

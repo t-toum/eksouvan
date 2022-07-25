@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:eksouvan/features/register_patient/data/model/patient_model.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../features/register/data/model/patient_model.dart';
 import '../utils/constants.dart';
 
 @injectable
@@ -26,7 +26,10 @@ class CloudFireStoreService {
     Map<String, dynamic> body = patientModel.toJson();
     body['patientId'] = uid;
     try {
-      await firebaseFirestore.collection('patients').doc(uid).set(body);
+      await firebaseFirestore
+          .collection(ColectionName.patient)
+          .doc(uid)
+          .set(body);
       return uid;
     } on FirebaseException catch (error) {
       throw error.message ?? "add new patient";
@@ -39,7 +42,8 @@ class CloudFireStoreService {
       final result =
           await firebaseFirestore.collection(ColectionName.patient).get();
       for (var doc in result.docs) {
-        var data = PatientModel.fromJson(doc.data());
+        var res = ConvertDatas.convertMapData(mapData: doc.data());
+        var data = PatientModel.fromJson(res);
         listData.add(data);
       }
       return listData;
@@ -54,10 +58,24 @@ class CloudFireStoreService {
           .collection(ColectionName.patient)
           .doc(patientId)
           .get();
-      PatientModel data = PatientModel.fromJson(result.data() ?? {});
+      var res = ConvertDatas.convertMapData(mapData: result.data() ?? {});
+      PatientModel data = PatientModel.fromJson(res);
       return data;
     } on FirebaseException catch (error) {
       throw error.message ?? "Get all patient";
+    }
+  }
+
+  Future<String> addDiagnose(
+      {required Map<String, dynamic> data, required String patientId}) async {
+    try {
+      await firebaseFirestore
+          .collection(ColectionName.patient)
+          .doc(patientId)
+          .update(data);
+      return 'Updated';
+    } catch (error) {
+      throw error.toString();
     }
   }
 }

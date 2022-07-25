@@ -9,9 +9,14 @@ import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
+import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
+import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/register_patient/presentation/cubit/register_patient_cubit.dart';
-import '../../features/register_patient/presentation/pages/register_patient_page.dart';
+import '../../features/register/domain/entity/patient.dart';
+import '../../features/register/presentation/cubit/register_patient_cubit.dart';
+import '../../features/register/presentation/pages/register_patient_page.dart';
+import '../usecases/success_params.dart';
 import '../widgets/success_widget.dart';
 
 class AppRoute {
@@ -22,6 +27,8 @@ class AppRoute {
   static const String historyRoute = "/history";
   static const String patientDetailRoute = "/patientDetal";
   static const String successRoute = "/success";
+  static const String dailyDiagnoseRoute = "/dialyDiagnose";
+  static const String dialyDiagnoseDetailRoute = "/dialyDiagnoseDetail";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -58,8 +65,29 @@ class AppRoute {
           )
         ]);
       case successRoute:
-        final String? title = settings.arguments as String?;
-        return _materialRoute(SuccessWidget(title: title), providers: []);
+        final SuccessParams? params = settings.arguments as SuccessParams?;
+        return _materialRoute(
+            SuccessWidget(
+              title: params?.title,
+              buttonTile: params?.buttonTitle,
+              onPressed: params?.onPressed,
+            ),
+            providers: []);
+      case dailyDiagnoseRoute:
+        return _materialRoute(const DialyDiagnosePage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>()..getAllPatient(),
+          )
+        ]);
+      case dialyDiagnoseDetailRoute:
+        final patientId = settings.arguments as String;
+        return _materialRoute(const DailyDiagnoseDetailPage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>()
+              ..getCurrentUser()
+              ..getPatientById(id: patientId),
+          )
+        ]);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

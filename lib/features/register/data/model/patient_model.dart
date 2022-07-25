@@ -1,7 +1,7 @@
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../diagnose/data/model/diagnose_model.dart';
+import '../../domain/entity/patient.dart';
 part 'patient_model.g.dart';
 
 @JsonSerializable()
@@ -13,8 +13,14 @@ class PatientModel extends Patient {
     String? address,
     String? tel,
     DateTime? birthday,
-    String? user,
-    List<DiagnoseModel?>? diagnoses,
+    String? userId,
+    DateTime? createDate,
+    DateTime? lastUpdate,
+    int? gender,
+    double? height,
+    double? weight,
+    String? congnitialDeases,
+    List<DiagnoseModel>? diagnoses,
   }) : super(
           patientId: patientId,
           firstname: firstname,
@@ -22,8 +28,14 @@ class PatientModel extends Patient {
           address: address,
           tel: tel,
           birthday: birthday,
-          diagnoses: diagnoses ?? const [],
-          user: user,
+          userId: userId,
+          createDate: createDate,
+          lastUpdate: lastUpdate,
+          gender: gender,
+          height: height,
+          weight: weight,
+          congenitalDeases: congnitialDeases,
+          diagnoses: diagnoses,
         );
   factory PatientModel.fromJson(Map<String, dynamic> json) =>
       _$PatientModelFromJson(json);

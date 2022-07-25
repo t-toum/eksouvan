@@ -1,10 +1,10 @@
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/features/histories/domain/usecases/get_all_patient_usecase.dart';
-import 'package:eksouvan/features/register_patient/domain/entity/patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import '../../../register/domain/entity/patient.dart';
 import '../../domain/usecases/get_patient_usecase.dart';
 import 'history_state..dart';
 
