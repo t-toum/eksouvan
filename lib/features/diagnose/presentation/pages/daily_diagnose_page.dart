@@ -48,7 +48,7 @@ class DialyDiagnosePage extends StatelessWidget {
                         tel: state.listPatient?[index].tel,
                         address: state.listPatient?[index].address,
                         lastUpdate: ConvertDatas.converDateFormat(
-                            state.listPatient?[index].updateDate),
+                            state.listPatient?[index].lastUpdate),
                         onTap: () {
                           AppNavigator.navigateTo(
                             AppRoute.dialyDiagnoseDetailRoute,

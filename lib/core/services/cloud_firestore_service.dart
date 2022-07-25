@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
@@ -42,7 +42,8 @@ class CloudFireStoreService {
       final result =
           await firebaseFirestore.collection(ColectionName.patient).get();
       for (var doc in result.docs) {
-        var data = PatientModel.fromJson(doc.data());
+        var res = ConvertDatas.convertMapData(mapData: doc.data());
+        var data = PatientModel.fromJson(res);
         listData.add(data);
       }
       return listData;
@@ -57,26 +58,22 @@ class CloudFireStoreService {
           .collection(ColectionName.patient)
           .doc(patientId)
           .get();
-      PatientModel data = PatientModel.fromJson(result.data() ?? {});
+      var res = ConvertDatas.convertMapData(mapData: result.data() ?? {});
+      PatientModel data = PatientModel.fromJson(res);
       return data;
     } on FirebaseException catch (error) {
       throw error.message ?? "Get all patient";
     }
   }
 
-  Future<String> addDiagnose({required DiagnoseModel model}) async {
-    String patientId = 'aa326fe4-6b0b-4fc7-be99-490f383d70cc';
+  Future<String> addDiagnose(
+      {required Map<String, dynamic> data, required String patientId}) async {
     try {
-      final String diagnoseId = uuid.v4();
-      Map<String, dynamic> body = model.toJson();
-      body['diagnoseId'] = diagnoseId;
       await firebaseFirestore
           .collection(ColectionName.patient)
           .doc(patientId)
-          .update({
-        "diagnoses": FieldValue.arrayUnion([body])
-      });
-      return diagnoseId;
+          .update(data);
+      return 'Updated';
     } catch (error) {
       throw error.toString();
     }

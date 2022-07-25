@@ -10,7 +10,7 @@ class Patient extends Equatable {
   final DateTime? birthday;
   final String? userId;
   final DateTime? createDate;
-  final DateTime? updateDate;
+  final DateTime? lastUpdate;
   final int? gender;
   final double? height;
   final double? weight;
@@ -26,7 +26,7 @@ class Patient extends Equatable {
     this.birthday,
     this.userId,
     this.createDate,
-    this.updateDate,
+    this.lastUpdate,
     this.gender,
     this.height,
     this.weight,
@@ -43,7 +43,7 @@ class Patient extends Equatable {
         tel,
         birthday,
         createDate,
-        updateDate,
+        lastUpdate,
         gender,
         height,
         weight,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 
@@ -12,7 +13,15 @@ class ConvertDatas {
           key == FieldKeys.kHeight ||
           key == FieldKeys.kBloodPressure ||
           key == FieldKeys.kTemperature) {
-        newValue[key] = double.parse(value);
+        if (value is! double) {
+          newValue[key] = double.parse(value ?? '0');
+        } else {
+          newValue[key] = value;
+        }
+      } else if (value is Timestamp) {
+        var time =
+            DateTime.fromMillisecondsSinceEpoch(value.microsecondsSinceEpoch);
+        newValue[key] = time.toString();
       } else {
         newValue[key] = value;
       }

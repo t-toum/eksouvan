@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../core/utils/dropdown_item.dart';
 import '../../../histories/domain/usecases/get_all_patient_usecase.dart';
@@ -25,12 +27,14 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   final AddDiagnoseUsecase addDiagnoseUsecase;
   final GetCUrrentUserUsecase getCUrrentUserUsecase;
   final GetPatientUsecase getPatientUsecase;
+  final Uuid uuid;
   DiagnoseCubit(this.getAllPatientUsecase, this.addDiagnoseUsecase,
-      this.getCUrrentUserUsecase, this.getPatientUsecase)
+      this.getCUrrentUserUsecase, this.getPatientUsecase, this.uuid)
       : super(const DiagnoseState());
   TextEditingController searchController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
   final DateTime currentDate = DateTime.now();
+
   String? currentUserId;
   List<DropdwonItems> genderList = [
     DropdwonItems(id: 1, name: 'Meal'),
@@ -39,10 +43,9 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   Future<void> getAllPatient() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
     final results = await getAllPatientUsecase(NoParams());
-    results.fold(
-        (error) => emit(
-            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
-        (data) {
+    results.fold((error) {
+      emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
+    }, (data) {
       emit(state.copyWith(dataStatus: DataStatus.success, listPatient: data));
     });
   }
@@ -71,18 +74,24 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   Future<void> addPatientDiagnose({Patient? patient}) async {
     if (formKey.currentState!.saveAndValidate()) {
       emit(state.copyWith(dataStatus: DataStatus.loading));
+      Map<String, dynamic> formValue = {};
+      final String diagnoseId = uuid.v4();
       Map<String, dynamic> formData = {};
       formData.addAll({
         FieldKeys.kDiagnoseDate: currentDate,
         FieldKeys.kUserId: currentUserId,
         FieldKeys.kPatientId: patient?.patientId,
+        FieldKeys.kDiagnoseId: diagnoseId,
         ...formKey.currentState?.value ?? {}
       });
-      Map<String, dynamic> formValue =
-          ConvertDatas.convertMapData(mapData: formData);
-      DiagnoseModel diagnose = DiagnoseModel.fromJson(formValue);
-      final result =
-          await addDiagnoseUsecase(AddDiagnoseParams(diagnoseModel: diagnose));
+      var fromConvert = ConvertDatas.convertMapData(mapData: formData);
+      DiagnoseModel diagnose = DiagnoseModel.fromJson(fromConvert);
+      formValue.addAll({
+        FieldKeys.kLastUpdate: currentDate,
+        FieldKeys.kDiagnoses: FieldValue.arrayUnion([diagnose.toJson()]),
+      });
+      final result = await addDiagnoseUsecase(AddDiagnoseParams(
+          patientId: patient?.patientId ?? '', data: formValue));
       result.fold((error) {
         emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
       }, (success) {

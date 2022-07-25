@@ -11,7 +11,7 @@ class FieldKeys {
   static const String kCongenitalDeases = "congenitalDeases";
   static const String kUserId = "userId";
   static const String kCreateDate = "createDate";
-  static const String kUpdateDate = "updateDate";
+  static const String kLastUpdate = "lastUpdate";
 
   //Diagnose
   static const String kBloodPressure = "bloodPressure";
@@ -20,6 +20,8 @@ class FieldKeys {
   static const String kDescription = "description";
   static const String kDiagnoseDate = "diagnoseDate";
   static const String kPatientId = "patientId";
+  static const String kDiagnoseId = "diagnoseId";
+  static const String kDiagnoses = "diagnoses";
 
 
 }

@@ -54,7 +54,7 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
       formData.addAll({
         FieldKeys.kUserId: currentUserId,
         FieldKeys.kCreateDate: DateTime.now().toString(),
-        FieldKeys.kUpdateDate: DateTime.now().toString(),
+        FieldKeys.kLastUpdate: DateTime.now().toString(),
         ...formKey.currentState?.value ?? {}
       });
 
