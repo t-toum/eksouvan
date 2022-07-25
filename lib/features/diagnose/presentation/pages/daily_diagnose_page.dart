@@ -52,7 +52,7 @@ class DialyDiagnosePage extends StatelessWidget {
                         onTap: () {
                           AppNavigator.navigateTo(
                             AppRoute.dialyDiagnoseDetailRoute,
-                            params: state.listPatient?[index],
+                            params: state.listPatient?[index].patientId,
                           );
                         },
                       );

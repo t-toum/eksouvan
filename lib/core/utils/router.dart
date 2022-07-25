@@ -16,6 +16,7 @@ import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register/domain/entity/patient.dart';
 import '../../features/register/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register/presentation/pages/register_patient_page.dart';
+import '../usecases/success_params.dart';
 import '../widgets/success_widget.dart';
 
 class AppRoute {
@@ -64,8 +65,14 @@ class AppRoute {
           )
         ]);
       case successRoute:
-        final String? title = settings.arguments as String?;
-        return _materialRoute(SuccessWidget(title: title), providers: []);
+        final SuccessParams? params = settings.arguments as SuccessParams?;
+        return _materialRoute(
+            SuccessWidget(
+              title: params?.title,
+              buttonTile: params?.buttonTitle,
+              onPressed: params?.onPressed,
+            ),
+            providers: []);
       case dailyDiagnoseRoute:
         return _materialRoute(const DialyDiagnosePage(), providers: [
           BlocProvider<DiagnoseCubit>(
@@ -73,16 +80,14 @@ class AppRoute {
           )
         ]);
       case dialyDiagnoseDetailRoute:
-        final patient = settings.arguments as Patient?;
-        return _materialRoute(
-            DailyDiagnoseDetailPage(
-              patient: patient,
-            ),
-            providers: [
-              BlocProvider<DiagnoseCubit>(
-                create: (context) => getIt<DiagnoseCubit>()..getCurrentUser(),
-              )
-            ]);
+        final patientId = settings.arguments as String;
+        return _materialRoute(const DailyDiagnoseDetailPage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>()
+              ..getCurrentUser()
+              ..getPatientById(id: patientId),
+          )
+        ]);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

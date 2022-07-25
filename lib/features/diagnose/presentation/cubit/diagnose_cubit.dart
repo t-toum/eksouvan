@@ -13,6 +13,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/dropdown_item.dart';
 import '../../../histories/domain/usecases/get_all_patient_usecase.dart';
+import '../../../histories/domain/usecases/get_patient_usecase.dart';
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
 import '../../../register/domain/entity/patient.dart';
 import '../../domain/useases/add_diagnose_usecase.dart';
@@ -23,8 +24,9 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   final GetAllPatientUsecase getAllPatientUsecase;
   final AddDiagnoseUsecase addDiagnoseUsecase;
   final GetCUrrentUserUsecase getCUrrentUserUsecase;
+  final GetPatientUsecase getPatientUsecase;
   DiagnoseCubit(this.getAllPatientUsecase, this.addDiagnoseUsecase,
-      this.getCUrrentUserUsecase)
+      this.getCUrrentUserUsecase, this.getPatientUsecase)
       : super(const DiagnoseState());
   TextEditingController searchController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
@@ -46,14 +48,23 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   }
 
   Future<void> getCurrentUser() async {
-    emit(state.copyWith(dataStatus: DataStatus.loading));
     final result = await getCUrrentUserUsecase(NoParams());
     result.fold(
         (error) => emit(
             state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
         (data) {
       currentUserId = data;
-      emit(state.copyWith(dataStatus: DataStatus.success));
+    });
+  }
+
+  Future<void> getPatientById({required String id}) async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result = await getPatientUsecase(GetPatientParams(patientId: id));
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (patient) {
+      emit(state.copyWith(dataStatus: DataStatus.success, patient: patient));
     });
   }
 

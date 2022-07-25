@@ -20,7 +20,7 @@
     "kPatientLastName": "Patient lastname",
     "kPatientBirtDay": "Patient Birth day",
     "kPhoneNumber": "Phone number",
-    "kAddNewPatientSuccess": "Add new patient has successfully",
+    "kAddNewPatientSuccess": "Register patient has successfully",
     "kPatientHistory": "Patient History",
     "kDiagnoseDetail": "Diagnose detail",
     "kDescription":"Description",
@@ -38,6 +38,7 @@
     "kBloodPressure":"Blood pressure",
     "kTemperature":"Temperature",
     "kAllergic":"Allergic",
-    "kDescriptionHint":"What do you feel to day?"
+    "kDescriptionHint":"What do you feel to day?",
+    "kNextToDiagnoseLabel":"Next to diagnose"
     
 }

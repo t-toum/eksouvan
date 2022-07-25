@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
+import 'package:eksouvan/core/usecases/success_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -65,8 +67,17 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
       }, (success) {
         emit(
             state.copyWith(dataStatus: DataStatus.success, patientId: success));
-        AppNavigator.navigateTo(AppRoute.successRoute,
-            params: tr("kAddNewPatientSuccess"));
+        AppNavigator.navigateTo(
+          AppRoute.successRoute,
+          params: SuccessParams(
+            title: LocaleKeys.kAddNewPatientSuccess.tr(),
+            buttonTitle: LocaleKeys.kNextToDiagnoseLabel,
+            onPressed: () {
+              AppNavigator.navigateTo(AppRoute.dialyDiagnoseDetailRoute,
+                  params: success);
+            },
+          ),
+        );
       });
     } else {
       print("Form invalid validation");

@@ -16,11 +16,11 @@ import '../../../../core/utils/convert_datas.dart';
 import '../../../../core/utils/form_builder_validator.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_textfield_area.dart';
-import '../../../register/domain/entity/patient.dart';
 
 class DailyDiagnoseDetailPage extends StatelessWidget {
-  final Patient? patient;
-  const DailyDiagnoseDetailPage({Key? key, this.patient}) : super(key: key);
+  const DailyDiagnoseDetailPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                   CustomTextField(
                     name: FieldKeys.kFirstname,
                     labelText: LocaleKeys.kNameLabel.tr(),
-                    initialValue: patient?.firstname,
+                    initialValue: state.patient?.firstname,
                     enabled: false,
                   ),
 
@@ -67,7 +67,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                   CustomTextField(
                     name: FieldKeys.kLastname,
                     labelText: LocaleKeys.kLastName.tr(),
-                    initialValue: patient?.lastname,
+                    initialValue: state.patient?.lastname,
                     enabled: false,
                   ),
 
@@ -79,7 +79,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     labelText: LocaleKeys.kGender.tr(),
                     items: cubit.genderList,
                     name: FieldKeys.kGender,
-                    initialValue: patient?.gender,
+                    initialValue: state.patient?.gender,
                     enabled: false,
                   ),
                   //BirthDay
@@ -90,7 +90,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     name: FieldKeys.kBirthDay,
                     labelText: LocaleKeys.kDateOfBirth..tr(),
                     initialValue:
-                        ConvertDatas.converDateFormat(patient?.birthday),
+                        ConvertDatas.converDateFormat(state.patient?.birthday),
                     enabled: false,
                   ),
                   //Wieght
@@ -100,7 +100,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                   CustomTextField(
                     name: FieldKeys.kWeight,
                     labelText:
-                        "${LocaleKeys.kWeight.tr()} - ${patient?.weight.toString()}",
+                        "${LocaleKeys.kWeight.tr()} - ${state.patient?.weight.toString()}",
                     hintText: LocaleKeys.kKg.tr(),
                   ),
 
@@ -163,7 +163,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                       onPressed: () {
                         context
                             .read<DiagnoseCubit>()
-                            .addPatientDiagnose(patient: patient);
+                            .addPatientDiagnose(patient: state.patient);
                       },
                     ),
                   ),
