@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/features/histories/domain/usecases/get_all_patient_usecase.dart';
@@ -7,12 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../histories/domain/usecases/get_patient_usecase.dart';
 import 'daily_patient_state.dart';
 
 @injectable
 class DailyPatientCubit extends Cubit<DailyPatientState> {
   final GetAllPatientUsecase getAllPatientUsecase;
-  DailyPatientCubit(this.getAllPatientUsecase)
+  final GetPatientUsecase getPatientUsecase;
+  DailyPatientCubit(this.getAllPatientUsecase, this.getPatientUsecase)
       : super(const DailyPatientState());
   final TextEditingController searchTextController = TextEditingController();
   Future<void> getDailyPatient() async {
@@ -29,6 +30,18 @@ class DailyPatientCubit extends Cubit<DailyPatientState> {
       }).toList();
       emit(state.copyWith(
           dataStatus: DataStatus.success, listPatient: listPatient));
+    });
+  }
+
+  Future<void> getPatient({required String patientId}) async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result =
+        await getPatientUsecase(GetPatientParams(patientId: patientId));
+    result.fold(
+        (error) => emit(
+            state..copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (res) {
+      emit(state.copyWith(dataStatus: DataStatus.success, patient: res));
     });
   }
 }

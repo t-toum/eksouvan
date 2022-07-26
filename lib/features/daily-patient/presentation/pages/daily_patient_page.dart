@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
 import 'package:eksouvan/core/widgets/custom_search_textfield.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
@@ -39,39 +41,16 @@ class DailyPatientPage extends StatelessWidget {
                   child: Column(
                     children:
                         List.generate(state.listPatient?.length ?? 0, (index) {
-                      return Column(
-                        children: [
-                          ListTile(
-                            leading: const Icon(
-                              Icons.person,
-                              size: 35,
-                            ),
-                            title: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                      '${state.listPatient?[index].firstname} ${state.listPatient?[index].lastname}'),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                      '${state.listPatient?[index].address}'),
-                                ),
-                                Expanded(
-                                  child: Text(DateFormatPattern.kShortDateFormat
-                                      .format(state
-                                              .listPatient?[index].lastUpdate ??
-                                          DateTime.now())),
-                                ),
-                              ],
-                            ),
-                            trailing: const Icon(
-                              Icons.arrow_forward_ios,
-                              size: 20,
-                            ),
-                            onTap: () {},
-                          ),
-                          const Divider(),
-                        ],
+                      return ListPatientItem(
+                        firstname: state.listPatient?[index].firstname,
+                        lastname: state.listPatient?[index].lastname,
+                        address: state.listPatient?[index].address,
+                        lastUpdate: state.listPatient?[index].lastUpdate,
+                        onTap: () {
+                          AppNavigator.navigateTo(
+                              AppRoute.dailyDiagnosePatientPageRoute,
+                              params: state.listPatient?[index].patientId);
+                        },
                       );
                     }),
                   ),

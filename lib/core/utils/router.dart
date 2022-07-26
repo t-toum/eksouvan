@@ -1,6 +1,7 @@
 import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
 import 'package:eksouvan/features/daily-patient/presentation/cubit/daily_patient_cubit.dart';
+import 'package:eksouvan/features/daily-patient/presentation/pages/daily_diagnose_patient_page.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
 import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
@@ -15,7 +16,6 @@ import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
-import '../../features/register/domain/entity/patient.dart';
 import '../../features/register/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register/presentation/pages/register_patient_page.dart';
 import '../usecases/success_params.dart';
@@ -32,6 +32,8 @@ class AppRoute {
   static const String dailyDiagnoseRoute = "/dialyDiagnose";
   static const String dialyDiagnoseDetailRoute = "/dialyDiagnoseDetail";
   static const String dialyPatient = "/dialyPatient";
+  static const String dailyDiagnosePatientPageRoute =
+      "/dailyDiagnosePatientPage";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -95,6 +97,14 @@ class AppRoute {
         return _materialRoute(const DailyPatientPage(), providers: [
           BlocProvider<DailyPatientCubit>(
             create: (context) => getIt<DailyPatientCubit>()..getDailyPatient(),
+          )
+        ]);
+      case dailyDiagnosePatientPageRoute:
+        final String patientId = settings.arguments as String;
+        return _materialRoute(const DailyDiagnosePatientPage(), providers: [
+          BlocProvider<DailyPatientCubit>(
+            create: (context) =>
+                getIt<DailyPatientCubit>()..getPatient(patientId: patientId),
           )
         ]);
       default:

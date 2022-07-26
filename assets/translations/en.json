@@ -39,6 +39,8 @@
     "kTemperature":"Temperature",
     "kAllergic":"Allergic",
     "kDescriptionHint":"What do you feel to day?",
-    "kNextToDiagnoseLabel":"Next to diagnose"
-    
+    "kNextToDiagnoseLabel":"Next to diagnose",
+    "kDiagnosePatient":"Diagnose Patient",
+    "kRegisterToDiagnose":"Register to Diagnose successfully",
+    "kNextToDiagnose":"Diagnose"
 }

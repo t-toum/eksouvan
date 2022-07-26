@@ -73,7 +73,7 @@ class CloudFireStoreService {
           .collection(ColectionName.patient)
           .doc(patientId)
           .update(data);
-      return 'Updated';
+      return patientId;
     } catch (error) {
       throw error.toString();
     }

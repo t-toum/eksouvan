@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
+import 'package:eksouvan/core/usecases/success_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -95,7 +98,15 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
         emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
       }, (success) {
         emit(state.copyWith(dataStatus: DataStatus.success));
-        AppNavigator.navigateTo(AppRoute.successRoute);
+        AppNavigator.navigateTo(AppRoute.successRoute,
+            params: SuccessParams(
+                title: LocaleKeys.kRegisterToDiagnose.tr(),
+                buttonTitle: LocaleKeys.kNextToDiagnose.tr(),
+                onPressed: () {
+                  AppNavigator.navigateTo(
+                      AppRoute.dailyDiagnosePatientPageRoute,
+                      params: success);
+                }));
       });
     } else {
       print("validate form");
