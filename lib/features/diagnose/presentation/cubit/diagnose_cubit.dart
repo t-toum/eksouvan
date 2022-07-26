@@ -6,7 +6,6 @@ import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
-import 'package:eksouvan/features/register/data/model/patient_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';

@@ -1,5 +1,6 @@
 import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
+import 'package:eksouvan/features/daily-patient/presentation/cubit/daily_patient_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
 import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
@@ -9,6 +10,7 @@ import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/daily-patient/presentation/pages/daily_patient_page.dart';
 import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
@@ -29,6 +31,7 @@ class AppRoute {
   static const String successRoute = "/success";
   static const String dailyDiagnoseRoute = "/dialyDiagnose";
   static const String dialyDiagnoseDetailRoute = "/dialyDiagnoseDetail";
+  static const String dialyPatient = "/dialyPatient";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -86,6 +89,12 @@ class AppRoute {
             create: (context) => getIt<DiagnoseCubit>()
               ..getCurrentUser()
               ..getPatientById(id: patientId),
+          )
+        ]);
+      case dialyPatient:
+        return _materialRoute(const DailyPatientPage(), providers: [
+          BlocProvider<DailyPatientCubit>(
+            create: (context) => getIt<DailyPatientCubit>()..getDailyPatient(),
           )
         ]);
       default:
