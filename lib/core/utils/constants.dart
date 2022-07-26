@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 enum DataStatus { initial, loading, success, failure }
@@ -36,4 +37,8 @@ class ColectionName {
   static const String users = "users";
   static const String patient = "patients";
   static const String diagnose = "diagnoses";
+}
+
+class DateFormatPattern {
+  static DateFormat kShortDateFormat = DateFormat('yyyy-MM-dd');
 }

@@ -86,7 +86,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
       var fromConvert = ConvertDatas.convertMapData(mapData: formData);
       DiagnoseModel diagnose = DiagnoseModel.fromJson(fromConvert);
       formValue.addAll({
-        FieldKeys.kLastUpdate: currentDate,
+        FieldKeys.kLastUpdate: currentDate.toString(),
         FieldKeys.kDiagnoses: FieldValue.arrayUnion([diagnose.toJson()]),
       });
       final result = await addDiagnoseUsecase(AddDiagnoseParams(
