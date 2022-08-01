@@ -3,6 +3,7 @@ import 'package:eksouvan/core/widgets/not_found.dart';
 import 'package:eksouvan/features/daily-patient/presentation/cubit/daily_patient_cubit.dart';
 import 'package:eksouvan/features/daily-patient/presentation/pages/daily_diagnose_patient_page.dart';
 import 'package:eksouvan/features/diagnose/presentation/pages/medicine_page..dart';
+import 'package:eksouvan/features/diagnose/presentation/pages/summary_page.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
 import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
@@ -38,6 +39,7 @@ class AppRoute {
       "/dailyDiagnosePatientPage";
   static const String symptomRoute = "/symptom";
   static const String medicineRoute = "medicine";
+  static const String summaryRoute = "summary";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -121,6 +123,12 @@ class AppRoute {
         return _materialRoute(const MedicinePage(), providers: [
           BlocProvider<DiagnoseCubit>(
             create: (context) => getIt<DiagnoseCubit>()..getAllMedicine(),
+          )
+        ]);
+      case summaryRoute:
+        return _materialRoute(const SummaryPage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>(),
           )
         ]);
       default:

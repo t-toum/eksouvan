@@ -30,8 +30,8 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
   String? currentUserId;
 
   List<DropdwonItems> genderList = [
-    DropdwonItems(id: 1, name: 'Meal'),
-    DropdwonItems(id: 2, name: "Female")
+    DropdwonItems(id: 1, name: LocaleKeys.kMale.tr()),
+    DropdwonItems(id: 2, name: LocaleKeys.kFemale.tr())
   ];
 
   Future<void> getCurrentUser() async {

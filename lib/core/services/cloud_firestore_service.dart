@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
@@ -65,14 +66,12 @@ class CloudFireStoreService {
     }
   }
 
-  Future<String> addDiagnose(
-      {required Map<String, dynamic> data, required String patientId}) async {
+  Future<String> addDiagnose({required DiagnoseModel data}) async {
     try {
-      await firebaseFirestore
-          .collection(ColectionName.patient)
-          .doc(patientId)
-          .update(data);
-      return patientId;
+      final response = await firebaseFirestore
+          .collection(ColectionName.diagnose)
+          .add(data.toJson());
+      return response.id;
     } catch (error) {
       throw error.toString();
     }

@@ -1,17 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/entities/medicine.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
-import 'package:eksouvan/core/usecases/success_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
-import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/enum.dart';
-import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/data/model/deases_model.dart';
-import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
 import 'package:eksouvan/features/diagnose/domain/useases/add_deases_usecase.dart';
 import 'package:eksouvan/features/diagnose/domain/useases/get_all_deases_usecase.dart';
@@ -26,7 +21,6 @@ import '../../../../core/utils/dropdown_item.dart';
 import '../../../histories/domain/usecases/get_all_patient_usecase.dart';
 import '../../../histories/domain/usecases/get_patient_usecase.dart';
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
-import '../../../register/domain/entity/patient.dart';
 import '../../domain/useases/add_diagnose_usecase.dart';
 import '../../domain/useases/add_new_medicine_usecase.dart';
 import '../../domain/useases/get_all_medicines_usecase.dart';
@@ -66,9 +60,12 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
 
   String? currentUserId;
   List<DropdwonItems> genderList = [
-    DropdwonItems(id: 1, name: 'Meal'),
-    DropdwonItems(id: 2, name: "Female")
+    DropdwonItems(id: 1, name: LocaleKeys.kMale.tr()),
+    DropdwonItems(id: 2, name: LocaleKeys.kFemale.tr())
   ];
+
+  //FormValue
+
   Future<void> getAllPatient() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
     final results = await getAllPatientUsecase(NoParams());
@@ -111,7 +108,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
     });
   }
 
-  Future<void> addPatientDiagnose({Patient? patient}) async {
+  Future<void> addPatientDiagnose() async {
     // if (formKey.currentState!.saveAndValidate()) {
     //   emit(state.copyWith(dataStatus: DataStatus.loading));
     //   Map<String, dynamic> formValue = {};
@@ -229,6 +226,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
             dataStatus: DataStatus.success,
             error: null,
           ));
+          AppNavigator.navigateTo(AppRoute.summaryRoute);
         } else {
           emit(state.copyWith(
             dataStatus: DataStatus.failure,

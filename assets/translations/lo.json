@@ -54,5 +54,6 @@
     "kWarnningSelectDeases": "ກະລຸນາເລືອກຢ່າງນ້ອຍຫນຶ່ງລາຍການ",
     "kMedicine":"ລາຍການຢາ",
     "kWarnningSelectMedicine": "ກະລຸນາເລືອກລາຍການຢາ",
-    "kwarning":"ຄຳເຕືອນ"
+    "kwarning":"ຄຳເຕືອນ",
+    "kSummary":"ສະຫລຸບລວມ"
 }

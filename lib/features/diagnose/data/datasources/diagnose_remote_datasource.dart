@@ -1,13 +1,13 @@
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/services/cloud_firestore_service.dart';
 import 'package:eksouvan/features/diagnose/data/model/deases_model.dart';
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exceptions.dart';
 
 abstract class DiagnoseRemoteDatasource {
-  Future<String> addDiagnose(
-      {required Map<String, dynamic> data, required String patientId});
+  Future<String> addDiagnose({required DiagnoseModel data});
   Future<List<DeasesModel>> getAllDeases();
   Future<String> addDeases({required DeasesModel deasesModel});
   Future<List<MedicineModel>> getAllMedicine();
@@ -21,11 +21,9 @@ class DiagnoseRemoteDatasourceImpl extends DiagnoseRemoteDatasource {
   DiagnoseRemoteDatasourceImpl(this.cloudFireStoreService);
 
   @override
-  Future<String> addDiagnose(
-      {required Map<String, dynamic> data, required String patientId}) async {
+  Future<String> addDiagnose({required DiagnoseModel data}) async {
     try {
-      final result = await cloudFireStoreService.addDiagnose(
-          data: data, patientId: patientId);
+      final result = await cloudFireStoreService.addDiagnose(data: data);
       return result;
     } catch (error) {
       throw ServerException(msg: error.toString());
@@ -60,9 +58,9 @@ class DiagnoseRemoteDatasourceImpl extends DiagnoseRemoteDatasource {
       throw ServerException(msg: error.toString());
     }
   }
-  
+
   @override
-  Future<String> addNewMedicine({required MedicineModel data}) async{
+  Future<String> addNewMedicine({required MedicineModel data}) async {
     try {
       return await cloudFireStoreService.addNewMedicine(model: data);
     } catch (error) {

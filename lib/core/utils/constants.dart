@@ -25,6 +25,7 @@ class DatabaseInfo {
 class AppImages {
   static const String brannerImg = "assets/images/branner.png";
   static const String branner_outline = "assets/images/branner_outline21.png";
+  static const String default_avatar = "assets/images/default_avatar.png";
 }
 
 //SharedPreferences

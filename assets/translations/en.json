@@ -54,5 +54,6 @@
     "kWarnningSelectDeases": "Please select  at lease one deases",
     "kMedicine":"Medicine",
     "kWarnningSelectMedicine": "Please select  at lease one medicine",
-    "kwarning":"Warning"
+    "kwarning":"Warning",
+    "kSummary":"Summary"
 }
