@@ -6,3 +6,9 @@ enum MenuItemType {
   dailyPatient,
   report
 }
+
+enum DiagnosePage{
+  patient,
+  deases,
+  medicine
+}

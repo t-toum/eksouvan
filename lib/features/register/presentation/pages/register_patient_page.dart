@@ -41,6 +41,7 @@ class RegisterPatientPage extends StatelessWidget {
                 children: [
                   CustomTextField(
                     name: FieldKeys.kFirstname,
+                    isRequired: true,
                     labelText: LocaleKeys.kNameLabel.tr(),
                     hintText: LocaleKeys.kPatientName.tr(),
                     validator: FormBuilderValidators.compose([
@@ -54,6 +55,7 @@ class RegisterPatientPage extends StatelessWidget {
                   ),
                   CustomTextField(
                     name: FieldKeys.kLastname,
+                    isRequired: true,
                     labelText: LocaleKeys.kLastName.tr(),
                     hintText: LocaleKeys.kPatientLastName.tr(),
                     validator: FormBuilderValidators.compose([
@@ -68,6 +70,7 @@ class RegisterPatientPage extends StatelessWidget {
                   CustomDropdown(
                     name: FieldKeys.kGender,
                     items: cubit.genderList,
+                    isRequired: true,
                     labelText: LocaleKeys.kGender.tr(),
                     hintText: LocaleKeys.kSelectGender.tr(),
                     validator: FormBuilderValidators.compose([
@@ -81,6 +84,7 @@ class RegisterPatientPage extends StatelessWidget {
                   ),
                   CustomDatePicker(
                     name: FieldKeys.kBirthDay,
+                    isRequired: true,
                     title: LocaleKeys.kDateOfBirth.tr(),
                     hintText: LocaleKeys.kPatientBirtDay.tr(),
                     validator: FormBuilderValidators.compose([
@@ -120,6 +124,7 @@ class RegisterPatientPage extends StatelessWidget {
                   ),
                   CustomTextField(
                     name: FieldKeys.kTel,
+                    isRequired: true,
                     labelText: LocaleKeys.kPhone.tr(),
                     hintText: LocaleKeys.kPhoneNumber.tr(),
                     validator: FormBuilderValidators.compose([
@@ -132,6 +137,7 @@ class RegisterPatientPage extends StatelessWidget {
                     height: 15,
                   ),
                   CustomTextField(
+                    isRequired: true,
                     name: FieldKeys.kAddress,
                     labelText: LocaleKeys.kCurrentAddress.tr(),
                     hintText: LocaleKeys.kCurrentAddress.tr(),

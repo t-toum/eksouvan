@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/enum.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/form_builder_validator.dart';
 import 'package:eksouvan/core/utils/router.dart';
@@ -27,13 +28,16 @@ class SymptomPage extends StatelessWidget {
     return AppTemplate(
       title: LocaleKeys.KSymptom.tr(),
       actions: [
-        TextButton(
-          onPressed: () {
-            AppNavigator.navigateTo(AppRoute.medicineRoute);
-          },
-          child: Text(
-            LocaleKeys.kNext.tr(),
-            style: const TextStyle(fontSize: 20, color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+            onPressed: () {
+              cubit.nextPage(currenPage: DiagnosePage.deases);
+            },
+            child: Text(
+              LocaleKeys.kNext.tr(),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ),
         ),
       ],
@@ -65,7 +69,8 @@ class SymptomPage extends StatelessWidget {
                       if (val == true) {
                         cubit.listDeases.add(state.listDeases?[index]);
                       } else {
-                        cubit.listDeases.removeAt(index);
+                        cubit.listDeases.removeWhere((el) =>
+                            el?.docId == state.listDeases?[index].docId);
                       }
                     },
                   );
@@ -74,11 +79,11 @@ class SymptomPage extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              (state.error != null)
+              (state.dataStatus == DataStatus.failure && state.error != null)
                   ? Row(
                       children: [
                         Text(
-                          "Warning: ${state.error}",
+                          "${LocaleKeys.kwarning.tr()}: ${state.error}",
                           style:
                               const TextStyle(fontSize: 16, color: Colors.red),
                         ),

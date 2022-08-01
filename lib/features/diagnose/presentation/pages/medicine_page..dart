@@ -9,6 +9,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../core/utils/app_navigator.dart';
+import '../../../../core/utils/enum.dart';
 import '../../../../core/utils/field_keys.dart';
 import '../../../../core/widgets/custom_checkbox.dart';
 import '../../../../core/widgets/custom_textfield.dart';
@@ -26,11 +27,16 @@ class MedicinePage extends StatelessWidget {
     return AppTemplate(
       title: LocaleKeys.kMedicine.tr(),
       actions: [
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            LocaleKeys.kNext.tr(),
-            style: const TextStyle(fontSize: 20, color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+            onPressed: () {
+              cubit.nextPage(currenPage: DiagnosePage.medicine);
+            },
+            child: Text(
+              LocaleKeys.kNext.tr(),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
           ),
         ),
       ],
@@ -60,18 +66,25 @@ class MedicinePage extends StatelessWidget {
                     ),
                     subtitle:
                         Text(state.listMedicine?[index].description ?? ''),
-                    onChanged: (val) {},
+                    onChanged: (val) {
+                      if (val == true) {
+                        cubit.listMedicine.add(state.listMedicine?[index]);
+                      } else {
+                        cubit.listMedicine.removeWhere((el) =>
+                            el?.docId == state.listMedicine?[index].docId);
+                      }
+                    },
                   );
                 }),
               ),
               const SizedBox(
                 height: 15,
               ),
-              (state.error != null)
+              (state.dataStatus == DataStatus.failure && state.error != null)
                   ? Row(
                       children: [
                         Text(
-                          "Warning: ${state.error}",
+                          "${LocaleKeys.kwarning.tr()}: ${state.error}",
                           style:
                               const TextStyle(fontSize: 16, color: Colors.red),
                         ),

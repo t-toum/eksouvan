@@ -51,6 +51,8 @@
     "kCancel": "Cancel",
     "kSave": "Save",
     "kDeases": "Deases",
-    "kWarnningSelectDeases": "Please select the dease at lease one deases",
-    "kMedicine":"Medicine"
+    "kWarnningSelectDeases": "Please select  at lease one deases",
+    "kMedicine":"Medicine",
+    "kWarnningSelectMedicine": "Please select  at lease one medicine",
+    "kwarning":"Warning"
 }

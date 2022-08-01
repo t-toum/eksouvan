@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/entities/medicine.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/usecases/success_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/core/utils/enum.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/data/model/deases_model.dart';
@@ -53,13 +55,14 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
       this.addNewMedicineUsecase)
       : super(const DiagnoseState());
   TextEditingController searchController = TextEditingController();
-  final formKey = GlobalKey<FormBuilderState>();
+  final patientKey = GlobalKey<FormBuilderState>();
   final desaesKey = GlobalKey<FormBuilderState>();
   final medicineKey = GlobalKey<FormBuilderState>();
   final DateTime currentDate = DateTime.now();
 
   //Deases
   List<Deases?> listDeases = [];
+  List<Medicine?> listMedicine = [];
 
   String? currentUserId;
   List<DropdwonItems> genderList = [
@@ -109,43 +112,43 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   }
 
   Future<void> addPatientDiagnose({Patient? patient}) async {
-    if (formKey.currentState!.saveAndValidate()) {
-      emit(state.copyWith(dataStatus: DataStatus.loading));
-      Map<String, dynamic> formValue = {};
-      final String diagnoseId = uuid.v4();
-      Map<String, dynamic> formData = {};
-      formData.addAll({
-        FieldKeys.kDiagnoseDate: currentDate,
-        FieldKeys.kUserId: currentUserId,
-        FieldKeys.kPatientId: patient?.patientId,
-        FieldKeys.kDiagnoseId: diagnoseId,
-        ...formKey.currentState?.value ?? {}
-      });
-      var fromConvert = ConvertDatas.convertMapData(mapData: formData);
-      DiagnoseModel diagnose = DiagnoseModel.fromJson(fromConvert);
-      formValue.addAll({
-        FieldKeys.kLastUpdate: currentDate.toString(),
-        FieldKeys.kDiagnoses: FieldValue.arrayUnion([diagnose.toJson()]),
-      });
-      final result = await addDiagnoseUsecase(AddDiagnoseParams(
-          patientId: patient?.patientId ?? '', data: formValue));
-      result.fold((error) {
-        emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
-      }, (success) {
-        emit(state.copyWith(dataStatus: DataStatus.success));
-        AppNavigator.navigateTo(AppRoute.successRoute,
-            params: SuccessParams(
-                title: LocaleKeys.kRegisterToDiagnose.tr(),
-                buttonTitle: LocaleKeys.kNextToDiagnose.tr(),
-                onPressed: () {
-                  AppNavigator.navigateTo(
-                      AppRoute.dailyDiagnosePatientPageRoute,
-                      params: success);
-                }));
-      });
-    } else {
-      print("validate form");
-    }
+    // if (formKey.currentState!.saveAndValidate()) {
+    //   emit(state.copyWith(dataStatus: DataStatus.loading));
+    //   Map<String, dynamic> formValue = {};
+    //   final String diagnoseId = uuid.v4();
+    //   Map<String, dynamic> formData = {};
+    //   formData.addAll({
+    //     FieldKeys.kDiagnoseDate: currentDate,
+    //     FieldKeys.kUserId: currentUserId,
+    //     FieldKeys.kPatientId: patient?.patientId,
+    //     FieldKeys.kDiagnoseId: diagnoseId,
+    //     ...formKey.currentState?.value ?? {}
+    //   });
+    //   var fromConvert = ConvertDatas.convertMapData(mapData: formData);
+    //   DiagnoseModel diagnose = DiagnoseModel.fromJson(fromConvert);
+    //   formValue.addAll({
+    //     FieldKeys.kLastUpdate: currentDate.toString(),
+    //     FieldKeys.kDiagnoses: FieldValue.arrayUnion([diagnose.toJson()]),
+    //   });
+    //   final result = await addDiagnoseUsecase(AddDiagnoseParams(
+    //       patientId: patient?.patientId ?? '', data: formValue));
+    //   result.fold((error) {
+    //     emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
+    //   }, (success) {
+    //     emit(state.copyWith(dataStatus: DataStatus.success));
+    //     AppNavigator.navigateTo(AppRoute.successRoute,
+    //         params: SuccessParams(
+    //             title: LocaleKeys.kRegisterToDiagnose.tr(),
+    //             buttonTitle: LocaleKeys.kNextToDiagnose.tr(),
+    //             onPressed: () {
+    //               AppNavigator.navigateTo(
+    //                   AppRoute.dailyDiagnosePatientPageRoute,
+    //                   params: success);
+    //             }));
+    //   });
+    // } else {
+    //   print("validate form");
+    // }
   }
 
   Future<void> saveDeases() async {
@@ -194,6 +197,48 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
         emit(state.copyWith(dataStatus: DataStatus.success));
         AppNavigator.goBack();
       });
+    }
+  }
+
+  void nextPage({required DiagnosePage currenPage}) {
+    switch (currenPage) {
+      case DiagnosePage.patient:
+        if (patientKey.currentState!.saveAndValidate()) {
+          AppNavigator.navigateTo(AppRoute.symptomRoute);
+        } else {
+          print('Patient validate invalid');
+        }
+        break;
+      case DiagnosePage.deases:
+        if (listDeases.isNotEmpty) {
+          emit(state.copyWith(
+            dataStatus: DataStatus.success,
+            error: null,
+          ));
+          AppNavigator.navigateTo(AppRoute.medicineRoute);
+        } else {
+          emit(state.copyWith(
+            dataStatus: DataStatus.failure,
+            error: LocaleKeys.kWarnningSelectDeases.tr(),
+          ));
+        }
+        break;
+      case DiagnosePage.medicine:
+        if (listMedicine.isNotEmpty) {
+          emit(state.copyWith(
+            dataStatus: DataStatus.success,
+            error: null,
+          ));
+        } else {
+          emit(state.copyWith(
+            dataStatus: DataStatus.failure,
+            error: LocaleKeys.kWarnningSelectMedicine.tr(),
+          ));
+        }
+        break;
+
+      default:
+        print("Page not found");
     }
   }
 }

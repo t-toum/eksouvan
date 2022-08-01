@@ -12,6 +12,7 @@ class CustomDropdown<T> extends StatelessWidget {
   final String? labelText;
   final bool enabled;
   final String? hintText;
+  final bool isRequired;
   const CustomDropdown({
     Key? key,
     required this.items,
@@ -21,6 +22,7 @@ class CustomDropdown<T> extends StatelessWidget {
     this.labelText,
     this.enabled = true,
     this.hintText,
+    this.isRequired = false,
   }) : super(key: key);
 
   @override
@@ -32,14 +34,25 @@ class CustomDropdown<T> extends StatelessWidget {
         children: [
           (labelText == null)
               ? Container()
-              : Text(
-                  labelText!.toUpperCase(),
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20,
-                    fontFamily: 'NotoSansLao',
-                    fontWeight: FontWeight.bold,
-                  ),
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      labelText!.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 20,
+                        fontFamily: 'NotoSansLao',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    (isRequired == true)
+                        ? const Text(
+                            ' *',
+                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          )
+                        : Container()
+                  ],
                 ),
           const SizedBox(
             height: 10,

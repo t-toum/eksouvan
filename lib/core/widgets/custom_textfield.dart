@@ -15,20 +15,22 @@ class CustomTextField extends StatelessWidget {
   final bool readOnly;
   final String name;
   final TextInputType? textInputType;
-  const CustomTextField(
-      {Key? key,
-      this.controller,
-      this.labelText,
-      this.hintText,
-      this.obscureText = false,
-      this.validator,
-      this.onChanged,
-      this.enabled = true,
-      this.initialValue,
-      this.readOnly = false,
-      required this.name,
-      this.textInputType})
-      : super(key: key);
+  final bool isRequired;
+  const CustomTextField({
+    Key? key,
+    this.controller,
+    this.labelText,
+    this.hintText,
+    this.obscureText = false,
+    this.validator,
+    this.onChanged,
+    this.enabled = true,
+    this.initialValue,
+    this.readOnly = false,
+    required this.name,
+    this.textInputType,
+    this.isRequired = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +41,24 @@ class CustomTextField extends StatelessWidget {
         children: [
           (labelText == null)
               ? Container()
-              : Text(
-                  labelText!.toUpperCase(),
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20,
-                    fontFamily: 'NotoSansLao',
-                    fontWeight: FontWeight.bold,
-                  ),
+              : Row(
+                  children: [
+                    Text(
+                      labelText!.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 20,
+                        fontFamily: 'NotoSansLao',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    (isRequired == true)
+                        ? const Text(
+                            ' *',
+                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          )
+                        : Container(),
+                  ],
                 ),
           const SizedBox(
             height: 10,
@@ -85,7 +97,6 @@ class CustomTextField extends StatelessWidget {
             initialValue: initialValue,
             enabled: enabled,
             readOnly: readOnly,
-            
           )
         ],
       ),

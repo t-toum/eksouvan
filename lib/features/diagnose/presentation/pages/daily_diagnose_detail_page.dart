@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../core/utils/convert_datas.dart';
+import '../../../../core/utils/enum.dart';
 import '../../../../core/utils/form_builder_validator.dart';
 import '../../../../core/widgets/custom_textfield_area.dart';
 
@@ -22,7 +23,6 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
   const DailyDiagnoseDetailPage({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<DiagnoseCubit>();
@@ -36,20 +36,22 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
         return AppTemplate(
           title: LocaleKeys.kDiagnoseDetail.tr(),
           actions: [
-            TextButton(
-              onPressed: () {
-                cubit.formKey.currentState?.save();
-                AppNavigator.navigateTo(AppRoute.symptomRoute);
-              },
-              child: Text(
-                LocaleKeys.kNext.tr(),
-                style: const TextStyle(fontSize: 20, color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                onPressed: () {
+                  cubit.nextPage(currenPage: DiagnosePage.patient);
+                },
+                child: Text(
+                  LocaleKeys.kNext.tr(),
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                ),
               ),
             ),
           ],
           body: SingleChildScrollView(
             child: FormBuilder(
-              key: cubit.formKey,
+              key: cubit.patientKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -106,6 +108,17 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 20, top: 20),
                     child: Text(LocaleKeys.kClinicalData.tr()),
                   ),
+                  //Height
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomTextField(
+                    name: FieldKeys.kHeight,
+                    labelText: LocaleKeys.KHeight.tr(),
+                    hintText: LocaleKeys.kCm.tr(),
+                    initialValue: state.patient?.height.toString(),
+                    enabled: false,
+                  ),
                   //Wieght
                   const SizedBox(
                     height: 15,
@@ -145,6 +158,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     name: FieldKeys.kAllergic,
                     labelText: LocaleKeys.kAllergic.tr(),
                     hintText: LocaleKeys.kAllergic.tr(),
+                    isRequired: true,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
                         errorText: LocaleKeys.kRequiredField.tr(),
@@ -159,27 +173,10 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     name: FieldKeys.kDescription,
                     labelText: LocaleKeys.kDescription.tr(),
                     hintText: LocaleKeys.kDescriptionHint.tr(),
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(
-                        errorText: LocaleKeys.kRequiredField.tr(),
-                      )
-                    ]),
                   ),
-
-                  //Register Button
                   const SizedBox(
-                    height: 15,
+                    height: 20,
                   ),
-                  // Center(
-                  //   child: CusttomButton(
-                  //     title: LocaleKeys.kNewRegisterLabel.tr(),
-                  //     onPressed: () {
-                  //       context
-                  //           .read<DiagnoseCubit>()
-                  //           .addPatientDiagnose(patient: state.patient);
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
             ),

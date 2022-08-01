@@ -8,14 +8,16 @@ class CustomDatePicker extends StatelessWidget {
   final String title;
   final String name;
   final String? hintText;
+  final bool isRequired;
   FormFieldValidator<DateTime>? validator;
-  CustomDatePicker(
-      {Key? key,
-      required this.title,
-      this.validator,
-      required this.name,
-      this.hintText})
-      : super(key: key);
+  CustomDatePicker({
+    Key? key,
+    required this.title,
+    this.validator,
+    required this.name,
+    this.hintText,
+    this.isRequired = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +26,25 @@ class CustomDatePicker extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            tr(title),
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 20,
-              fontFamily: 'NotoSansLao',
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                tr(title),
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 20,
+                  fontFamily: 'NotoSansLao',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              (isRequired == true)
+                  ? const Text(
+                      '*',
+                      style: TextStyle(fontSize: 20, color: Colors.red),
+                    )
+                  : Container()
+            ],
           ),
           const SizedBox(
             height: 10,
