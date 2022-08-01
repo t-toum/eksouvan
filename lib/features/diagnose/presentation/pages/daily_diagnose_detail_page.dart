@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
+import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
 import 'package:eksouvan/core/widgets/costom_dropdown.dart';
 import 'package:eksouvan/core/widgets/custom_textfield.dart';
@@ -14,7 +16,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import '../../../../core/utils/convert_datas.dart';
 import '../../../../core/utils/form_builder_validator.dart';
-import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_textfield_area.dart';
 
 class DailyDiagnoseDetailPage extends StatelessWidget {
@@ -34,6 +35,18 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
         }
         return AppTemplate(
           title: LocaleKeys.kDiagnoseDetail.tr(),
+          actions: [
+            TextButton(
+              onPressed: () {
+                cubit.formKey.currentState?.save();
+                AppNavigator.navigateTo(AppRoute.symptomRoute);
+              },
+              child: Text(
+                LocaleKeys.kNext.tr(),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ),
+          ],
           body: SingleChildScrollView(
             child: FormBuilder(
               key: cubit.formKey,
@@ -42,13 +55,8 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      '${LocaleKeys.kDate.tr()} : ${ConvertDatas.converDateFormat(cubit.currentDate)}',
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
+                    child: Text(LocaleKeys.kGeneral.tr()),
                   ),
-
                   //Firstname
                   const SizedBox(
                     height: 15,
@@ -88,10 +96,15 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                   ),
                   CustomTextField(
                     name: FieldKeys.kBirthDay,
-                    labelText: LocaleKeys.kDateOfBirth..tr(),
+                    labelText: LocaleKeys.kDateOfBirth.tr(),
                     initialValue:
                         ConvertDatas.converDateFormat(state.patient?.birthday),
                     enabled: false,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 20),
+                    child: Text(LocaleKeys.kClinicalData.tr()),
                   ),
                   //Wieght
                   const SizedBox(
@@ -157,16 +170,16 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  Center(
-                    child: CusttomButton(
-                      title: LocaleKeys.kNewRegisterLabel.tr(),
-                      onPressed: () {
-                        context
-                            .read<DiagnoseCubit>()
-                            .addPatientDiagnose(patient: state.patient);
-                      },
-                    ),
-                  ),
+                  // Center(
+                  //   child: CusttomButton(
+                  //     title: LocaleKeys.kNewRegisterLabel.tr(),
+                  //     onPressed: () {
+                  //       context
+                  //           .read<DiagnoseCubit>()
+                  //           .addPatientDiagnose(patient: state.patient);
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
             ),

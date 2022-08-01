@@ -22,9 +22,9 @@ class HomePage extends StatelessWidget {
           );
         }
         return Scaffold(
-          appBar: WidgetBuilders.customAppbar(onPressed: () {
-            context.read<HomeCubit>().getLogOut();
-          }),
+          appBar: WidgetBuilders.customAppbar(
+              // context.read<HomeCubit>().getLogOut();
+              ),
           body: Container(
             padding: const EdgeInsets.all(30),
             child: GridView.count(

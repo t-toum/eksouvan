@@ -48,7 +48,7 @@ class HistoryPage extends StatelessWidget {
                           firstname: state.listPatient[index].firstname,
                           lastname: state.listPatient[index].lastname,
                           address: state.listPatient[index].address,
-                          listDeases: [],
+                          // listDeases: [],
                           onTap: () {
                             AppNavigator.navigateTo(AppRoute.patientDetailRoute,
                                 params: state.listPatient[index].patientId);

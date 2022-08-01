@@ -1,6 +1,4 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
-
-import 'package:eksouvan/core/entities/deases.dart';
 import 'package:flutter/material.dart';
 
 class ListItems extends StatelessWidget {
@@ -9,7 +7,7 @@ class ListItems extends StatelessWidget {
   final String? lastname;
   final String? address;
   final GestureTapCallback? onTap;
-  final List<Deases>? listDeases;
+  // final List<Deases>? listDeases;
   const ListItems({
     Key? key,
     this.leading,
@@ -17,7 +15,7 @@ class ListItems extends StatelessWidget {
     this.lastname,
     this.address,
     this.onTap,
-    this.listDeases,
+    // this.listDeases,
   }) : super(key: key);
 
   @override
@@ -41,9 +39,9 @@ class ListItems extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Expanded(
-                child: Text(listDeases.toString()),
-              ),
+              // Expanded(
+              //   child: Text(listDeases.toString()),
+              // ),
             ],
           ),
           onTap: onTap,

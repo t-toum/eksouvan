@@ -1,13 +1,13 @@
-import 'package:eksouvan/core/entities/deases.dart';
+import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'deases_model.g.dart';
-
 @JsonSerializable()
 class DeasesModel extends Deases {
   const DeasesModel({
-    String? deasesId,
-    String? deasesname,
-  }) : super(deasesId: deasesId, deasesName: deasesname);
+    String? docId,
+    String? deases,
+    String? description,
+  }) : super(docId: docId, deases: deases, description: description);
 
   factory DeasesModel.fromJson(Map<String, dynamic> json) =>
       _$DeasesModelFromJson(json);

@@ -2,6 +2,7 @@ import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
 import 'package:eksouvan/features/daily-patient/presentation/cubit/daily_patient_cubit.dart';
 import 'package:eksouvan/features/daily-patient/presentation/pages/daily_diagnose_patient_page.dart';
+import 'package:eksouvan/features/diagnose/presentation/pages/medicine_page..dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
 import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
@@ -15,6 +16,7 @@ import '../../features/daily-patient/presentation/pages/daily_patient_page.dart'
 import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_page.dart';
+import '../../features/diagnose/presentation/pages/symptom_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register/presentation/pages/register_patient_page.dart';
@@ -34,6 +36,8 @@ class AppRoute {
   static const String dialyPatient = "/dialyPatient";
   static const String dailyDiagnosePatientPageRoute =
       "/dailyDiagnosePatientPage";
+  static const String symptomRoute = "/symptom";
+  static const String medicineRoute = "medicine";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -105,6 +109,18 @@ class AppRoute {
           BlocProvider<DailyPatientCubit>(
             create: (context) =>
                 getIt<DailyPatientCubit>()..getPatient(patientId: patientId),
+          )
+        ]);
+      case symptomRoute:
+        return _materialRoute(const SymptomPage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>()..getAllDease(),
+          )
+        ]);
+      case medicineRoute:
+        return _materialRoute(const MedicinePage(), providers: [
+          BlocProvider<DiagnoseCubit>(
+            create: (context) => getIt<DiagnoseCubit>()..getAllMedicine(),
           )
         ]);
       default:

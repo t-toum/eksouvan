@@ -23,5 +23,10 @@ class FieldKeys {
   static const String kDiagnoseId = "diagnoseId";
   static const String kDiagnoses = "diagnoses";
 
+  //Deases
+  static const String kDeases = "deases";
+  //Medicine
+  static const String kMedicine = "medicine";
+
 
 }

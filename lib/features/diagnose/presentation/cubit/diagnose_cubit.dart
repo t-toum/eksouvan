@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/usecases/success_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
@@ -7,7 +8,11 @@ import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
+import 'package:eksouvan/features/diagnose/data/model/deases_model.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
+import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
+import 'package:eksouvan/features/diagnose/domain/useases/add_deases_usecase.dart';
+import 'package:eksouvan/features/diagnose/domain/useases/get_all_deases_usecase.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +26,8 @@ import '../../../histories/domain/usecases/get_patient_usecase.dart';
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
 import '../../../register/domain/entity/patient.dart';
 import '../../domain/useases/add_diagnose_usecase.dart';
+import '../../domain/useases/add_new_medicine_usecase.dart';
+import '../../domain/useases/get_all_medicines_usecase.dart';
 import 'diagnose_state.dart';
 
 @injectable
@@ -29,13 +36,30 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   final AddDiagnoseUsecase addDiagnoseUsecase;
   final GetCUrrentUserUsecase getCUrrentUserUsecase;
   final GetPatientUsecase getPatientUsecase;
+  final GetAllDeaseUsecase getAllDeaseUsecase;
+  final AddDeasesUsecase addDeasesUsecase;
+  final GetAllMedicineUsecase getAllMedicineUsecase;
+  final AddNewMedicineUsecase addNewMedicineUsecase;
   final Uuid uuid;
-  DiagnoseCubit(this.getAllPatientUsecase, this.addDiagnoseUsecase,
-      this.getCUrrentUserUsecase, this.getPatientUsecase, this.uuid)
+  DiagnoseCubit(
+      this.getAllPatientUsecase,
+      this.addDiagnoseUsecase,
+      this.getCUrrentUserUsecase,
+      this.getPatientUsecase,
+      this.uuid,
+      this.getAllDeaseUsecase,
+      this.addDeasesUsecase,
+      this.getAllMedicineUsecase,
+      this.addNewMedicineUsecase)
       : super(const DiagnoseState());
   TextEditingController searchController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
+  final desaesKey = GlobalKey<FormBuilderState>();
+  final medicineKey = GlobalKey<FormBuilderState>();
   final DateTime currentDate = DateTime.now();
+
+  //Deases
+  List<Deases?> listDeases = [];
 
   String? currentUserId;
   List<DropdwonItems> genderList = [
@@ -70,6 +94,17 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
             state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
         (patient) {
       emit(state.copyWith(dataStatus: DataStatus.success, patient: patient));
+    });
+  }
+
+  Future<void> getAllDease() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final results = await getAllDeaseUsecase(NoParams());
+    results.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (deases) {
+      emit(state.copyWith(dataStatus: DataStatus.success, listDeases: deases));
     });
   }
 
@@ -110,6 +145,55 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
       });
     } else {
       print("validate form");
+    }
+  }
+
+  Future<void> saveDeases() async {
+    if (desaesKey.currentState!.saveAndValidate()) {
+      emit(state.copyWith(dataStatus: DataStatus.loading));
+      Map<String, dynamic> formValue =
+          desaesKey.currentState?.value as Map<String, dynamic>;
+      DeasesModel deasesModel = DeasesModel.fromJson(formValue);
+      final result =
+          await addDeasesUsecase(AddDeaseParams(deasesModel: deasesModel));
+      result.fold(
+          (l) => emit(
+              state.copyWith(dataStatus: DataStatus.failure, error: l.msg)),
+          (r) {
+        emit(state.copyWith(dataStatus: DataStatus.success));
+        AppNavigator.goBack();
+      });
+    } else {
+      print('Not validate');
+    }
+  }
+
+  Future<void> getAllMedicine() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final results = await getAllMedicineUsecase(NoParams());
+    results.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (listData) {
+      emit(state.copyWith(
+          dataStatus: DataStatus.success, listMedicine: listData));
+    });
+  }
+
+  Future<void> addNewMedicine() async {
+    if (medicineKey.currentState!.saveAndValidate()) {
+      emit(state.copyWith(dataStatus: DataStatus.loading));
+      Map<String, dynamic> formValue =
+          medicineKey.currentState?.value as Map<String, dynamic>;
+      MedicineModel data = MedicineModel.fromJson(formValue);
+      final result = await addNewMedicineUsecase(AddNewMedicineParams(data));
+      result.fold(
+          (l) => emit(
+              state.copyWith(dataStatus: DataStatus.failure, error: l.msg)),
+          (r) {
+        emit(state.copyWith(dataStatus: DataStatus.success));
+        AppNavigator.goBack();
+      });
     }
   }
 }

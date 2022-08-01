@@ -1,4 +1,3 @@
-import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:equatable/equatable.dart';
 
 class Patient extends Equatable {
@@ -15,7 +14,6 @@ class Patient extends Equatable {
   final double? height;
   final double? weight;
   final String? congenitalDeases;
-  final List<DiagnoseModel>? diagnoses;
 
   const Patient({
     this.patientId,
@@ -31,7 +29,6 @@ class Patient extends Equatable {
     this.height,
     this.weight,
     this.congenitalDeases,
-    this.diagnoses,
   });
 
   @override
@@ -48,6 +45,5 @@ class Patient extends Equatable {
         height,
         weight,
         congenitalDeases,
-        diagnoses,
       ];
 }

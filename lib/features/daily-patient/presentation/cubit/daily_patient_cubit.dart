@@ -19,18 +19,18 @@ class DailyPatientCubit extends Cubit<DailyPatientState> {
   Future<void> getDailyPatient() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
     final results = await getAllPatientUsecase(NoParams());
-    results.fold(
-        (error) => emit(
-            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
-        (res) {
-      List<Patient>? listPatient = res.where((patient) {
-        return DateFormatPattern.kShortDateFormat.format(patient.lastUpdate!) ==
-                DateFormatPattern.kShortDateFormat.format(DateTime.now()) &&
-            (patient.diagnoses != null && patient.diagnoses!.isNotEmpty);
-      }).toList();
-      emit(state.copyWith(
-          dataStatus: DataStatus.success, listPatient: listPatient));
-    });
+    // results.fold(
+    //     (error) => emit(
+    //         state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+    //     (res) {
+    //   List<Patient>? listPatient = res.where((patient) {
+    //     return DateFormatPattern.kShortDateFormat.format(patient.lastUpdate!) ==
+    //             DateFormatPattern.kShortDateFormat.format(DateTime.now()) &&
+    //         (patient.diagnoses != null && patient.diagnoses!.isNotEmpty);
+    //   }).toList();
+    //   emit(state.copyWith(
+    //       dataStatus: DataStatus.success, listPatient: listPatient));
+    // });
   }
 
   Future<void> getPatient({required String patientId}) async {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_navigator.dart';
 
 class WidgetBuilders {
-  static AppBar customAppbar({VoidCallback? onPressed}) {
+  static AppBar customAppbar({List<Widget>?actions}) {
     return AppBar(
       toolbarHeight: 100,
       centerTitle: true,
@@ -16,14 +16,7 @@ class WidgetBuilders {
           image: AssetImage(AppImages.branner_outline),
         ),
       ),
-      actions: [
-        (onPressed != null)
-            ? IconButton(
-                onPressed: onPressed,
-                icon: const Icon(Icons.logout, size: 30),
-              )
-            : Container(),
-      ],
+      actions: actions,
     );
   }
 
