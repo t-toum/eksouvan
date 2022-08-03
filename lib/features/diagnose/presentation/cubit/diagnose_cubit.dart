@@ -4,12 +4,16 @@ import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/enum.dart';
+import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/data/model/deases_model.dart';
+import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
 import 'package:eksouvan/features/diagnose/domain/useases/add_deases_usecase.dart';
 import 'package:eksouvan/features/diagnose/domain/useases/get_all_deases_usecase.dart';
+import 'package:eksouvan/features/register/data/model/patient_model.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +21,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../core/usecases/next_page_params.dart';
 import '../../../../core/utils/dropdown_item.dart';
 import '../../../histories/domain/usecases/get_all_patient_usecase.dart';
 import '../../../histories/domain/usecases/get_patient_usecase.dart';
@@ -65,6 +70,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   ];
 
   //FormValue
+  Map<String, dynamic> formValue = {};
 
   Future<void> getAllPatient() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
@@ -93,6 +99,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
         (error) => emit(
             state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
         (patient) {
+      formValue.addAll({...(patient as PatientModel).toJson()});
       emit(state.copyWith(dataStatus: DataStatus.success, patient: patient));
     });
   }
@@ -109,43 +116,23 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   }
 
   Future<void> addPatientDiagnose() async {
-    // if (formKey.currentState!.saveAndValidate()) {
-    //   emit(state.copyWith(dataStatus: DataStatus.loading));
-    //   Map<String, dynamic> formValue = {};
-    //   final String diagnoseId = uuid.v4();
-    //   Map<String, dynamic> formData = {};
-    //   formData.addAll({
-    //     FieldKeys.kDiagnoseDate: currentDate,
-    //     FieldKeys.kUserId: currentUserId,
-    //     FieldKeys.kPatientId: patient?.patientId,
-    //     FieldKeys.kDiagnoseId: diagnoseId,
-    //     ...formKey.currentState?.value ?? {}
-    //   });
-    //   var fromConvert = ConvertDatas.convertMapData(mapData: formData);
-    //   DiagnoseModel diagnose = DiagnoseModel.fromJson(fromConvert);
-    //   formValue.addAll({
-    //     FieldKeys.kLastUpdate: currentDate.toString(),
-    //     FieldKeys.kDiagnoses: FieldValue.arrayUnion([diagnose.toJson()]),
-    //   });
-    //   final result = await addDiagnoseUsecase(AddDiagnoseParams(
-    //       patientId: patient?.patientId ?? '', data: formValue));
-    //   result.fold((error) {
-    //     emit(state.copyWith(dataStatus: DataStatus.failure, error: error.msg));
-    //   }, (success) {
-    //     emit(state.copyWith(dataStatus: DataStatus.success));
-    //     AppNavigator.navigateTo(AppRoute.successRoute,
-    //         params: SuccessParams(
-    //             title: LocaleKeys.kRegisterToDiagnose.tr(),
-    //             buttonTitle: LocaleKeys.kNextToDiagnose.tr(),
-    //             onPressed: () {
-    //               AppNavigator.navigateTo(
-    //                   AppRoute.dailyDiagnosePatientPageRoute,
-    //                   params: success);
-    //             }));
-    //   });
-    // } else {
-    //   print("validate form");
-    // }
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    formValue[FieldKeys.kDiagnoseDate] = DateTime.now().toString();
+    var formData = ConvertDatas.convertMapData(mapData: formValue);
+    formData[FieldKeys.kDeases] =
+        listDeases.map((e) => (e as DeasesModel).toJson()).toList();
+    formData[FieldKeys.kMedicine] =
+        listMedicine.map((e) => (e as MedicineModel).toJson()).toList();
+    DiagnoseModel data = DiagnoseModel.fromJson(formData);
+    final result = await addDiagnoseUsecase(AddDiagnoseParams(data: data));
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (cuccess) {
+      emit(state.copyWith(dataStatus: DataStatus.success));
+      AppNavigator.pushAndRemoveUntil(AppRoute.addDiagnoseSuccessRoute,
+          params: data.patientId);
+    });
   }
 
   Future<void> saveDeases() async {
@@ -197,11 +184,17 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
     }
   }
 
-  void nextPage({required DiagnosePage currenPage}) {
-    switch (currenPage) {
+  void onChangeDeases(value) {}
+
+  void nextPage({required NextPageParams nextPageParams}) {
+    switch (nextPageParams.diagnosePage) {
       case DiagnosePage.patient:
         if (patientKey.currentState!.saveAndValidate()) {
-          AppNavigator.navigateTo(AppRoute.symptomRoute);
+          formValue.addAll({
+            ...patientKey.currentState?.value as Map<String, dynamic>,
+          });
+          AppNavigator.navigateTo(AppRoute.symptomRoute,
+              params: nextPageParams.cubit);
         } else {
           print('Patient validate invalid');
         }
@@ -212,7 +205,9 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
             dataStatus: DataStatus.success,
             error: null,
           ));
-          AppNavigator.navigateTo(AppRoute.medicineRoute);
+          formValue[FieldKeys.kDeases] = listDeases;
+          AppNavigator.navigateTo(AppRoute.medicineRoute,
+              params: nextPageParams.cubit);
         } else {
           emit(state.copyWith(
             dataStatus: DataStatus.failure,
@@ -226,7 +221,9 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
             dataStatus: DataStatus.success,
             error: null,
           ));
-          AppNavigator.navigateTo(AppRoute.summaryRoute);
+          formValue[FieldKeys.kMedicine] = listMedicine;
+          AppNavigator.navigateTo(AppRoute.summaryRoute,
+              params: nextPageParams.cubit);
         } else {
           emit(state.copyWith(
             dataStatus: DataStatus.failure,

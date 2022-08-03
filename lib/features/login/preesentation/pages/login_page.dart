@@ -7,6 +7,7 @@ import 'package:eksouvan/core/widgets/custom_textfield.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_state.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -31,7 +32,7 @@ class LoginPage extends StatelessWidget {
             listener: (context, state) {
               if (state.dataStatus == DataStatus.failure) {
                 WidgetBuilders.customDialog(
-                    title: 'Login',
+                    title: LocaleKeys.kLoginLabel.tr(),
                     context: context,
                     content: state.error ?? '');
               } else if (state.dataStatus == DataStatus.success) {
@@ -52,7 +53,7 @@ class LoginPage extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.only(top: 50, bottom: 20),
                         child: Text(
-                          tr("kLoginLabel"),
+                          LocaleKeys.kLoginLabel.tr(),
                           style: const TextStyle(
                             fontSize: 40,
                             color: Colors.grey,
@@ -69,28 +70,26 @@ class LoginPage extends StatelessWidget {
                           children: [
                             CustomTextField(
                               controller: emailController,
-                              key: const Key("Username"),
                               name: 'Username',
-                              hintText: 'Input your username',
-                              labelText: 'kUsernameLabel',
+                              // hintText: 'Input your username',
+                              labelText: LocaleKeys.kUsernameLabel.tr(),
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(
-                                    errorText: tr("kRequiredField"))
+                                    errorText: LocaleKeys.kRequiredField.tr())
                               ]),
                             ),
                             const SizedBox(
                               height: 15,
                             ),
                             CustomTextField(
-                              name: 'Password',
-                              key: const Key('Password'),
-                              hintText: 'Input your Password',
+                              name: 'password',
+                              // hintText: 'Input your Password',
                               obscureText: true,
                               controller: passwordController,
-                              labelText: 'kPasswordLabel',
+                              labelText: LocaleKeys.kPasswordLabel.tr(),
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(
-                                    errorText: tr("kRequiredField"))
+                                    errorText: LocaleKeys.kRequiredField.tr())
                               ]),
                             ),
                           ],
@@ -108,7 +107,7 @@ class LoginPage extends StatelessWidget {
                             print("validation failed");
                           }
                         },
-                        title: "kLoginLabel",
+                        title: LocaleKeys.kLoginLabel.tr(),
                       )
                     ],
                   ),

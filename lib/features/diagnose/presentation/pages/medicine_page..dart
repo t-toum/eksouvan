@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/entities/medicine.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/form_builder_validator.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../../../core/usecases/next_page_params.dart';
 import '../../../../core/utils/app_navigator.dart';
 import '../../../../core/utils/enum.dart';
 import '../../../../core/utils/field_keys.dart';
@@ -31,7 +33,9 @@ class MedicinePage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
             onPressed: () {
-              cubit.nextPage(currenPage: DiagnosePage.medicine);
+              cubit.nextPage(
+                  nextPageParams: NextPageParams(
+                      diagnosePage: DiagnosePage.medicine, cubit: cubit));
             },
             child: Text(
               LocaleKeys.kNext.tr(),
@@ -58,6 +62,10 @@ class MedicinePage extends StatelessWidget {
                     decoration: const InputDecoration(
                       isDense: true,
                     ),
+                    initialValue: cubit.formValue['medicines'] == null
+                        ? false
+                        : (cubit.formValue['medicines'] as List<Medicine?>)
+                            .contains(state.listMedicine?[index]),
                     title: Text(
                       state.listMedicine?[index].medicine ?? '',
                       style: const TextStyle(
@@ -68,7 +76,10 @@ class MedicinePage extends StatelessWidget {
                         Text(state.listMedicine?[index].description ?? ''),
                     onChanged: (val) {
                       if (val == true) {
-                        cubit.listMedicine.add(state.listMedicine?[index]);
+                        if (!cubit.listMedicine
+                            .contains(state.listMedicine?[index])) {
+                          cubit.listMedicine.add(state.listMedicine?[index]);
+                        }
                       } else {
                         cubit.listMedicine.removeWhere((el) =>
                             el?.docId == state.listMedicine?[index].docId);

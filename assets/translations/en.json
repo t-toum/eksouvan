@@ -55,5 +55,7 @@
     "kMedicine":"Medicine",
     "kWarnningSelectMedicine": "Please select  at lease one medicine",
     "kwarning":"Warning",
-    "kSummary":"Summary"
+    "kSummary":"Summary",
+    "kSaveSuccess":"Saved successfully",
+    "kAddAppointment":"Add Appointment"
 }

@@ -10,6 +10,7 @@ import 'package:eksouvan/core/widgets/custom_checkbox.dart';
 import 'package:eksouvan/core/widgets/custom_textfield.dart';
 import 'package:eksouvan/core/widgets/custom_textfield_area.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
+import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_state.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
@@ -17,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../../../../core/usecases/next_page_params.dart';
 
 class SymptomPage extends StatelessWidget {
   const SymptomPage({Key? key}) : super(key: key);
@@ -32,7 +35,10 @@ class SymptomPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
             onPressed: () {
-              cubit.nextPage(currenPage: DiagnosePage.deases);
+              cubit.nextPage(
+                nextPageParams: NextPageParams(
+                    diagnosePage: DiagnosePage.deases, cubit: cubit),
+              );
             },
             child: Text(
               LocaleKeys.kNext.tr(),
@@ -64,10 +70,17 @@ class SymptomPage extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
+                    initialValue: (cubit.formValue['deases'] == null)
+                        ? false
+                        : (cubit.formValue['deases'] as List<Deases?>)
+                            .contains(state.listDeases?[index]),
                     subtitle: Text(state.listDeases?[index].description ?? ''),
                     onChanged: (val) {
                       if (val == true) {
-                        cubit.listDeases.add(state.listDeases?[index]);
+                        if (!cubit.listDeases
+                            .contains(state.listDeases?[index])) {
+                          cubit.listDeases.add(state.listDeases?[index]);
+                        }
                       } else {
                         cubit.listDeases.removeWhere((el) =>
                             el?.docId == state.listDeases?[index].docId);

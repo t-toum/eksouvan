@@ -55,5 +55,7 @@
     "kMedicine":"ລາຍການຢາ",
     "kWarnningSelectMedicine": "ກະລຸນາເລືອກລາຍການຢາ",
     "kwarning":"ຄຳເຕືອນ",
-    "kSummary":"ສະຫລຸບລວມ"
+    "kSummary":"ສະຫລຸບລວມ",
+    "kSaveSuccess":"ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ",
+    "kAddAppointment":"ເພີ່ມຂໍ້ມູນການນັດຫມາຍ"
 }

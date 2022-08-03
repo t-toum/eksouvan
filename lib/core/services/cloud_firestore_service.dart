@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
@@ -68,9 +69,16 @@ class CloudFireStoreService {
 
   Future<String> addDiagnose({required DiagnoseModel data}) async {
     try {
+      Map<String, dynamic> formValue = data.toJson();
+      List<dynamic> listDeases =
+          data.deases?.map((e) => e.toJson()).toList() ?? [];
+      List<dynamic> listMedicine =
+          data.medicines?.map((e) => e.toJson()).toList() ?? [];
+      formValue[FieldKeys.kDeases] = FieldValue.arrayUnion(listDeases);
+      formValue[FieldKeys.kMedicine] = FieldValue.arrayUnion(listMedicine);
       final response = await firebaseFirestore
           .collection(ColectionName.diagnose)
-          .add(data.toJson());
+          .add(formValue);
       return response.id;
     } catch (error) {
       throw error.toString();

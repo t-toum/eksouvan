@@ -55,6 +55,9 @@ class HomePage extends StatelessWidget {
                         case MenuItemType.dailyPatient:
                           AppNavigator.navigateTo(AppRoute.dialyPatient);
                           break;
+                        case MenuItemType.appointment:
+                          AppNavigator.navigateTo(AppRoute.appointmentRout);
+                          break;
                         default:
                           AppNavigator.navigateTo("not_found");
                       }

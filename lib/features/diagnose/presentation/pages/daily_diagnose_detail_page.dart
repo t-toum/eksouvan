@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/usecases/next_page_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
@@ -40,7 +41,9 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 onPressed: () {
-                  cubit.nextPage(currenPage: DiagnosePage.patient);
+                  cubit.nextPage(
+                      nextPageParams: NextPageParams(
+                          diagnosePage: DiagnosePage.patient, cubit: cubit));
                 },
                 child: Text(
                   LocaleKeys.kNext.tr(),
@@ -124,9 +127,11 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     height: 15,
                   ),
                   CustomTextField(
+                    initialValue: (cubit.formValue[FieldKeys.kWeight] == null)
+                        ? null
+                        : cubit.formValue[FieldKeys.kWeight].toString(),
                     name: FieldKeys.kWeight,
-                    labelText:
-                        "${LocaleKeys.kWeight.tr()} - ${state.patient?.weight.toString()}",
+                    labelText: LocaleKeys.kWeight.tr(),
                     hintText: LocaleKeys.kKg.tr(),
                   ),
 
@@ -135,6 +140,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     height: 15,
                   ),
                   CustomTextField(
+                    initialValue: cubit.formValue[FieldKeys.kBloodPressure],
                     name: FieldKeys.kBloodPressure,
                     labelText: LocaleKeys.kBloodPressure.tr(),
                     hintText: LocaleKeys.kBloodPressure.tr(),
@@ -145,6 +151,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     height: 15,
                   ),
                   CustomTextField(
+                    initialValue: cubit.formValue[FieldKeys.kTemperature],
                     name: FieldKeys.kTemperature,
                     labelText: LocaleKeys.kTemperature.tr(),
                     hintText: LocaleKeys.kTemperature.tr(),
@@ -155,6 +162,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     height: 15,
                   ),
                   CustomTextField(
+                    initialValue: cubit.formValue[FieldKeys.kAllergic],
                     name: FieldKeys.kAllergic,
                     labelText: LocaleKeys.kAllergic.tr(),
                     hintText: LocaleKeys.kAllergic.tr(),
@@ -170,6 +178,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     height: 15,
                   ),
                   CustomTextFieldArea(
+                    initialValue: cubit.formValue[FieldKeys.kDescription],
                     name: FieldKeys.kDescription,
                     labelText: LocaleKeys.kDescription.tr(),
                     hintText: LocaleKeys.kDescriptionHint.tr(),

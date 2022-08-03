@@ -26,7 +26,7 @@ class CusttomButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         child: Text(
-          tr(title),
+          title,
           style: const TextStyle(fontSize: 25),
         ),
       ),

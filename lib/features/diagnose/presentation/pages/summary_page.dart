@@ -1,6 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/entities/medicine.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
+import 'package:eksouvan/core/widgets/custom_textfield_area.dart';
+import 'package:eksouvan/core/widgets/loading_widget.dart';
+import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import 'package:eksouvan/features/diagnose/presentation/cubit/diagnose_state.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
@@ -13,14 +18,24 @@ class SummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<DiagnoseCubit>();
+    final List<Deases?> listDesase = cubit.formValue[FieldKeys.kDeases] ?? [];
+    final List<Medicine?> listMedicine =
+        cubit.formValue[FieldKeys.kMedicine] ?? [];
     return BlocBuilder<DiagnoseCubit, DiagnoseState>(
       builder: (context, state) {
+        if (state.dataStatus == DataStatus.loading) {
+          return const LoadingWidget(
+            showImage: false,
+          );
+        }
         return AppTemplate(
           actions: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  cubit.addPatientDiagnose();
+                },
                 child: Text(
                   LocaleKeys.kSave.tr(),
                   style: const TextStyle(fontSize: 20, color: Colors.white),
@@ -49,14 +64,14 @@ class SummaryPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Name Surname',
-                            style: TextStyle(
+                            "${cubit.formValue[FieldKeys.kFirstname]} ${cubit.formValue[FieldKeys.kLastname]}",
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Text('Address'),
+                          Text(cubit.formValue[FieldKeys.kAddress] ?? ''),
                         ],
                       ),
                     )
@@ -73,11 +88,11 @@ class SummaryPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    children: List.generate(10, (index) {
+                    children: List.generate(listDesase.length, (index) {
                       return ListTile(
                         leading: Text('${index + 1}'),
                         dense: true,
-                        title: Text('FRESD'),
+                        title: Text(listDesase[index]?.deases ?? ''),
                       );
                     }),
                   ),
@@ -90,17 +105,23 @@ class SummaryPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    children: List.generate(5, (index) {
+                    children: List.generate(listMedicine.length, (index) {
                       return ListTile(
                         leading: Text('${index + 1}'),
                         dense: true,
-                        title: Text('FRESD'),
+                        title: Text(listMedicine[index]?.medicine ?? ''),
                       );
                     }),
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: CustomTextFieldArea(
+                    labelText: LocaleKeys.kDescription.tr(),
+                    name: 'description',
+                    initialValue: cubit.formValue[FieldKeys.kDescription],
+                    enabled: false,
+                  ),
                 )
               ],
             ),

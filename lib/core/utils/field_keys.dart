@@ -26,7 +26,7 @@ class FieldKeys {
   //Deases
   static const String kDeases = "deases";
   //Medicine
-  static const String kMedicine = "medicine";
+  static const String kMedicine = "medicines";
 
 
 }

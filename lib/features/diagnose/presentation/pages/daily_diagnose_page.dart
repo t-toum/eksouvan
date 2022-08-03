@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/router.dart';
+import 'package:eksouvan/core/widgets/failure_widget.dart';
 import 'package:eksouvan/features/diagnose/presentation/widgets/list_patient_item.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,10 @@ class DialyDiagnosePage extends StatelessWidget {
         if (state.dataStatus == DataStatus.loading) {
           return const LoadingWidget(
             showImage: false,
+          );
+        } else if (state.dataStatus == DataStatus.failure) {
+          return FailureWidget(
+            errorMessage: state.error,
           );
         }
         return AppTemplate(
