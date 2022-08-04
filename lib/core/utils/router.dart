@@ -14,6 +14,7 @@ import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/appointments/presentation/cubit/appointment_cubit.dart';
 import '../../features/daily-patient/presentation/pages/daily_patient_page.dart';
 import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
@@ -151,7 +152,15 @@ class AppRoute {
       case appointmentRout:
         return _materialRoute(
           const AppointmentPage(),
+          providers: [
+            BlocProvider<AppointmentCubit>(
+              create: (context) => getIt<AppointmentCubit>()
+                ..getAppointment()
+                ..getAllPatient(),
+            )
+          ],
         );
+
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

@@ -57,5 +57,9 @@
     "kwarning":"ຄຳເຕືອນ",
     "kSummary":"ສະຫລຸບລວມ",
     "kSaveSuccess":"ບັນທຶກຂໍ້ມູນສຳເລັດແລ້ວ",
-    "kAddAppointment":"ເພີ່ມຂໍ້ມູນການນັດຫມາຍ"
+    "kAddAppointment":"ເພີ່ມຂໍ້ມູນການນັດຫມາຍ",
+    "kSelectPaient":"ກະລຸນາເລືອກຄົນເຈັບ",
+    "kPatinet":"ຄົນເຈັບ",
+    "kDueDate":"ວັນທີ່ນັດຫມໍ",
+    "kSelectDueDate":"ກະລຸນາເລືອກວັນທີ່ນັດພົບ"
 }

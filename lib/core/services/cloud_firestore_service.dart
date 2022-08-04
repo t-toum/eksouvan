@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
+import 'package:eksouvan/features/appointments/data/models/appointment_model.dart';
 import 'package:eksouvan/features/diagnose/data/model/diagnose_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
@@ -136,6 +137,34 @@ class CloudFireStoreService {
           .collection(ColectionName.medicines)
           .add(model.toJson());
       return res.id;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<String> addAppointment({required AppointmentModel data}) async {
+    try {
+      final res = await firebaseFirestore
+          .collection(ColectionName.appointments)
+          .add(data.toJson());
+      return res.id;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<List<AppointmentModel>> getAllAppointment() async {
+    List<AppointmentModel> listAppointment = [];
+    try {
+      final res =
+          await firebaseFirestore.collection(ColectionName.appointments).get();
+      for (var docs in res.docs) {
+        
+        AppointmentModel appointmentModel =
+            AppointmentModel.formJson(docs.data());
+        listAppointment.add(appointmentModel);
+      }
+      return listAppointment;
     } catch (error) {
       throw error.toString();
     }

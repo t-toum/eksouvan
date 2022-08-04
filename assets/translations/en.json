@@ -57,5 +57,9 @@
     "kwarning":"Warning",
     "kSummary":"Summary",
     "kSaveSuccess":"Saved successfully",
-    "kAddAppointment":"Add Appointment"
+    "kAddAppointment":"Add Appointment",
+    "kSelectPaient":"Please select patient",
+    "kPatinet":"Patient",
+    "kDueDate":"Due date",
+    "kSelectDueDate":"Please select due date"
 }

@@ -42,6 +42,7 @@ class ColectionName {
   static const String diagnose = "diagnoses";
   static const String deases = "deases";
   static const String medicines = "medicines";
+  static const String appointments = "appointments";
 }
 
 class DateFormatPattern {

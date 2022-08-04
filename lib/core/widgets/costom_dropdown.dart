@@ -13,7 +13,8 @@ class CustomDropdown<T> extends StatelessWidget {
   final bool enabled;
   final String? hintText;
   final bool isRequired;
-  const CustomDropdown({
+  GestureTapCallback? onTap;
+  CustomDropdown({
     Key? key,
     required this.items,
     this.initialValue,
@@ -23,6 +24,7 @@ class CustomDropdown<T> extends StatelessWidget {
     this.enabled = true,
     this.hintText,
     this.isRequired = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -57,25 +59,28 @@ class CustomDropdown<T> extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          FormBuilderDropdown(
-            enabled: enabled,
-            name: name,
-            decoration: InputDecoration(
-              isDense: true,
-              border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: AppColors.primaryColor),
-                  borderRadius: BorderRadius.circular(8)),
+          InkWell(
+            onTap: onTap,
+            child: FormBuilderDropdown(
+              enabled: enabled,
+              name: name,
+              decoration: InputDecoration(
+                isDense: true,
+                border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: AppColors.primaryColor),
+                    borderRadius: BorderRadius.circular(8)),
+              ),
+              initialValue: initialValue,
+              validator: validator,
+              allowClear: true,
+              hint: Text(hintText ?? ''),
+              items: items
+                  .map((gender) => DropdownMenuItem(
+                        value: gender.id,
+                        child: Text('${gender.name}'),
+                      ))
+                  .toList(),
             ),
-            initialValue: initialValue,
-            validator: validator,
-            allowClear: true,
-            hint: Text(hintText ?? ''),
-            items: items
-                .map((gender) => DropdownMenuItem(
-                      value: gender.id,
-                      child: Text('${gender.name}'),
-                    ))
-                .toList(),
           ),
         ],
       ),

@@ -15,7 +15,7 @@ abstract class InjectionModule {
   InternetConnectionChecker get internetConnectionChecker =>
       InternetConnectionChecker();
   Logger get logger => Logger();
-  Uuid get uuid => Uuid();
+  Uuid get uuid => const Uuid();
   @lazySingleton
   FirebaseAuth get auth => FirebaseAuth.instance;
 

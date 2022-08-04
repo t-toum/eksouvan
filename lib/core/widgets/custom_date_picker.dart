@@ -9,6 +9,7 @@ class CustomDatePicker extends StatelessWidget {
   final String name;
   final String? hintText;
   final bool isRequired;
+  final DateTime? lastDate;
   FormFieldValidator<DateTime>? validator;
   CustomDatePicker({
     Key? key,
@@ -17,6 +18,7 @@ class CustomDatePicker extends StatelessWidget {
     required this.name,
     this.hintText,
     this.isRequired = false,
+    this.lastDate,
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class CustomDatePicker extends StatelessWidget {
             name: name,
             inputType: InputType.date,
             firstDate: DateTime(1900),
-            lastDate: DateTime.now(),
+            lastDate: lastDate ?? DateTime.now(),
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderSide: const BorderSide(color: AppColors.primaryColor),
