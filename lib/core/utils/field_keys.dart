@@ -28,5 +28,7 @@ class FieldKeys {
   //Medicine
   static const String kMedicine = "medicines";
 
-
+  //Appointment
+  static const String kAppointmentDate = "appointmentDate";
+  static const String kDocId = "docId";
 }

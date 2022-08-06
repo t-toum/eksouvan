@@ -11,7 +11,8 @@ import '../cubit/appointment_cubit.dart';
 import '../cubit/appointment_state.dart';
 
 class PatientModal extends StatelessWidget {
-  const PatientModal({Key? key}) : super(key: key);
+  final Function delegate;
+  const PatientModal({Key? key, required this.delegate}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +64,8 @@ class PatientModal extends StatelessWidget {
                             lastname: state.listPatient?[index].lastname,
                             tel: state.listPatient?[index].tel,
                             onTap: () {
-                              AppNavigator.goBackWithData(
-                                  data: state.listPatient?[index].patientId);
+                              delegate(state.listPatient?[index].patientId);
+                              AppNavigator.goBack();
                             },
                           );
                         }),

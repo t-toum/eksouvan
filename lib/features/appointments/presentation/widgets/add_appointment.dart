@@ -19,13 +19,17 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../core/utils/form_builder_validator.dart';
 import '../cubit/appointment_state.dart';
 
-class AddAppointmentWidget extends StatelessWidget {
+class AddAppointmentWidget extends StatefulWidget {
   const AddAppointmentWidget({Key? key}) : super(key: key);
 
   @override
+  State<AddAppointmentWidget> createState() => _AddAppointmentWidgetState();
+}
+
+class _AddAppointmentWidgetState extends State<AddAppointmentWidget> {
+  @override
   Widget build(BuildContext context) {
     final cubit = context.read<AppointmentCubit>();
-
     return Scaffold(
       body: BlocBuilder<AppointmentCubit, AppointmentState>(
         builder: (context, state) {
@@ -85,20 +89,25 @@ class AddAppointmentWidget extends StatelessWidget {
                       isRequired: true,
                       enabled: false,
                       hintText: LocaleKeys.kSelectPaient.tr(),
-                      onTap: () async {
-                        final patientId = await showCupertinoModalBottomSheet(
+                      onTap: () {
+                        showCupertinoModalBottomSheet(
                           expand: true,
                           enableDrag: false,
                           context: context,
                           builder: (_) {
                             return BlocProvider<AppointmentCubit>.value(
                               value: context.read<AppointmentCubit>(),
-                              child: const PatientModal(),
+                              child: PatientModal(
+                                delegate: (value) {
+                                  setState(() {
+                                    cubit.getAllPatient();
+                                    cubit.onChangeValue(value: value);
+                                  });
+                                },
+                              ),
                             );
                           },
                         );
-                        cubit.selectedPatientId = patientId;
-                        cubit.onChangeValue(value: patientId);
                       },
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
@@ -112,6 +121,7 @@ class AddAppointmentWidget extends StatelessWidget {
                     CustomDatePicker(
                       title: LocaleKeys.kDueDate.tr(),
                       name: 'dueDate',
+                      lastDate: DateTime.now().add(const Duration(days: 365)),
                       hintText: LocaleKeys.kSelectDueDate.tr(),
                       isRequired: true,
                       validator: FormBuilderValidators.compose([

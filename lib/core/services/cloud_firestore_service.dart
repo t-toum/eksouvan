@@ -159,9 +159,9 @@ class CloudFireStoreService {
       final res =
           await firebaseFirestore.collection(ColectionName.appointments).get();
       for (var docs in res.docs) {
-        
-        AppointmentModel appointmentModel =
-            AppointmentModel.formJson(docs.data());
+        Map<String, dynamic> docsData = docs.data();
+        docsData[FieldKeys.kDocId] = docs.id;
+        AppointmentModel appointmentModel = AppointmentModel.formJson(docsData);
         listAppointment.add(appointmentModel);
       }
       return listAppointment;

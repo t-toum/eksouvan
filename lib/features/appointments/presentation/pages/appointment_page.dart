@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
+import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/appointments/presentation/widgets/add_appointment.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,11 @@ class AppointmentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AppointmentCubit, AppointmentState>(
       builder: (context, state) {
+        if (state.dataStatus == DataStatus.loading) {
+          return const LoadingWidget(
+            showImage: false,
+          );
+        }
         return AppTemplate(
           actions: [
             Padding(
@@ -39,7 +46,14 @@ class AppointmentPage extends StatelessWidget {
             )
           ],
           title: LocaleKeys.kAppointment.tr(),
-          body: Container(),
+          body: Column(
+              children:
+                  List.generate(state.listAppointment?.length ?? 0, (index) {
+            return ListTile(
+              leading: Text('${index + 1}'),
+              title: Text("Test"),
+            );
+          })),
         );
       },
     );
