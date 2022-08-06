@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/appointments/presentation/cubit/appointment_cubit.dart';
+import '../../features/appointments/presentation/pages/appointment_detail.dart';
 import '../../features/daily-patient/presentation/pages/daily_patient_page.dart';
 import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
@@ -45,6 +46,7 @@ class AppRoute {
   static const String summaryRoute = "summary";
   static const String addDiagnoseSuccessRoute = "addDiagnoseSuccess";
   static const String appointmentRout = "appointment";
+  static const String appointmentDetailRoute = "appointmentDetail";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -143,10 +145,10 @@ class AppRoute {
           ),
         );
       case addDiagnoseSuccessRoute:
-        final patientId = settings.arguments as String;
+        final patientId = settings.arguments as String?;
         return _materialRoute(
           AddDiagnoseSuccessWidget(
-            patientId: patientId,
+            patientId: patientId ?? '',
           ),
         );
       case appointmentRout:
@@ -158,6 +160,17 @@ class AppRoute {
                 ..getAppointment()
                 ..getAllPatient(),
             )
+          ],
+        );
+      case appointmentDetailRoute:
+        return _materialRoute(
+          const AppointDetailPage(),
+          providers: [
+            // BlocProvider<AppointmentCubit>(
+            //   create: (context) => getIt<AppointmentCubit>()
+            //     ..getAppointment()
+            //     ..getAllPatient(),
+            // )
           ],
         );
 

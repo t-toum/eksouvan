@@ -71,10 +71,12 @@ class RegisterPatientCubit extends Cubit<RegisterPatientState> {
           AppRoute.successRoute,
           params: SuccessParams(
             title: LocaleKeys.kAddNewPatientSuccess.tr(),
-            buttonTitle: LocaleKeys.kNextToDiagnoseLabel,
+            buttonTitle: LocaleKeys.kNextToDiagnoseLabel.tr(),
             onPressed: () {
-              AppNavigator.navigateTo(AppRoute.dialyDiagnoseDetailRoute,
-                  params: success);
+              AppNavigator.navigateTo(
+                AppRoute.dialyDiagnoseDetailRoute,
+                params: success,
+              );
             },
           ),
         );

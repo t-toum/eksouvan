@@ -35,5 +35,5 @@ class AppointmentState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [listPatient, error, dataStatus, patientId];
+  List<Object?> get props => [listPatient, error, dataStatus, patientId,listAppointment];
 }

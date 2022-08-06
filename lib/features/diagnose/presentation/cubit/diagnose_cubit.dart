@@ -147,8 +147,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
           (l) => emit(
               state.copyWith(dataStatus: DataStatus.failure, error: l.msg)),
           (r) {
-        emit(state.copyWith(dataStatus: DataStatus.success));
-        AppNavigator.goBack();
+        emit(state.copyWith(dataStatus: DataStatus.saveDeaseSuccess));
       });
     } else {
       print('Not validate');
@@ -178,13 +177,10 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
           (l) => emit(
               state.copyWith(dataStatus: DataStatus.failure, error: l.msg)),
           (r) {
-        emit(state.copyWith(dataStatus: DataStatus.success));
-        AppNavigator.goBack();
+        emit(state.copyWith(dataStatus: DataStatus.saveMedicineSucess));
       });
     }
   }
-
-  void onChangeDeases(value) {}
 
   void nextPage({required NextPageParams nextPageParams}) {
     switch (nextPageParams.diagnosePage) {

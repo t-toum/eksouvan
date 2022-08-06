@@ -60,7 +60,9 @@ class CloudFireStoreService {
           .collection(ColectionName.patient)
           .doc(patientId)
           .get();
-      var res = ConvertDatas.convertMapData(mapData: result.data() ?? {});
+      Map<String, dynamic> mapData = result.data() ?? {};
+      mapData[FieldKeys.kPatientId] = result.id;
+      var res = ConvertDatas.convertMapData(mapData: mapData);
       PatientModel data = PatientModel.fromJson(res);
       return data;
     } on FirebaseException catch (error) {

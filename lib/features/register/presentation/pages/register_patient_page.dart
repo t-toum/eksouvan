@@ -151,7 +151,7 @@ class RegisterPatientPage extends StatelessWidget {
                     height: 20,
                   ),
                   CusttomButton(
-                    title: LocaleKeys.kNewRegisterLabel,
+                    title: LocaleKeys.kNewRegisterLabel.tr(),
                     onPressed: () {
                       context.read<RegisterPatientCubit>().addNewPatient();
                     },

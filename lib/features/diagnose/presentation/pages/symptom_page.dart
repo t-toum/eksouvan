@@ -4,7 +4,6 @@ import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/enum.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/form_builder_validator.dart';
-import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
 import 'package:eksouvan/core/widgets/custom_checkbox.dart';
 import 'package:eksouvan/core/widgets/custom_textfield.dart';
@@ -47,7 +46,13 @@ class SymptomPage extends StatelessWidget {
           ),
         ),
       ],
-      body: BlocBuilder<DiagnoseCubit, DiagnoseState>(
+      body: BlocConsumer<DiagnoseCubit, DiagnoseState>(
+        listener: (context, state) {
+          if (state.dataStatus == DataStatus.saveDeaseSuccess) {
+            AppNavigator.goBack();
+            cubit.getAllDease();
+          }
+        },
         builder: (context, state) {
           if (state.dataStatus == DataStatus.loading) {
             return const LoadingWidget(

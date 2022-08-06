@@ -61,5 +61,6 @@
     "kSelectPaient":"Please select patient",
     "kPatinet":"Patient",
     "kDueDate":"Due date",
-    "kSelectDueDate":"Please select due date"
+    "kSelectDueDate":"Please select due date",
+    "kAppointmentDetail":"Appointment Detail"
 }

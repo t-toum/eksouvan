@@ -44,7 +44,13 @@ class MedicinePage extends StatelessWidget {
           ),
         ),
       ],
-      body: BlocBuilder<DiagnoseCubit, DiagnoseState>(
+      body: BlocConsumer<DiagnoseCubit, DiagnoseState>(
+        listener: (context, state) {
+          if (state.dataStatus == DataStatus.saveMedicineSucess) {
+            AppNavigator.goBack();
+            cubit.getAllMedicine();
+          }
+        },
         builder: (context, state) {
           if (state.dataStatus == DataStatus.loading) {
             return const LoadingWidget(
@@ -165,7 +171,8 @@ class MedicinePage extends StatelessWidget {
                                       child: Column(
                                         children: [
                                           CustomTextField(
-                                            name: FieldKeys.kMedicine,
+                                            isRequired: true,
+                                            name: 'medicine',
                                             labelText:
                                                 LocaleKeys.kMedicine.tr(),
                                             validator:
@@ -184,14 +191,6 @@ class MedicinePage extends StatelessWidget {
                                             name: FieldKeys.kDescription,
                                             labelText:
                                                 LocaleKeys.kDescription.tr(),
-                                            validator:
-                                                FormBuilderValidators.compose([
-                                              FormBuilderValidators.required(
-                                                errorText: LocaleKeys
-                                                    .kRequiredField
-                                                    .tr(),
-                                              )
-                                            ]),
                                           )
                                         ],
                                       ),

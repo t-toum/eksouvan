@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/appointments/presentation/widgets/add_appointment.dart';
@@ -10,13 +13,21 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../cubit/appointment_cubit.dart';
 import '../cubit/appointment_state.dart';
+import '../widgets/appointment_item.dart';
 
 class AppointmentPage extends StatelessWidget {
   const AppointmentPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppointmentCubit, AppointmentState>(
+    final cubit = context.read<AppointmentCubit>();
+    return BlocConsumer<AppointmentCubit, AppointmentState>(
+      listener: (context, state) {
+        if (state.dataStatus == DataStatus.saveAppointmentSuccess) {
+          AppNavigator.goBack();
+          cubit.getAppointment();
+        }
+      },
       builder: (context, state) {
         if (state.dataStatus == DataStatus.loading) {
           return const LoadingWidget(
@@ -47,13 +58,24 @@ class AppointmentPage extends StatelessWidget {
           ],
           title: LocaleKeys.kAppointment.tr(),
           body: Column(
-              children:
-                  List.generate(state.listAppointment?.length ?? 0, (index) {
-            return ListTile(
-              leading: Text('${index + 1}'),
-              title: Text("Test"),
-            );
-          })),
+            children: List.generate(
+              state.listAppointment?.length ?? 0,
+              (index) {
+                return AppointmentItem(
+                  no: '${index + 1}',
+                  displayName: cubit.getPatient(
+                      patientId: state.listAppointment?[index].patientId),
+                  appointmentDate: ConvertDatas.converDateFormat(
+                      state.listAppointment?[index].appointmentDate),
+                  dueDate: ConvertDatas.converDateFormat(
+                      state.listAppointment?[index].dueDate),
+                  onTap: () {
+                    AppNavigator.navigateTo(AppRoute.appointmentDetailRoute);
+                  },
+                );
+              },
+            ),
+          ),
         );
       },
     );
