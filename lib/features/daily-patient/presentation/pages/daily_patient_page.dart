@@ -48,7 +48,7 @@ class DailyPatientPage extends StatelessWidget {
                         lastUpdate: state.listPatient?[index].lastUpdate,
                         onTap: () {
                           AppNavigator.navigateTo(
-                              AppRoute.dailyPatientDetailRoute,
+                              AppRoute.dialyDiagnoseDetailRoute,
                               params: state.listPatient?[index].patientId);
                         },
                       );

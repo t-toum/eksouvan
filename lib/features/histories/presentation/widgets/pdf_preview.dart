@@ -19,6 +19,7 @@ class PdfPreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: PdfPreview(
         build: (format) => _generatePdf(format),
       ),
@@ -27,7 +28,9 @@ class PdfPreviewWidget extends StatelessWidget {
 
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-    final font = await PdfGoogleFonts.nunitoExtraLight();
+    // final font = await PdfGoogleFonts.nunitoExtraLight();
+    final font = pw.Font.ttf(
+        await rootBundle.load("assets/fonts/NotoSansLao-Regular.ttf"));
     final img = pw.MemoryImage(
         (await rootBundle.load(AppImages.brannerImg)).buffer.asUint8List());
     final defultAvatar = pw.MemoryImage(
@@ -43,7 +46,7 @@ class PdfPreviewWidget extends StatelessWidget {
               child:
                   pw.Text(title, style: pw.TextStyle(font: font, fontSize: 14)),
             ),
-            pw.Text(value ?? '', style: pw.TextStyle(font: font))
+            pw.Text(value ?? '')
           ],
         ),
       );
@@ -95,39 +98,38 @@ class PdfPreviewWidget extends StatelessWidget {
                               children: [
                                 pw.Text(
                                   "${historyParams?.patient?.firstname ?? ''} ${historyParams?.patient?.lastname ?? ''}",
-                                  style: pw.TextStyle(font: font, fontSize: 20),
+                                  style: const pw.TextStyle(fontSize: 20),
                                 ),
-                                pw.Text('Address',
-                                    style: pw.TextStyle(font: font)),
+                                pw.Text(historyParams?.patient?.address ?? ''),
                               ],
                             ),
                           ),
                         ],
                       ),
                       textItem(
-                        title: '${LocaleKeys.kGender.tr()}:',
+                        title: LocaleKeys.kGender.tr(),
                         value: ConvertDatas.convertGender(
                             historyParams?.patient?.gender),
                       ),
                       textItem(
-                        title: '${LocaleKeys.kDateOfBirth.tr()}:',
+                        title: LocaleKeys.kDateOfBirth.tr(),
                         value: ConvertDatas.converDateFormat(
                             historyParams?.patient?.birthday),
                       ),
                       textItem(
-                        title: '${LocaleKeys.kWeight.tr()}:',
+                        title: LocaleKeys.kWeight.tr(),
                         value: '${historyParams?.patient?.weight}.Kg',
                       ),
                       textItem(
-                        title: '${LocaleKeys.KHeight.tr()}:',
+                        title: LocaleKeys.KHeight.tr(),
                         value: '${historyParams?.patient?.height}.cm',
                       ),
                       textItem(
-                        title: '${LocaleKeys.kCongenitalDeases.tr()}:',
+                        title: LocaleKeys.kCongenitalDeases.tr(),
                         value: historyParams?.patient?.congenitalDeases,
                       ),
                       textItem(
-                        title: '${LocaleKeys.kPhone.tr()}:',
+                        title: LocaleKeys.kPhone.tr(),
                         value: historyParams?.patient?.tel,
                       ),
                       pw.SizedBox(height: 20),
@@ -143,9 +145,9 @@ class PdfPreviewWidget extends StatelessWidget {
                             fontWeight: pw.FontWeight.bold,
                             fontSize: 16,
                           ),
-                          cellStyle: pw.TextStyle(
-                            font: font,
-                          ),
+                          // cellStyle: pw.TextStyle(
+                          //   font: font,
+                          // ),
                           headerAlignment: pw.Alignment.centerLeft,
                           border: pw.TableBorder(
                               horizontalInside: pw.BorderSide(
@@ -182,9 +184,9 @@ class PdfPreviewWidget extends StatelessWidget {
                             fontWeight: pw.FontWeight.bold,
                             fontSize: 16,
                           ),
-                          cellStyle: pw.TextStyle(
-                            font: font,
-                          ),
+                          // cellStyle: pw.TextStyle(
+                          //   font: font,
+                          // ),
                           headerAlignment: pw.Alignment.centerLeft,
                           border: pw.TableBorder(
                               horizontalInside: pw.BorderSide(
