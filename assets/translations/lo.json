@@ -62,5 +62,6 @@
     "kPatinet":"ຄົນເຈັບ",
     "kDueDate":"ວັນທີ່ນັດຫມໍ",
     "kSelectDueDate":"ກະລຸນາເລືອກວັນທີ່ນັດພົບ",
-    "kAppointmentDetail":"ລາຍລະອຽດການນັດ"
+    "kAppointmentDetail":"ລາຍລະອຽດການນັດ",
+    "kDailyPatientDetail":"ລາຍລະອຽດຄົນເຈັບ"
 }

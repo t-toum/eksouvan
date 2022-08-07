@@ -171,4 +171,41 @@ class CloudFireStoreService {
       throw error.toString();
     }
   }
+
+  Future<List<DiagnoseModel>> getAllDiagnose() async {
+    List<DiagnoseModel> listDiagnose = [];
+    try {
+      final res =
+          await firebaseFirestore.collection(ColectionName.diagnose).get();
+      for (var docs in res.docs) {
+        Map<String, dynamic> docsData = docs.data();
+        docsData[FieldKeys.kDiagnoseId] = docs.id;
+        DiagnoseModel diagnoseModel = DiagnoseModel.fromJson(docsData);
+        listDiagnose.add(diagnoseModel);
+      }
+      return listDiagnose;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<DiagnoseModel> getDiagnoseByPatient(
+      {required String patientId}) async {
+    List<DiagnoseModel> listDiagnose = [];
+    try {
+      final res =
+          await firebaseFirestore.collection(ColectionName.diagnose).get();
+      for (var docs in res.docs) {
+        Map<String, dynamic> docsData = docs.data();
+        docsData[FieldKeys.kDiagnoseId] = docs.id;
+        DiagnoseModel diagnoseModel = DiagnoseModel.fromJson(docsData);
+        listDiagnose.add(diagnoseModel);
+      }
+      DiagnoseModel? data =
+          listDiagnose.where((el) => el.patientId == patientId).first;
+      return data;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
 }

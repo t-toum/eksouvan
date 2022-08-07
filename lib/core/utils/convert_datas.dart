@@ -13,10 +13,11 @@ class ConvertDatas {
           key == FieldKeys.kHeight ||
           key == FieldKeys.kBloodPressure ||
           key == FieldKeys.kTemperature) {
-        if (value is! double) {
-          newValue[key] = double.parse(value ?? '0');
+        if (value is double) {
+          newValue[key] = double.parse(value.toString());
         } else {
-          newValue[key] = value;
+          newValue[key] =
+              (value == null || value == "") ? null : double.parse(value);
         }
       } else if (value is Timestamp) {
         var time =

@@ -19,7 +19,7 @@ class HistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTemplate(
-      title:LocaleKeys.kHistoryLabel.tr(),
+      title: LocaleKeys.kHistoryLabel.tr(),
       body: BlocBuilder<HistoryCubit, HistoryState>(
         builder: (context, state) {
           if (state.dataStatus == DataStatus.loading) {
@@ -48,7 +48,6 @@ class HistoryPage extends StatelessWidget {
                           firstname: state.listPatient[index].firstname,
                           lastname: state.listPatient[index].lastname,
                           address: state.listPatient[index].address,
-                          // listDeases: [],
                           onTap: () {
                             AppNavigator.navigateTo(AppRoute.patientDetailRoute,
                                 params: state.listPatient[index].patientId);

@@ -2,7 +2,6 @@ import 'package:eksouvan/core/locators/service_locator.dart';
 import 'package:eksouvan/core/widgets/not_found.dart';
 import 'package:eksouvan/features/appointments/presentation/pages/appointment_page.dart';
 import 'package:eksouvan/features/daily-patient/presentation/cubit/daily_patient_cubit.dart';
-import 'package:eksouvan/features/daily-patient/presentation/pages/daily_diagnose_patient_page.dart';
 import 'package:eksouvan/features/diagnose/presentation/pages/medicine_page..dart';
 import 'package:eksouvan/features/diagnose/presentation/pages/summary_page.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
@@ -16,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/appointments/presentation/cubit/appointment_cubit.dart';
 import '../../features/appointments/presentation/pages/appointment_detail.dart';
+import '../../features/daily-patient/presentation/pages/daily_patient_detail.dart';
 import '../../features/daily-patient/presentation/pages/daily_patient_page.dart';
 import '../../features/diagnose/presentation/cubit/diagnose_cubit.dart';
 import '../../features/diagnose/presentation/pages/daily_diagnose_detail_page.dart';
@@ -42,11 +42,12 @@ class AppRoute {
   static const String dailyDiagnosePatientPageRoute =
       "/dailyDiagnosePatientPage";
   static const String symptomRoute = "/symptom";
-  static const String medicineRoute = "medicine";
-  static const String summaryRoute = "summary";
-  static const String addDiagnoseSuccessRoute = "addDiagnoseSuccess";
-  static const String appointmentRout = "appointment";
-  static const String appointmentDetailRoute = "appointmentDetail";
+  static const String medicineRoute = "/medicine";
+  static const String summaryRoute = "/summary";
+  static const String addDiagnoseSuccessRoute = "/addDiagnoseSuccess";
+  static const String appointmentRout = "/appointment";
+  static const String appointmentDetailRoute = "/appointmentDetail";
+  static const String dailyPatientDetailRoute = "/dailyPatientDetail";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -79,6 +80,7 @@ class AppRoute {
         return _materialRoute(const PatientDetailPage(), providers: [
           BlocProvider<HistoryCubit>(
             create: (context) => getIt<HistoryCubit>()
+              ..getDiagnose(patientId: settings.arguments as String)
               ..getPatient(patientId: settings.arguments as String),
           )
         ]);
@@ -112,14 +114,14 @@ class AppRoute {
             create: (context) => getIt<DailyPatientCubit>()..getDailyPatient(),
           )
         ]);
-      case dailyDiagnosePatientPageRoute:
-        final String patientId = settings.arguments as String;
-        return _materialRoute(const DailyDiagnosePatientPage(), providers: [
-          BlocProvider<DailyPatientCubit>(
-            create: (context) =>
-                getIt<DailyPatientCubit>()..getPatient(patientId: patientId),
-          )
-        ]);
+      // case dailyDiagnosePatientPageRoute:
+      //   final String patientId = settings.arguments as String;
+      //   return _materialRoute(const DailyDiagnosePatientPage(), providers: [
+      //     BlocProvider<DailyPatientCubit>(
+      //       create: (context) =>
+      //           getIt<DailyPatientCubit>()..getPatient(patientId: patientId),
+      //     )
+      //   ]);
       case symptomRoute:
         final cubit = settings.arguments as DiagnoseCubit;
         return MaterialPageRoute(
@@ -171,6 +173,16 @@ class AppRoute {
             //     ..getAppointment()
             //     ..getAllPatient(),
             // )
+          ],
+        );
+      case dailyPatientDetailRoute:
+        final String patientId = settings.arguments as String;
+        return _materialRoute(
+          const DailyPatientDetail(),
+          providers: [
+            BlocProvider<DailyPatientCubit>(
+                create: (context) => getIt<DailyPatientCubit>()
+                  ..getPatient(patientId: patientId))
           ],
         );
 
