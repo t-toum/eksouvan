@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 
 class ConvertDatas {
   static Map<String, dynamic> convertMapData(
@@ -37,6 +38,14 @@ class ConvertDatas {
     } else {
       final inputDateFormat = DateFormat('dd-MM-yyyy');
       return inputDateFormat.format(dateTime);
+    }
+  }
+
+  static String convertGender(int? id) {
+    if (id == 1) {
+      return LocaleKeys.kMale.tr();
+    } else {
+      return LocaleKeys.kFemale.tr();
     }
   }
 }

@@ -29,3 +29,8 @@ samples, guidance on mobile development, and a full API reference.
     ```bash
         flutter pub run easy_localization:generate -S assets/translations -f keys -o locale_keys.g.dart
     ``` 
+    1. Generate AppIcon.
+    ```bash
+        flutter pub get
+        flutter pub run flutter_launcher_icons:main
+    ``` 

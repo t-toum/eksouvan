@@ -7,6 +7,7 @@ import 'package:eksouvan/features/diagnose/presentation/pages/summary_page.dart'
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/pages/history_page.dart';
 import 'package:eksouvan/features/histories/presentation/pages/patient_detail_page.dart';
+import 'package:eksouvan/features/histories/presentation/widgets/pdf_preview.dart';
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
@@ -25,6 +26,7 @@ import '../../features/diagnose/presentation/widgets/add_diagnose_success_widget
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register/presentation/pages/register_patient_page.dart';
+import '../usecases/pdf_history_params.dart';
 import '../usecases/success_params.dart';
 import '../widgets/success_widget.dart';
 
@@ -48,6 +50,7 @@ class AppRoute {
   static const String appointmentRout = "/appointment";
   static const String appointmentDetailRoute = "/appointmentDetail";
   static const String dailyPatientDetailRoute = "/dailyPatientDetail";
+  static const String pdfPreviewRoute = "/pdfPreview";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -165,13 +168,6 @@ class AppRoute {
       case appointmentDetailRoute:
         return _materialRoute(
           const AppointDetailPage(),
-          providers: [
-            // BlocProvider<AppointmentCubit>(
-            //   create: (context) => getIt<AppointmentCubit>()
-            //     ..getAppointment()
-            //     ..getAllPatient(),
-            // )
-          ],
         );
       case dailyPatientDetailRoute:
         final String patientId = settings.arguments as String;
@@ -183,7 +179,12 @@ class AppRoute {
                   ..getPatient(patientId: patientId))
           ],
         );
-
+      case pdfPreviewRoute:
+        return _materialRoute(
+          PdfPreviewWidget(
+            historyParams: settings.arguments as PdfHistoryParams,
+          ),
+        );
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

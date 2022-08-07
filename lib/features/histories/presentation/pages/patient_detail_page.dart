@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/usecases/pdf_history_params.dart';
+import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
+import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_state..dart';
@@ -9,9 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/app_template.dart';
 import '../../../../generated/locale_keys.g.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
-import 'package:pdf/pdf.dart';
 
 class PatientDetailPage extends StatelessWidget {
   const PatientDetailPage({Key? key}) : super(key: key);
@@ -33,17 +33,11 @@ class PatientDetailPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
                 onPressed: () {
-                  final doc = pw.Document();
-                  doc.addPage(
-                    pw.Page(
-                      pageFormat: PdfPageFormat.a4,
-                      build: (pw.Context context) {
-                        return pw.Center(
-                          child: pw.Text('Hello World'),
-                        ); // Center
-                      },
-                    ),
-                  );
+                  AppNavigator.navigateTo(AppRoute.pdfPreviewRoute,
+                      params: PdfHistoryParams(
+                          patient: state.patient,
+                          listAppointment: cubit.listAppointment ?? [],
+                          listDiagnose: cubit.listDiagnose ?? []));
                 },
                 icon: const Icon(
                   Icons.print,
