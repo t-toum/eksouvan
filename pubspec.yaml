@@ -34,6 +34,8 @@ dependencies:
   date_time_picker: ^2.1.0
   uuid: ^3.0.6
   modal_bottom_sheet: ^2.1.0
+  printing: ^5.9.2
+  pdf: ^3.8.2
 
 dev_dependencies:
   flutter_test:

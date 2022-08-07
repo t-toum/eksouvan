@@ -11,6 +11,9 @@ import '../../../register/domain/entity/patient.dart';
 import '../../domain/usecases/get_all_daignose_usecase.dart';
 import '../../domain/usecases/get_patient_usecase.dart';
 import 'history_state..dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:pdf/pdf.dart';
 
 @injectable
 class HistoryCubit extends Cubit<HistoryState> {
@@ -97,5 +100,19 @@ class HistoryCubit extends Cubit<HistoryState> {
       listAppointment =
           success.where((el) => el.patientId == patientId).toList();
     });
+  }
+
+  Future<void> printDoc() async {
+    final pdf = pw.Document();
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text("Hello World"),
+          ); // Center
+        },
+      ),
+    );
   }
 }

@@ -9,6 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/app_template.dart';
 import '../../../../generated/locale_keys.g.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:pdf/pdf.dart';
 
 class PatientDetailPage extends StatelessWidget {
   const PatientDetailPage({Key? key}) : super(key: key);
@@ -25,6 +28,29 @@ class PatientDetailPage extends StatelessWidget {
         }
         return AppTemplate(
           title: LocaleKeys.kPatientHistory.tr(),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () {
+                  final doc = pw.Document();
+                  doc.addPage(
+                    pw.Page(
+                      pageFormat: PdfPageFormat.a4,
+                      build: (pw.Context context) {
+                        return pw.Center(
+                          child: pw.Text('Hello World'),
+                        ); // Center
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.print,
+                ),
+              ),
+            )
+          ],
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
