@@ -7,5 +7,5 @@ abstract class HistoryRepository{
   Future<Either<Failure,List<Patient>>>getAllPatient();
   Future<Either<Failure,Patient>>getPatient({required String patientId});
   Future<Either<Failure,List<Diagnose>>>getAllDiagnose();
-  Future<Either<Failure,Diagnose>>getDiagnose({required String patientId});
+  // Future<Either<Failure,Diagnose>>getDiagnose({required String patientId});
 }

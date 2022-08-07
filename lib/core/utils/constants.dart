@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
 enum DataStatus {
@@ -57,3 +58,14 @@ class ColectionName {
 class DateFormatPattern {
   static DateFormat kShortDateFormat = DateFormat('yyyy-MM-dd');
 }
+
+List<String> historyColumn = [
+  LocaleKeys.kAppointmentDate.tr(),
+  LocaleKeys.kDiseases.tr(),
+  LocaleKeys.kMedicine.tr()
+];
+
+List<String> historyAppointment = [
+  LocaleKeys.kAppointment.tr(),
+  LocaleKeys.kDescription.tr(),
+];

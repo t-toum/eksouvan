@@ -5,9 +5,11 @@ class Deases extends Equatable {
   final String? deases;
   final String? description;
 
- const Deases({this.docId, this.deases, this.description});
- 
+  const Deases({this.docId, this.deases, this.description});
+
   @override
-  List<Object?> get props => [docId,deases,description];
-  
+  String toString() => deases ?? '';
+
+  @override
+  List<Object?> get props => [docId, deases, description];
 }

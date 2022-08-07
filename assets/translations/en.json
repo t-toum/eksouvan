@@ -63,5 +63,9 @@
     "kDueDate":"Due date",
     "kSelectDueDate":"Please select due date",
     "kAppointmentDetail":"Appointment Detail",
-    "kDailyPatientDetail":"Daily Patient Detail"
+    "kDailyPatientDetail":"Daily Patient Detail",
+    "kAppointmentDate":"Appointment date",
+    "kDiagnoseHistory":"Diagnose history",
+    "kDiseases":"Diseases",
+    "kAppointmentHistory":"Appointment History"
 }

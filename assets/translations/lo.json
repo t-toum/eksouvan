@@ -63,5 +63,9 @@
     "kDueDate":"ວັນທີ່ນັດຫມໍ",
     "kSelectDueDate":"ກະລຸນາເລືອກວັນທີ່ນັດພົບ",
     "kAppointmentDetail":"ລາຍລະອຽດການນັດ",
-    "kDailyPatientDetail":"ລາຍລະອຽດຄົນເຈັບ"
+    "kDailyPatientDetail":"ລາຍລະອຽດຄົນເຈັບ",
+    "kAppointmentDate":"ວັນທີ່ມາພົບແພດ",
+    "kDiagnoseHistory":"ປະຫວັດການພົບແພດ",
+    "kDiseases":"ອາການ",
+    "kAppointmentHistory":"ປະຫັວດການນັດພົບ"
 }

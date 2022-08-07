@@ -1,6 +1,7 @@
 import 'package:eksouvan/core/entities/medicine.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'medicine_model.g.dart';
+
 @JsonSerializable()
 class MedicineModel extends Medicine {
   const MedicineModel({

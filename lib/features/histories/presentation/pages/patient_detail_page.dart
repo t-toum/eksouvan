@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_cubit.dart';
 import 'package:eksouvan/features/histories/presentation/cubit/history_state..dart';
@@ -14,6 +15,7 @@ class PatientDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<HistoryCubit>();
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
         if (state.dataStatus == DataStatus.loading) {
@@ -25,6 +27,7 @@ class PatientDetailPage extends StatelessWidget {
           title: LocaleKeys.kPatientHistory.tr(),
           body: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -57,7 +60,93 @@ class PatientDetailPage extends StatelessWidget {
                   ],
                 ),
                 const Divider(),
-                Text('Dianose'),
+                Text(
+                  LocaleKeys.kDiagnoseHistory.tr(),
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                DataTable(
+                  columns: List.generate(historyColumn.length, (index) {
+                    return DataColumn(
+                      label: Text(
+                        historyColumn[index],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    );
+                  }),
+                  rows: List.generate(
+                    cubit.listDiagnose?.length ?? 0,
+                    (index) {
+                      return DataRow(
+                        cells: [
+                          DataCell(
+                            Text(
+                              ConvertDatas.converDateFormat(
+                                  cubit.listDiagnose?[index].diagnoseDate),
+                            ),
+                          ),
+                          DataCell(
+                            Text(cubit.listDiagnose?[index].deases
+                                    .toString()
+                                    .replaceAll('[', '')
+                                    .replaceAll(']', '') ??
+                                ''),
+                          ),
+                          DataCell(
+                            Text(cubit.listDiagnose?[index].medicines
+                                    .toString()
+                                    .replaceAll('[', '')
+                                    .replaceAll(']', '') ??
+                                ''),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+
+                //Appointment
+                const Divider(),
+                Text(
+                  LocaleKeys.kAppointmentHistory.tr(),
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+                DataTable(
+                  columns: List.generate(historyAppointment.length, (index) {
+                    return DataColumn(
+                      label: Text(
+                        historyAppointment[index],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    );
+                  }),
+                  rows: List.generate(
+                    cubit.listAppointment?.length ?? 0,
+                    (index) {
+                      return DataRow(
+                        cells: [
+                          DataCell(
+                            Text(
+                              ConvertDatas.converDateFormat(
+                                  cubit.listAppointment?[index].dueDate),
+                            ),
+                          ),
+                          DataCell(
+                            Text(cubit.listAppointment?[index].description ??
+                                ''),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

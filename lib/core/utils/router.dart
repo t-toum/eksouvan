@@ -73,14 +73,12 @@ class AppRoute {
       case historyRoute:
         return _materialRoute(const HistoryPage(), providers: [
           BlocProvider<HistoryCubit>(
-            create: (context) => getIt<HistoryCubit>()..getAllPatient(),
-          )
+              create: (context) => getIt<HistoryCubit>()..getAllPatient())
         ]);
       case patientDetailRoute:
         return _materialRoute(const PatientDetailPage(), providers: [
           BlocProvider<HistoryCubit>(
             create: (context) => getIt<HistoryCubit>()
-              ..getDiagnose(patientId: settings.arguments as String)
               ..getPatient(patientId: settings.arguments as String),
           )
         ]);

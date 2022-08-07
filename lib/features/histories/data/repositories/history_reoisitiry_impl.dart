@@ -47,13 +47,13 @@ class HistoryRepositoryImpl extends HistoryRepository {
     }
   }
   
-  @override
-  Future<Either<Failure, Diagnose>> getDiagnose({required String patientId})async {
-    try {
-      final result = await historyRemoteDataSource.getDiagnoseByPatient(patientId: patientId);
-      return Right(result);
-    } on ServerException catch (error) {
-      return Left(ServerFailure(msg: error.msg));
-    }
-  }
+  // @override
+  // Future<Either<Failure, Diagnose>> getDiagnose({required String patientId})async {
+  //   try {
+  //     final result = await historyRemoteDataSource.getDiagnoseByPatient(patientId: patientId);
+  //     return Right(result);
+  //   } on ServerException catch (error) {
+  //     return Left(ServerFailure(msg: error.msg));
+  //   }
+  // }
 }

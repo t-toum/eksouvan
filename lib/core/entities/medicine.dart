@@ -6,6 +6,8 @@ class Medicine extends Equatable {
   final String? description;
 
   const Medicine({this.docId, this.medicine, this.description});
+  @override
+  String toString() => medicine ?? '';
 
   @override
   List<Object?> get props => [docId, medicine, description];

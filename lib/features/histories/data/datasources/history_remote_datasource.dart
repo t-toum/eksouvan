@@ -8,7 +8,7 @@ abstract class HistoryRemoteDataSource {
   Future<List<PatientModel>> getAllPatient();
   Future<PatientModel> getPatient({required String patientId});
   Future<List<DiagnoseModel>> getAllDiagnose();
-  Future<DiagnoseModel> getDiagnoseByPatient({required String patientId});
+  // Future<DiagnoseModel> getDiagnoseByPatient({required String patientId});
 }
 
 @LazySingleton(as: HistoryRemoteDataSource)
@@ -47,13 +47,13 @@ class HistoryRemoteDataSourceImpl extends HistoryRemoteDataSource {
     }
   }
   
-  @override
-  Future<DiagnoseModel> getDiagnoseByPatient({required String patientId}) async{
-    try {
-      final result = await cloudFireStoreService.getDiagnoseByPatient(patientId: patientId);
-      return result;
-    } catch (error) {
-      throw ServerException(msg: error.toString());
-    }
-  }
+  // @override
+  // Future<DiagnoseModel> getDiagnoseByPatient({required String patientId}) async{
+  //   try {
+  //     final result = await cloudFireStoreService.getDiagnoseByPatient(patientId: patientId);
+  //     return result;
+  //   } catch (error) {
+  //     throw ServerException(msg: error.toString());
+  //   }
+  // }
 }
