@@ -1,3 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/generated/locale_keys.g.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppNavigator {
@@ -36,5 +39,31 @@ class AppNavigator {
 
   static navigateToWithData(String routeName, {dynamic params}) {
     return navigatorKey!.currentState?.pushNamed(routeName, arguments: params);
+  }
+
+  static openDialog({String? title, String? content, VoidCallback? onPressed}) {
+    showCupertinoModalPopup(
+      context: navigatorKey!.currentState!.context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text(title ?? ''),
+          content: Text(content ?? ''),
+          actions: [
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(LocaleKeys.kCancel.tr()),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: onPressed,
+              child: Text(LocaleKeys.kOk.tr()),
+            )
+          ],
+        );
+      },
+    );
   }
 }

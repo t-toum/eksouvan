@@ -38,6 +38,14 @@ class AppImages {
   static const String default_avatar = "assets/images/default_avatar.png";
   static const String animat_crying = "assets/images/crying.gif";
   static const String success = "assets/images/success.png";
+  static const String report = "assets/images/report.png";
+  static const String translate_black = "assets/images/translate_black.png";
+  static const String translate_blue = "assets/images/translate_blue.png";
+  static const String user = "assets/images/user.png";
+  static const String patient = "assets/images/patient.png";
+  static const String pill = "assets/images/pill.png";
+  static const String medicine = "assets/images/medicine.png";
+  static const String deases = "assets/images/deases.png";
 }
 
 //SharedPreferences

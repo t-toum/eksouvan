@@ -1,6 +1,7 @@
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/enum.dart';
+import 'package:eksouvan/core/widgets/app_template.dart';
 import 'package:eksouvan/core/widgets/widget_builder.dart';
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +19,25 @@ class HomePage extends StatelessWidget {
       builder: (context, state) {
         if (state.dataStatus == DataStatus.loading) {
           return const Scaffold(
-            body: LoadingWidget(title: "Logging out"),
+            body: LoadingWidget(),
           );
         }
-        return Scaffold(
-          appBar: WidgetBuilders.customAppbar(
-              // context.read<HomeCubit>().getLogOut();
+        return AppTemplate(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () {
+                  AppNavigator.navigateTo(AppRoute.settingRoute);
+                },
+                icon: const Icon(
+                  Icons.settings,
+                  size: 40,
+                ),
               ),
+            ),
+          ],
+          title: '',
           body: Container(
             padding: const EdgeInsets.all(30),
             child: GridView.count(
@@ -57,6 +70,9 @@ class HomePage extends StatelessWidget {
                           break;
                         case MenuItemType.appointment:
                           AppNavigator.navigateTo(AppRoute.appointmentRout);
+                          break;
+                        case MenuItemType.report:
+                          AppNavigator.navigateTo(AppRoute.reportRoute);
                           break;
                         default:
                           AppNavigator.navigateTo("not_found");

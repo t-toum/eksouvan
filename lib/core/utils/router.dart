@@ -11,6 +11,14 @@ import 'package:eksouvan/features/histories/presentation/widgets/pdf_preview.dar
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/cubit/login_cubit.dart';
 import 'package:eksouvan/features/login/preesentation/pages/login_page.dart';
+import 'package:eksouvan/features/reports/presentations/cubit/report_cubit.dart';
+import 'package:eksouvan/features/reports/presentations/pages/report_appointment_page..dart';
+import 'package:eksouvan/features/reports/presentations/pages/report_diagnose_page.dart';
+import 'package:eksouvan/features/reports/presentations/pages/report_page.dart';
+import 'package:eksouvan/features/reports/presentations/pages/report_patient_page.dart';
+import 'package:eksouvan/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:eksouvan/features/settings/presentation/pages/setting_page.dart';
+import 'package:eksouvan/features/settings/presentation/pages/setting_user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,6 +59,13 @@ class AppRoute {
   static const String appointmentDetailRoute = "/appointmentDetail";
   static const String dailyPatientDetailRoute = "/dailyPatientDetail";
   static const String pdfPreviewRoute = "/pdfPreview";
+
+  static const String reportRoute = "/report";
+  static const String reportPatientRoute = "/reportPatient";
+  static const String reportDiagnoseRoute = "/reportDiagnose";
+  static const String reportAppointmentRoute = "/reportAppointment";
+  static const String settingRoute = "/setting";
+  static const String settingUserRoute = "/settingUser";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -115,14 +130,6 @@ class AppRoute {
             create: (context) => getIt<DailyPatientCubit>()..getDailyPatient(),
           )
         ]);
-      // case dailyDiagnosePatientPageRoute:
-      //   final String patientId = settings.arguments as String;
-      //   return _materialRoute(const DailyDiagnosePatientPage(), providers: [
-      //     BlocProvider<DailyPatientCubit>(
-      //       create: (context) =>
-      //           getIt<DailyPatientCubit>()..getPatient(patientId: patientId),
-      //     )
-      //   ]);
       case symptomRoute:
         final cubit = settings.arguments as DiagnoseCubit;
         return MaterialPageRoute(
@@ -185,6 +192,32 @@ class AppRoute {
             historyParams: settings.arguments as PdfHistoryParams,
           ),
         );
+      case reportRoute:
+        return _materialRoute(
+          const ReportPage(),
+        );
+      case reportPatientRoute:
+        return _materialRoute(const ReportPatientPage(), providers: [
+          BlocProvider<ReportCubit>(
+              create: (context) => getIt<ReportCubit>()..getAppatient())
+        ]);
+      case reportDiagnoseRoute:
+        return _materialRoute(
+          const ReportDiagnosePage(),
+        );
+      case reportAppointmentRoute:
+        return _materialRoute(
+          const ReportAppointmentPage(),
+        );
+      case settingRoute:
+        return _materialRoute(const SettingPage(), providers: [
+          BlocProvider<SettingCubit>(create: (context) => getIt<SettingCubit>())
+        ]);
+      case settingUserRoute:
+        return _materialRoute(const SettingUserPage(), providers: [
+          BlocProvider<SettingCubit>(
+              create: (context) => getIt<SettingCubit>()..getAllUser())
+        ]);
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),

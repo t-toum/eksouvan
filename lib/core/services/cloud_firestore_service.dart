@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
+import 'package:eksouvan/core/models/user_model.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/features/appointments/data/models/appointment_model.dart';
@@ -189,23 +190,19 @@ class CloudFireStoreService {
     }
   }
 
-  // Future<DiagnoseModel> getDiagnoseByPatient(
-  //     {required String patientId}) async {
-  //   List<DiagnoseModel> listDiagnose = [];
-  //   try {
-  //     final res =
-  //         await firebaseFirestore.collection(ColectionName.diagnose).get();
-  //     for (var docs in res.docs) {
-  //       Map<String, dynamic> docsData = docs.data();
-  //       docsData[FieldKeys.kDiagnoseId] = docs.id;
-  //       DiagnoseModel diagnoseModel = DiagnoseModel.fromJson(docsData);
-  //       listDiagnose.add(diagnoseModel);
-  //     }
-  //     DiagnoseModel? data =
-  //         listDiagnose.where((el) => el.patientId == patientId).first;
-  //     return data;
-  //   } catch (error) {
-  //     throw error.toString();
-  //   }
-  // }
+  Future<List<UserModel>> getAllUserData() async {
+    List<UserModel> listUser = [];
+    try {
+      final res = await firebaseFirestore.collection(ColectionName.users).get();
+      for (var docs in res.docs) {
+        Map<String, dynamic> docsData = docs.data();
+        docsData[FieldKeys.kDocId] = docs.id;
+        UserModel userModel = UserModel.fromJson(docsData);
+        listUser.add(userModel);
+      }
+      return listUser;
+    } catch (error) {
+      throw error.toString();
+    }
+  }
 }

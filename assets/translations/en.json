@@ -67,5 +67,16 @@
     "kAppointmentDate":"Appointment date",
     "kDiagnoseHistory":"Diagnose history",
     "kDiseases":"Diseases",
-    "kAppointmentHistory":"Appointment History"
+    "kAppointmentHistory":"Appointment History",
+    "kReportPatient":"Report patient",
+    "kReportAppointment":"Report Appointment",
+    "kReportDiagnose":"Report Diagnose",
+    "kSetting":"Setting",
+    "kLanguage":"Language",
+    "kUser":"User",
+    "kLogout":"Logout",
+    "kOk":"Ok",
+    "kWarning":"Warning",
+    "kLogoutDes":"Do you want to logout?"
+
 }

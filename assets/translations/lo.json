@@ -67,5 +67,15 @@
     "kAppointmentDate":"ວັນທີ່ມາພົບແພດ",
     "kDiagnoseHistory":"ປະຫວັດການພົບແພດ",
     "kDiseases":"ອາການ",
-    "kAppointmentHistory":"ປະຫັວດການນັດພົບ"
+    "kAppointmentHistory":"ປະຫັວດການນັດພົບ",
+    "kReportPatient":"ລາຍງານຂໍ້ມູນຄົນເຈັບ",
+    "kReportAppointment":"ລາຍງານຂໍ້ມູນການນັດພົບ",
+    "kReportDiagnose":"ລາຍງານຂໍ້ມູນການກວດ",
+    "kSetting":"ຕັ້ງຄ່າ",
+    "kLanguage":"ພາສາ",
+    "kUser":"ຜູ້ໃຊ້",
+    "kLogout":"ອອກຈາກລະບົບ",
+    "kOk":"ຕົກລົງ",
+    "kWarning":"ຄຳເຕືອນ",
+    "kLogoutDes":"ທ່ານຕ້ອງການອອກຈາກລະບົບໍ່?"
 }
