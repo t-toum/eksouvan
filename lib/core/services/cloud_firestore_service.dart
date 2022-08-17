@@ -18,10 +18,17 @@ class CloudFireStoreService {
   final Uuid uuid;
   CloudFireStoreService(this.firebaseFirestore, this.uuid);
 
-  Future<dynamic> getAllUser() async {
+  Future<List<UserModel>> getAllUser() async {
     try {
-      final response = await firebaseFirestore.collection('users').get();
-      return response.metadata;
+      List<UserModel> listUser = [];
+      final response =
+          await firebaseFirestore.collection(ColectionName.users).get();
+      for (var doc in response.docs) {
+        Map<String, dynamic> mapData = doc.data();
+        mapData["docId"] = doc.id;
+        listUser.add(UserModel.fromJson(mapData));
+      }
+      return listUser;
     } on FirebaseException catch (error) {
       throw error.message ?? "";
     }

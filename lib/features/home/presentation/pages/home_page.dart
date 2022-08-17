@@ -25,10 +25,9 @@ class HomePage extends StatelessWidget {
         return AppTemplate(
           actions: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(right: 20),
               child: IconButton(
                 onPressed: () async {
-                  // AppNavigator.navigateTo(AppRoute.settingRoute);
                   await AppNavigator.navigateToWithData(AppRoute.settingRoute);
                   await cubit.refeshSate();
                 },

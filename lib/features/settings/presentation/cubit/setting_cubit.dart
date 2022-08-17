@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../home/domain/usecases/get_logout_usecase.dart';
+import '../../domain/usecases/get_all_user_usecase.dart';
 import '../../domain/usecases/get_lang_usecase.dart';
 import '../../domain/usecases/set_lang_usecase.dart';
 
@@ -17,8 +18,9 @@ class SettingCubit extends Cubit<SettingState> {
   final GetLogoutUsecase getLogoutUsecase;
   final GetLanguageUsecase getLanguageUsecase;
   final SetLanguageUsecase setLanguageUsecase;
-  SettingCubit(
-      this.getLogoutUsecase, this.getLanguageUsecase, this.setLanguageUsecase)
+  final GetAllUserUsecase getAllUserUsecase;
+  SettingCubit(this.getLogoutUsecase, this.getLanguageUsecase,
+      this.setLanguageUsecase, this.getAllUserUsecase)
       : super(const SettingState());
   bool lang = false;
 
@@ -79,5 +81,15 @@ class SettingCubit extends Cubit<SettingState> {
     emit(state.copyWith(dataStatus: DataStatus.success));
   }
 
-  Future<void> getAllUser() async {}
+  Future<void> getAllUser() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result = await getAllUserUsecase(NoParams());
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (success) {
+      print(success);
+      emit(state.copyWith(dataStatus: DataStatus.success, listUser: success));
+    });
+  }
 }
