@@ -12,10 +12,10 @@ void main() async {
   runApp(EasyLocalization(
     path: Languages.langPath,
     supportedLocales: const [
-      Locale(Languages.laCode),
+      Locale(Languages.loCode),
       Locale(Languages.enCode)
     ],
-    fallbackLocale: const Locale(Languages.enCode),
+    fallbackLocale: const Locale(Languages.loCode),
     child: const MyApp(),
   ));
 }
