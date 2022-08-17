@@ -77,6 +77,8 @@
     "kLogout":"Logout",
     "kOk":"Ok",
     "kWarning":"Warning",
-    "kLogoutDes":"Do you want to logout?"
+    "kLogoutDes":"Do you want to logout?",
+    "kLaoLabel":"Lao",
+    "kEngLabel":"Eng"
 
 }

@@ -20,6 +20,7 @@ class Languages {
   static const String langPath = 'assets/translations';
   static const String loCode = 'lo';
   static const String enCode = 'en';
+  static const String languageCode = 'languageCode';
 }
 
 class AppColors {

@@ -211,7 +211,9 @@ class AppRoute {
         );
       case settingRoute:
         return _materialRoute(const SettingPage(), providers: [
-          BlocProvider<SettingCubit>(create: (context) => getIt<SettingCubit>())
+          BlocProvider<SettingCubit>(
+            create: (context) => getIt<SettingCubit>()..getLang(),
+          )
         ]);
       case settingUserRoute:
         return _materialRoute(const SettingUserPage(), providers: [

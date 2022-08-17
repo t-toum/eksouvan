@@ -27,6 +27,7 @@ class HomeCubit extends Cubit<HomeState> {
         (todoList) => emit(state.copyWith(
             dataStatus: DataStatus.success, todoList: todoList)));
   }
+
   Future<void> getLogOut() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
     final result = await getLogoutUsecase(NoParams());
@@ -37,6 +38,13 @@ class HomeCubit extends Cubit<HomeState> {
         (success) {
       emit(state.copyWith(dataStatus: DataStatus.success));
       AppNavigator.pushAndRemoveUntil(AppRoute.loginRoute);
+    });
+  }
+
+  Future<void> refeshSate() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      emit(state.copyWith(dataStatus: DataStatus.success));
     });
   }
 }

@@ -2,7 +2,6 @@ import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/enum.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
-import 'package:eksouvan/core/widgets/widget_builder.dart';
 import 'package:eksouvan/features/home/presentation/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +14,7 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<HomeCubit>();
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         if (state.dataStatus == DataStatus.loading) {
@@ -27,8 +27,10 @@ class HomePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: IconButton(
-                onPressed: () {
-                  AppNavigator.navigateTo(AppRoute.settingRoute);
+                onPressed: () async {
+                  // AppNavigator.navigateTo(AppRoute.settingRoute);
+                  await AppNavigator.navigateToWithData(AppRoute.settingRoute);
+                  await cubit.refeshSate();
                 },
                 icon: const Icon(
                   Icons.settings,
