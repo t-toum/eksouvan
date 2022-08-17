@@ -18,7 +18,7 @@ const baseUrl = "";
 //Language
 class Languages {
   static const String langPath = 'assets/translations';
-  static const String loCode = 'lo';
+  static const String laCode = 'la';
   static const String enCode = 'en';
 }
 

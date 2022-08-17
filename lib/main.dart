@@ -12,7 +12,7 @@ void main() async {
   runApp(EasyLocalization(
     path: Languages.langPath,
     supportedLocales: const [
-      Locale(Languages.loCode),
+      Locale(Languages.laCode),
       Locale(Languages.enCode)
     ],
     fallbackLocale: const Locale(Languages.enCode),
