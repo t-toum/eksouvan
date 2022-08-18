@@ -1,31 +1,29 @@
-import 'package:eksouvan/core/error/exceptions.dart';
-import 'package:eksouvan/core/models/todo_model.dart';
-import 'package:eksouvan/core/network/network_call.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 
+import '../../../../core/services/auth_service.dart';
+
 abstract class HomeRemoteDatasource {
-  Future<List<TodoModel>> getTodos();
+  Future<bool> signOutFirebase();
 }
 
 @LazySingleton(as: HomeRemoteDatasource)
 class HomeRemoteDatasourceImpl extends HomeRemoteDatasource {
-  final NetworkCall networkCall;
+  final AuthService authService;
   final Logger logger;
-  HomeRemoteDatasourceImpl({
+  HomeRemoteDatasourceImpl(
+    this.authService, {
     required this.logger,
-    required this.networkCall,
   });
 
   @override
-  Future<List<TodoModel>> getTodos() async {
+  Future<bool> signOutFirebase()async {
     try {
-      final response = await networkCall.getTodos();
-      logger.i(response);
-      return response;
-    } catch (e) {
-      logger.d(e);
-      throw ServerException(msg: e.toString());
+      final res =await authService.signOut();
+      return res;
+    } on FirebaseAuthException catch (eror) {
+      throw eror.message ?? '';
     }
   }
 }

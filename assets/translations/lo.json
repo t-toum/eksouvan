@@ -29,7 +29,7 @@
     "kMale": "ຜູ້ຊາຍ",
     "kFemale": "ຜູ້ຍິງ",
     "kWeight": "ນ້ຳຫນັກ",
-    "KHeight": "ລວງສູງ",
+    "kHeight": "ລວງສູງ",
     "kKg": "Kg",
     "kCm": "cm",
     "kCongenitalDeases": "ໂລກປະຈຳໂຕ",
@@ -46,7 +46,7 @@
     "kGeneral": "ຂໍ້ມູນທົ່ວໄປ",
     "kClinicalData": "ຂໍ້ມູນດ້ານການແພດ",
     "kNext": "ຖັດໄປ",
-    "KSymptom": "ອາການ",
+    "kSymptom": "ອາການ",
     "kAddNew": "ເພີ່ມໃຫມ່",
     "kCancel": "ຍົກເລີກ",
     "kSave": "ບັນທຶກ",
@@ -79,5 +79,9 @@
     "kWarning":"ຄຳເຕືອນ",
     "kLogoutDes":"ທ່ານຕ້ອງການອອກຈາກລະບົບໍ່?",
     "kLaoLabel":"ລາວ",
-    "kEngLabel":"ອັງກິດ"
+    "kEngLabel":"ອັງກິດ",
+    "kUsername":"ຊື່ຜູ້ໃຊ້",
+    "kNewUser":"ເພີ່ມຜູ້ໃຊ້ໃຫມ່",
+    "kEmail":"ອີເມລ",
+    "kPassword":"ລະຫັດຜ່ານ"
 }

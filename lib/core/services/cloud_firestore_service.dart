@@ -212,4 +212,15 @@ class CloudFireStoreService {
       throw error.toString();
     }
   }
+
+  Future<dynamic> saveUser({required UserModel data}) async {
+    try {
+      final res = await firebaseFirestore
+          .collection(ColectionName.users)
+          .add(data.toJson());
+      return res.get();
+    } catch (error) {
+      throw error.toString();
+    }
+  }
 }

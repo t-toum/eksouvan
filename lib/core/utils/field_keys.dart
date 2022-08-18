@@ -31,4 +31,9 @@ class FieldKeys {
   //Appointment
   static const String kAppointmentDate = "appointmentDate";
   static const String kDocId = "docId";
+
+  //User
+  static const String kName = "name";
+  static const String kEmail = "email";
+  static const String kPassword = "password";
 }

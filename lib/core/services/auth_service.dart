@@ -16,12 +16,23 @@ class AuthService {
     }
   }
 
+  Future<UserCredential> createUser(
+      {required String email, required String password}) async {
+    try {
+      final credential = await firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return credential;
+    } on FirebaseAuthException catch (error) {
+      throw error.message ?? 'Error create user';
+    }
+  }
+
   Future<dynamic> signOut() async {
     try {
       await firebaseAuth.signOut();
       return true;
     } on FirebaseAuthException catch (error) {
-      throw error.message ?? "Firebase Auth";
+      throw error.message ?? "Sign out Firebase Auth";
     }
   }
 }

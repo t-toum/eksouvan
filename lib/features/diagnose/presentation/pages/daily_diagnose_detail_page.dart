@@ -117,7 +117,7 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                   ),
                   CustomTextField(
                     name: FieldKeys.kHeight,
-                    labelText: LocaleKeys.KHeight.tr(),
+                    labelText: LocaleKeys.kHeight.tr(),
                     hintText: LocaleKeys.kCm.tr(),
                     initialValue: state.patient?.height.toString(),
                     enabled: false,

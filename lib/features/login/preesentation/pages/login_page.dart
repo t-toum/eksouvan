@@ -97,8 +97,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       CusttomButton(
                         onPressed: () {
-                          final String email =
-                              "${emailController.text}@eksouvan.com";
+                          final String email = emailController.text;
                           if (_formKey.currentState!.saveAndValidate()) {
                             context.read<LoginCubit>().login(
                                 email: email,

@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:eksouvan/features/home/data/datasources/home_local_datasource.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../../core/entities/todo.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
@@ -20,22 +18,9 @@ class HomeRepositoryImpl extends HomeRepository {
       required this.homeLocalDatasource});
 
   @override
-  Future<Either<Failure, List<Todo>>> getTodos() async {
-    try {
-      if (await networkInfo.isConnected) {
-        final listTodos = await homeRemoteDatasource.getTodos();
-        return Right(listTodos);
-      } else {
-        return const Left(ServerFailure(msg: "No Internet connection"));
-      }
-    } on ServerException catch (e) {
-      return Left(ServerFailure(msg: e.msg));
-    }
-  }
-
-  @override
   Future<Either<Failure, bool>> logOut() async {
     try {
+      await homeRemoteDatasource.signOutFirebase();
       final result = await homeLocalDatasource.logOut();
       return Right(result);
     } on CacheException catch (e) {

@@ -29,7 +29,7 @@
     "kMale": "Male",
     "kFemale": "Female",
     "kWeight": "Weight",
-    "KHeight": "Height",
+    "kHeight": "Height",
     "kKg": "Kg",
     "kCm": "cm",
     "kCongenitalDeases": "Congenital Deases",
@@ -75,10 +75,14 @@
     "kLanguage":"Language",
     "kUser":"Users",
     "kLogout":"Logout",
-    "kOk":"Ok",
+    "kOk":"OK",
     "kWarning":"Warning",
     "kLogoutDes":"Do you want to logout?",
     "kLaoLabel":"Lao",
-    "kEngLabel":"Eng"
+    "kEngLabel":"Eng",
+    "kUsername":"Name",
+    "kNewUser":"New User",
+    "kEmail":"Email",
+    "kPassword":"Password"
 
 }

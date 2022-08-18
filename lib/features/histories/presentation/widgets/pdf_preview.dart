@@ -121,7 +121,7 @@ class PdfPreviewWidget extends StatelessWidget {
                         value: '${historyParams?.patient?.weight}.Kg',
                       ),
                       textItem(
-                        title: LocaleKeys.KHeight.tr(),
+                        title: LocaleKeys.kHeight.tr(),
                         value: '${historyParams?.patient?.height}.cm',
                       ),
                       textItem(

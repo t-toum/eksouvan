@@ -10,12 +10,14 @@ class UserModel extends User {
     String? password,
     String? docId,
     String? role,
+    String? email,
   ) : super(
           name: name,
           username: username,
           password: password,
           docId: docId,
           role: role,
+          email: email,
         );
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);

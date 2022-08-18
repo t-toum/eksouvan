@@ -1,16 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/models/user_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/settings/presentation/cubit/setting_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../home/domain/usecases/get_logout_usecase.dart';
+import '../../domain/usecases/create_user_usecase.dart';
 import '../../domain/usecases/get_all_user_usecase.dart';
 import '../../domain/usecases/get_lang_usecase.dart';
+import '../../domain/usecases/save_user_usecase.dart';
 import '../../domain/usecases/set_lang_usecase.dart';
 
 @injectable
@@ -19,10 +24,20 @@ class SettingCubit extends Cubit<SettingState> {
   final GetLanguageUsecase getLanguageUsecase;
   final SetLanguageUsecase setLanguageUsecase;
   final GetAllUserUsecase getAllUserUsecase;
-  SettingCubit(this.getLogoutUsecase, this.getLanguageUsecase,
-      this.setLanguageUsecase, this.getAllUserUsecase)
+  final CreateuserUsecase createuserUsecase;
+  final SaveUserUsecase saveUserUsecase;
+  SettingCubit(
+      this.getLogoutUsecase,
+      this.getLanguageUsecase,
+      this.setLanguageUsecase,
+      this.getAllUserUsecase,
+      this.createuserUsecase,
+      this.saveUserUsecase)
       : super(const SettingState());
   bool lang = false;
+  final formAddUserKey = GlobalKey<FormBuilderState>();
+  String? userUuid;
+  Map<String, dynamic> formValue = {};
 
   Future<void> getLogout() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
@@ -91,5 +106,29 @@ class SettingCubit extends Cubit<SettingState> {
       print(success);
       emit(state.copyWith(dataStatus: DataStatus.success, listUser: success));
     });
+  }
+
+  Future<void> createNewUser() async {
+    if (formAddUserKey.currentState!.saveAndValidate()) {
+      emit(state.copyWith(dataStatus: DataStatus.loading));
+      formValue.addAll({...formAddUserKey.currentState?.value ?? {}});
+      final result = await createuserUsecase(CreateuserUsecaseParams(
+          email: formValue[FieldKeys.kEmail],
+          password: formValue[FieldKeys.kPassword]));
+      result.fold(
+          (error) => emit(
+              state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+          (uid) async {
+        formValue.addAll({FieldKeys.kDocId: uid});
+        UserModel data = UserModel.fromJson(formValue);
+        final res = await saveUserUsecase(SaveUserUsecaseParams(data: data));
+        res.fold(
+            (error) => emit(state.copyWith(
+                dataStatus: DataStatus.failure, error: error.msg)), (r) {
+          emit(state.copyWith(dataStatus: DataStatus.success));
+          AppNavigator.goBackWithData();
+        });
+      });
+    }
   }
 }

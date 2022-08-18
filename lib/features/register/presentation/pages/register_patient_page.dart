@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/constants.dart';
-import 'package:eksouvan/core/utils/dropdown_item.dart';
 import 'package:eksouvan/core/utils/form_builder_validator.dart';
 import 'package:eksouvan/core/widgets/custom_textfield.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
@@ -107,7 +106,7 @@ class RegisterPatientPage extends StatelessWidget {
                   ),
                   CustomTextField(
                     name: FieldKeys.kHeight,
-                    labelText: LocaleKeys.KHeight.tr(),
+                    labelText: LocaleKeys.kHeight.tr(),
                     hintText: LocaleKeys.kCm.tr(),
                     textInputType: TextInputType.number,
                   ),
