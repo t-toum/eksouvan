@@ -80,9 +80,10 @@ class SettingPage extends StatelessWidget {
                           ),
                           const Divider(),
                           SettingItem(
-                            title: LocaleKeys.kMedicine.tr(),
-                            icon: AppImages.medicine,
-                          ),
+                              title: LocaleKeys.kMedicine.tr(),
+                              icon: AppImages.medicine,
+                              onTap: (() => AppNavigator.navigateTo(
+                                  AppRoute.settingMedicineRoute))),
                           const Divider(),
                           SettingItem(
                             title: LocaleKeys.kDeases.tr(),

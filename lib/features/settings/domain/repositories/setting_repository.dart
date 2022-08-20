@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:eksouvan/core/entities/medicine_type.dart';
 import 'package:eksouvan/core/error/failures.dart';
 import 'package:eksouvan/core/models/user_model.dart';
 
@@ -11,4 +12,5 @@ abstract class SettingRepository {
   Future<Either<Failure, String>> createUser(
       {required String email, required String password});
   Future<Either<Failure, dynamic>> saveUser({required UserModel data});
+  Future<Either<Failure,List<MedicineType>>>getMedicineType();
 }

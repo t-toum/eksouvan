@@ -84,5 +84,12 @@
     "kNewUser":"ເພີ່ມຜູ້ໃຊ້ໃຫມ່",
     "kEmail":"ອີເມລ",
     "kPassword":"ລະຫັດຜ່ານ",
-    "kBloodType":"ກຸບເລືອດ"
+    "kBloodType":"ກຸບເລືອດ",
+    "kListMedicine":"ລາຍການຢາ",
+    "kAddMedicine":"ເພີ່ມລາຍການຢາໃຫມ່",
+    "kEditMedicine":"ແກ້ໄຂຂໍ້ມູນ",
+    "kMedicineName":"ຊື່ຢາ",
+    "kMedicineType":"ປະເພດຢາ",
+    "kSelectMedicineType":"ເລືອກປະເພດຢາ",
+    "kWarnningSelect":"ກະລຸນາເລືອກຢ່າງນ້ອຍຫນຶ່ງລາຍການ"
 }

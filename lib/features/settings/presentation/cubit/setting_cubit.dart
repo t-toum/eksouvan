@@ -5,6 +5,7 @@ import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
+import 'package:eksouvan/features/diagnose/domain/useases/get_all_medicines_usecase.dart';
 import 'package:eksouvan/features/settings/presentation/cubit/setting_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,7 @@ import '../../../home/domain/usecases/get_logout_usecase.dart';
 import '../../domain/usecases/create_user_usecase.dart';
 import '../../domain/usecases/get_all_user_usecase.dart';
 import '../../domain/usecases/get_lang_usecase.dart';
+import '../../domain/usecases/get_medicine_type_usecase.dart';
 import '../../domain/usecases/save_user_usecase.dart';
 import '../../domain/usecases/set_lang_usecase.dart';
 
@@ -26,16 +28,21 @@ class SettingCubit extends Cubit<SettingState> {
   final GetAllUserUsecase getAllUserUsecase;
   final CreateuserUsecase createuserUsecase;
   final SaveUserUsecase saveUserUsecase;
+  final GetAllMedicineUsecase getAllMedicineUsecase;
+  final GetMedicineTypeUsecase getMedicineTypeUsecase;
   SettingCubit(
       this.getLogoutUsecase,
       this.getLanguageUsecase,
       this.setLanguageUsecase,
       this.getAllUserUsecase,
       this.createuserUsecase,
-      this.saveUserUsecase)
+      this.saveUserUsecase,
+      this.getAllMedicineUsecase,
+      this.getMedicineTypeUsecase)
       : super(const SettingState());
   bool lang = false;
   final formAddUserKey = GlobalKey<FormBuilderState>();
+  final medicineKey = GlobalKey<FormBuilderState>();
   String? userUuid;
   Map<String, dynamic> formValue = {};
 
@@ -130,5 +137,34 @@ class SettingCubit extends Cubit<SettingState> {
         });
       });
     }
+  }
+
+  Future<void> getMedicineType() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result = await getMedicineTypeUsecase(NoParams());
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (medicineType) {
+      emit(state.copyWith(
+        dataStatus: DataStatus.success,
+        listMedicineType: medicineType,
+      ));
+    });
+  }
+
+  Future<void> getAllMedicine() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result = await getAllMedicineUsecase(NoParams());
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (r) {
+      emit(state.copyWith(dataStatus: DataStatus.success, listMedicine: r));
+    });
+  }
+
+  Future<void> onSaveMedicine() async {
+    if (medicineKey.currentState!.saveAndValidate()) {}
   }
 }

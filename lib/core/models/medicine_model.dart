@@ -8,7 +8,13 @@ class MedicineModel extends Medicine {
     String? docId,
     String? medicine,
     String? description,
-  }) : super(docId: docId, medicine: medicine, description: description);
+    String? type,
+  }) : super(
+          docId: docId,
+          medicine: medicine,
+          description: description,
+          type: type,
+        );
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) =>
       _$MedicineModelFromJson(json);

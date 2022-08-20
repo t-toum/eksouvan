@@ -84,6 +84,13 @@
     "kNewUser":"New User",
     "kEmail":"Email",
     "kPassword":"Password",
-    "kBloodType":"Blood Type"
+    "kBloodType":"Blood Type",
+    "kListMedicine":"List Medicine",
+    "kAddMedicine":"Add new medicine",
+    "kEditMedicine":"Update new medicine",
+    "kMedicineName":"Medicine name",
+    "kMedicineType":"Medicine Type",
+    "kSelectMedicineType":"Select medicine type",
+    "kWarnningSelect":"Please select at lease one item"
 
 }

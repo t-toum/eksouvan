@@ -1,3 +1,4 @@
+import 'package:eksouvan/core/entities/medicine_type.dart';
 import 'package:eksouvan/core/entities/user.dart';
 import 'package:eksouvan/core/error/exceptions.dart';
 import 'package:eksouvan/core/error/failures.dart';
@@ -60,9 +61,19 @@ class SettingRepositoryImpl extends SettingRepository {
   }
 
   @override
-  Future<Either<Failure, dynamic>> saveUser({required UserModel data}) async{
+  Future<Either<Failure, dynamic>> saveUser({required UserModel data}) async {
     try {
       final result = await settingRemoteDatasource.saveUser(data: data);
+      return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(msg: error.msg));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MedicineType>>> getMedicineType() async {
+    try {
+      final result = await settingRemoteDatasource.getMedicineType();
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(msg: error.msg));

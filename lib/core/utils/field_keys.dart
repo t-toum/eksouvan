@@ -28,6 +28,7 @@ class FieldKeys {
   static const String kDeases = "deases";
   //Medicine
   static const String kMedicine = "medicines";
+  static const String kMedicineType = "medicineType";
 
   //Appointment
   static const String kAppointmentDate = "appointmentDate";

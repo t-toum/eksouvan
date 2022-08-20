@@ -17,6 +17,7 @@ import 'package:eksouvan/features/reports/presentations/pages/report_diagnose_pa
 import 'package:eksouvan/features/reports/presentations/pages/report_page.dart';
 import 'package:eksouvan/features/reports/presentations/pages/report_patient_page.dart';
 import 'package:eksouvan/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:eksouvan/features/settings/presentation/pages/setting_medicine_page.dart';
 import 'package:eksouvan/features/settings/presentation/pages/setting_page.dart';
 import 'package:eksouvan/features/settings/presentation/pages/setting_user_page.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,7 @@ class AppRoute {
   static const String reportAppointmentRoute = "/reportAppointment";
   static const String settingRoute = "/setting";
   static const String settingUserRoute = "/settingUser";
+  static const String settingMedicineRoute = "/settingMedicine";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -219,6 +221,13 @@ class AppRoute {
         return _materialRoute(const SettingUserPage(), providers: [
           BlocProvider<SettingCubit>(
               create: (context) => getIt<SettingCubit>()..getAllUser())
+        ]);
+
+      case settingMedicineRoute:
+        return _materialRoute(const SettingMedicinePage(), providers: [
+          BlocProvider<SettingCubit>(
+            create: (context) => getIt<SettingCubit>()..getAllMedicine(),
+          )
         ]);
       default:
         return MaterialPageRoute(

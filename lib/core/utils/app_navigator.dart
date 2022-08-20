@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class AppNavigator {
   static GlobalKey<NavigatorState>? navigatorKey;
@@ -64,6 +65,14 @@ class AppNavigator {
           ],
         );
       },
+    );
+  }
+
+  static openModel({required Widget chiled}) {
+    showCupertinoModalBottomSheet(
+      enableDrag: false,
+      context: navigatorKey!.currentContext!,
+      builder: ((_) => chiled),
     );
   }
 }

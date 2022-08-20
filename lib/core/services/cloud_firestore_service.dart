@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
+import 'package:eksouvan/core/models/medicine_type_mode.dart';
 import 'package:eksouvan/core/models/user_model.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
@@ -220,6 +221,33 @@ class CloudFireStoreService {
           .add(data.toJson());
       return res.get();
     } catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<List<MedicineTypeMedel>> getMedicineType() async {
+    List<MedicineTypeMedel> lsitMidecineType = [];
+    try {
+      final res =
+          await firebaseFirestore.collection(ColectionName.medicine_type).get();
+      for (var medicineType in res.docs) {
+        Map<String, dynamic> mapData = medicineType.data();
+        mapData['id'] = medicineType.id;
+        lsitMidecineType.add(MedicineTypeMedel.fromJson(mapData));
+      }
+      return lsitMidecineType;
+    } on FirebaseException catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<dynamic> addMedicineType({required MedicineTypeMedel data}) async {
+    try {
+      final res = await firebaseFirestore
+          .collection(ColectionName.medicine_type)
+          .add(data.toJson());
+      return res.get();
+    } on FirebaseException catch (error) {
       throw error.toString();
     }
   }
