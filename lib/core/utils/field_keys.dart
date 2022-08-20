@@ -12,6 +12,7 @@ class FieldKeys {
   static const String kUserId = "userId";
   static const String kCreateDate = "createDate";
   static const String kLastUpdate = "lastUpdate";
+  static const String kBloodType = "bloodType";
 
   //Diagnose
   static const String kBloodPressure = "bloodPressure";

@@ -113,6 +113,15 @@ class RegisterPatientPage extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
+                  CustomDropdown(
+                    name: FieldKeys.kBloodType,
+                    items: listBloodType,
+                    labelText: LocaleKeys.kBloodType.tr(),
+                    hintText: LocaleKeys.kBloodType.tr(),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   CustomTextField(
                     name: FieldKeys.kCongenitalDeases,
                     labelText: LocaleKeys.kCongenitalDeases.tr(),

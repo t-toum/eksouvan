@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/utils/dropdown_item.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
@@ -72,4 +73,12 @@ List<String> historyColumn = [
 List<String> historyAppointment = [
   LocaleKeys.kAppointment.tr(),
   LocaleKeys.kDescription.tr(),
+];
+
+//Blood Type
+List<DropdwonItems> listBloodType = [
+  DropdwonItems(id: "A", name: "A"),
+  DropdwonItems(id: "B", name: "B"),
+  DropdwonItems(id: "AB", name: "AB"),
+  DropdwonItems(id: "O", name: "O"),
 ];

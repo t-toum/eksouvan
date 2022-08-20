@@ -134,6 +134,16 @@ class DailyDiagnoseDetailPage extends StatelessWidget {
                     labelText: LocaleKeys.kWeight.tr(),
                     hintText: LocaleKeys.kKg.tr(),
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomDropdown(
+                    labelText: LocaleKeys.kBloodType.tr(),
+                    items: listBloodType,
+                    name: FieldKeys.kBloodType,
+                    initialValue: state.patient?.bloodType,
+                    enabled: false,
+                  ),
 
                   //Blood Pressure
                   const SizedBox(

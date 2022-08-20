@@ -46,7 +46,7 @@
     "kGeneral": "General",
     "kClinicalData": "Clinical Data",
     "kNext": "Next",
-    "KSymptom": "Symptom",
+    "kSymptom": "Symptom",
     "kAddNew": "Add new",
     "kCancel": "Cancel",
     "kSave": "Save",
@@ -83,6 +83,7 @@
     "kUsername":"Name",
     "kNewUser":"New User",
     "kEmail":"Email",
-    "kPassword":"Password"
+    "kPassword":"Password",
+    "kBloodType":"Blood Type"
 
 }

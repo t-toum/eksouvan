@@ -1,6 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../diagnose/data/model/diagnose_model.dart';
 import '../../domain/entity/patient.dart';
 part 'patient_model.g.dart';
 
@@ -20,6 +18,7 @@ class PatientModel extends Patient {
     double? height,
     double? weight,
     String? congnitialDeases,
+    String? bloodType,
   }) : super(
           patientId: patientId,
           firstname: firstname,
@@ -34,6 +33,7 @@ class PatientModel extends Patient {
           height: height,
           weight: weight,
           congenitalDeases: congnitialDeases,
+          bloodType: bloodType,
         );
   factory PatientModel.fromJson(Map<String, dynamic> json) =>
       _$PatientModelFromJson(json);

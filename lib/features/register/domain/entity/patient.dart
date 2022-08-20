@@ -14,6 +14,7 @@ class Patient extends Equatable {
   final double? height;
   final double? weight;
   final String? congenitalDeases;
+  final String? bloodType;
 
   const Patient({
     this.patientId,
@@ -29,6 +30,7 @@ class Patient extends Equatable {
     this.height,
     this.weight,
     this.congenitalDeases,
+    this.bloodType,
   });
 
   @override
@@ -45,5 +47,6 @@ class Patient extends Equatable {
         height,
         weight,
         congenitalDeases,
+        bloodType,
       ];
 }
