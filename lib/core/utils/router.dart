@@ -148,7 +148,7 @@ class AppRoute {
         final cubit = settings.arguments as DiagnoseCubit;
         return MaterialPageRoute(
           builder: (context) => BlocProvider<DiagnoseCubit>.value(
-            value: cubit..getAllMedicine(),
+            value: cubit..getAllMedicine()..getMedicineType(),
             child: const MedicinePage(),
           ),
         );

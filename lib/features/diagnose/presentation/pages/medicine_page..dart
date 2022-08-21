@@ -11,8 +11,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../core/usecases/next_page_params.dart';
 import '../../../../core/utils/app_navigator.dart';
+import '../../../../core/utils/dropdown_item.dart';
 import '../../../../core/utils/enum.dart';
 import '../../../../core/utils/field_keys.dart';
+import '../../../../core/widgets/costom_dropdown.dart';
 import '../../../../core/widgets/custom_checkbox.dart';
 import '../../../../core/widgets/custom_textfield.dart';
 import '../../../../core/widgets/loading_widget.dart';
@@ -72,11 +74,26 @@ class MedicinePage extends StatelessWidget {
                         ? false
                         : (cubit.formValue['medicines'] as List<Medicine?>)
                             .contains(state.listMedicine?[index]),
-                    title: Text(
-                      state.listMedicine?[index].medicine ?? '',
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            state.listMedicine?[index].medicine ?? '',
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            cubit.getMedicineTypeName(
+                                id: state.listMedicine?[index].type ?? ''),
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     subtitle:
                         Text(state.listMedicine?[index].description ?? ''),
@@ -182,6 +199,34 @@ class MedicinePage extends StatelessWidget {
                                                     .kRequiredField
                                                     .tr(),
                                               )
+                                            ]),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          CustomDropdown(
+                                            isRequired: true,
+                                            // initialValue: cubit.pickedMedicine,
+                                            labelText:
+                                                LocaleKeys.kMedicineType.tr(),
+                                            hintText: LocaleKeys
+                                                .kSelectMedicineType
+                                                .tr(),
+                                            items: cubit.listMedicineType
+                                                    ?.map((type) =>
+                                                        DropdwonItems(
+                                                            id: type.id,
+                                                            name: type
+                                                                .medicineType))
+                                                    .toList() ??
+                                                [],
+                                            name: FieldKeys.kMedicineType,
+                                            validator:
+                                                FormBuilderValidators.compose([
+                                              FormBuilderValidators.required(
+                                                  errorText: LocaleKeys
+                                                      .kWarnningSelect
+                                                      .tr())
                                             ]),
                                           ),
                                           const SizedBox(

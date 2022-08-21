@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/entities/medicine.dart';
+import 'package:eksouvan/core/entities/medicine_type.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
@@ -26,6 +27,7 @@ import '../../../../core/utils/dropdown_item.dart';
 import '../../../histories/domain/usecases/get_all_patient_usecase.dart';
 import '../../../histories/domain/usecases/get_patient_usecase.dart';
 import '../../../home/domain/usecases/get_current_user_usecase.dart';
+import '../../../settings/domain/usecases/get_medicine_type_usecase.dart';
 import '../../domain/useases/add_diagnose_usecase.dart';
 import '../../domain/useases/add_new_medicine_usecase.dart';
 import '../../domain/useases/get_all_medicines_usecase.dart';
@@ -42,6 +44,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   final GetAllMedicineUsecase getAllMedicineUsecase;
   final AddNewMedicineUsecase addNewMedicineUsecase;
   final Uuid uuid;
+  final GetMedicineTypeUsecase getMedicineTypeUsecase;
   DiagnoseCubit(
       this.getAllPatientUsecase,
       this.addDiagnoseUsecase,
@@ -51,7 +54,8 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
       this.getAllDeaseUsecase,
       this.addDeasesUsecase,
       this.getAllMedicineUsecase,
-      this.addNewMedicineUsecase)
+      this.addNewMedicineUsecase,
+      this.getMedicineTypeUsecase)
       : super(const DiagnoseState());
   TextEditingController searchController = TextEditingController();
   final patientKey = GlobalKey<FormBuilderState>();
@@ -62,6 +66,7 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
   //Deases
   List<Deases?> listDeases = [];
   List<Medicine?> listMedicine = [];
+  List<MedicineType>? listMedicineType;
 
   String? currentUserId;
   List<DropdwonItems> genderList = [
@@ -164,6 +169,29 @@ class DiagnoseCubit extends Cubit<DiagnoseState> {
       emit(state.copyWith(
           dataStatus: DataStatus.success, listMedicine: listData));
     });
+  }
+
+  Future<void> getMedicineType() async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result = await getMedicineTypeUsecase(NoParams());
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (medicineType) {
+      listMedicineType = medicineType;
+      emit(state.copyWith(
+        dataStatus: DataStatus.success,
+      ));
+    });
+  }
+
+  String getMedicineTypeName({String? id}) {
+    if (id != null || id != "") {
+      var data = listMedicineType?.where((el) => el.id == id).first;
+      return data?.medicineType ?? '';
+    } else {
+      return "";
+    }
   }
 
   Future<void> addNewMedicine() async {
