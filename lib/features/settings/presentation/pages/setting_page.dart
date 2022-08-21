@@ -74,21 +74,21 @@ class SettingPage extends StatelessWidget {
                             },
                           ),
                           const Divider(),
-                          SettingItem(
-                            title: LocaleKeys.kPatinet.tr(),
-                            icon: AppImages.patient,
-                          ),
-                          const Divider(),
+                          // SettingItem(
+                          //   title: LocaleKeys.kPatinet.tr(),
+                          //   icon: AppImages.patient,
+                          // ),
+                          // const Divider(),
                           SettingItem(
                               title: LocaleKeys.kMedicine.tr(),
                               icon: AppImages.medicine,
                               onTap: (() => AppNavigator.navigateTo(
                                   AppRoute.settingMedicineRoute))),
-                          const Divider(),
-                          SettingItem(
-                            title: LocaleKeys.kDeases.tr(),
-                            icon: AppImages.deases,
-                          ),
+                          // const Divider(),
+                          // SettingItem(
+                          //   title: LocaleKeys.kDeases.tr(),
+                          //   icon: AppImages.deases,
+                          // ),
                         ],
                       ),
                     ),

@@ -10,7 +10,9 @@ class CustomDatePicker extends StatelessWidget {
   final String? hintText;
   final bool isRequired;
   final DateTime? lastDate;
+  final DateTime? initialDate;
   FormFieldValidator<DateTime>? validator;
+  ValueChanged<DateTime?>? onChanged;
   CustomDatePicker({
     Key? key,
     required this.title,
@@ -19,6 +21,8 @@ class CustomDatePicker extends StatelessWidget {
     this.hintText,
     this.isRequired = false,
     this.lastDate,
+    this.onChanged,
+    this.initialDate,
   }) : super(key: key);
 
   @override
@@ -54,6 +58,7 @@ class CustomDatePicker extends StatelessWidget {
           FormBuilderDateTimePicker(
             name: name,
             inputType: InputType.date,
+            initialDate: initialDate,
             firstDate: DateTime(1900),
             lastDate: lastDate ?? DateTime.now(),
             decoration: InputDecoration(
@@ -65,6 +70,7 @@ class CustomDatePicker extends StatelessWidget {
               hintText: hintText,
             ),
             validator: validator,
+            onChanged: onChanged,
           ),
         ],
       ),

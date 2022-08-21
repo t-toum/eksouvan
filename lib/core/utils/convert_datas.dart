@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
-import 'package:eksouvan/features/diagnose/domain/entity/deases.dart';
 import 'package:eksouvan/generated/locale_keys.g.dart';
 
 class ConvertDatas {
@@ -41,11 +40,15 @@ class ConvertDatas {
     }
   }
 
-  static String convertGender(int? id) {
+  static String convertGender({int? id, bool? isShort}) {
     if (id == 1) {
-      return LocaleKeys.kMale.tr();
+      return (isShort == true)
+          ? LocaleKeys.kMaleShort.tr()
+          : LocaleKeys.kMale.tr();
     } else {
-      return LocaleKeys.kFemale.tr();
+      return (isShort == true)
+          ? LocaleKeys.kFemaleShort.tr()
+          : LocaleKeys.kFemale.tr();
     }
   }
 }

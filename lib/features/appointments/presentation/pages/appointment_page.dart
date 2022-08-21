@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
 import 'package:eksouvan/core/utils/convert_datas.dart';
-import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/core/widgets/app_template.dart';
 import 'package:eksouvan/core/widgets/loading_widget.dart';
 import 'package:eksouvan/features/appointments/presentation/widgets/add_appointment.dart';
@@ -10,10 +9,10 @@ import 'package:eksouvan/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
 import '../cubit/appointment_cubit.dart';
 import '../cubit/appointment_state.dart';
 import '../widgets/appointment_item.dart';
+import '../widgets/modal_appointment_widget.dart';
 
 class AppointmentPage extends StatelessWidget {
   const AppointmentPage({Key? key}) : super(key: key);
@@ -70,7 +69,9 @@ class AppointmentPage extends StatelessWidget {
                   dueDate: ConvertDatas.converDateFormat(
                       state.listAppointment?[index].dueDate),
                   onTap: () {
-                    AppNavigator.navigateTo(AppRoute.appointmentDetailRoute);
+                    AppNavigator.openModel(
+                      chiled: const ModalAppointmentWidget(),
+                    );
                   },
                 );
               },

@@ -109,7 +109,7 @@ class PdfPreviewWidget extends StatelessWidget {
                       textItem(
                         title: LocaleKeys.kGender.tr(),
                         value: ConvertDatas.convertGender(
-                            historyParams?.patient?.gender),
+                            id: historyParams?.patient?.gender),
                       ),
                       textItem(
                         title: LocaleKeys.kDateOfBirth.tr(),

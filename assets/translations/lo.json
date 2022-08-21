@@ -95,6 +95,13 @@
     "kListAllMedicine": "ລາຍການຢາທັງຫມົດ",
     "kListAllMedicineType": "ລາຍການປະເພດຢາທັງຫມົດ",
     "kAddMedicineType": "ເພີ່ມປະເພດຢາໃຫມ່",
-    "kMedicineTypeName":"ຊື່ປະເພດຢາ",
-    "kDeleteMessage":"ທ່ານຕ້ອງການທີ່ຈະລຶບລາຍການນີ້ບໍ່ ?"
+    "kMedicineTypeName": "ຊື່ປະເພດຢາ",
+    "kDeleteMessage": "ທ່ານຕ້ອງການທີ່ຈະລຶບລາຍການນີ້ບໍ່ ?",
+    "kMaleShort": "ທ",
+    "kFemaleShort": "ນ",
+    "kNo": "ລ/ດ",
+    "kFirstname": "ຊື່",
+    "kRegisterDate":"ວັນທີ່ລົງທະບຽນ",
+    "kStartDate":"ເລີ່ມວັນທີ່",
+    "kEndDate":"ຫາວັນທີ່"
 }

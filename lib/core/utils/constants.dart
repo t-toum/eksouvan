@@ -84,3 +84,12 @@ List<DropdwonItems> listBloodType = [
   DropdwonItems(id: "AB", name: "AB"),
   DropdwonItems(id: "O", name: "O"),
 ];
+
+final List<String> reportPatientcolumns = [
+      LocaleKeys.kNo.tr(),
+      LocaleKeys.kGender.tr(),
+      LocaleKeys.kFirstname.tr(),
+      LocaleKeys.kLastName.tr(),
+      LocaleKeys.kDateOfBirth.tr(),
+      LocaleKeys.kRegisterDate.tr(),
+    ];

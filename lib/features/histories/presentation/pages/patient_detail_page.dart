@@ -22,9 +22,7 @@ class PatientDetailPage extends StatelessWidget {
     return BlocBuilder<HistoryCubit, HistoryState>(
       builder: (context, state) {
         if (state.dataStatus == DataStatus.loading) {
-          return LoadingWidget(
-            title: LocaleKeys.kLoginLabel.tr(),
-          );
+          return const LoadingWidget();
         }
         return AppTemplate(
           title: LocaleKeys.kPatientHistory.tr(),
