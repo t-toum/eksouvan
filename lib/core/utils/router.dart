@@ -210,6 +210,10 @@ class AppRoute {
       case reportDiagnoseRoute:
         return _materialRoute(
           const ReportDiagnosePage(),
+          providers: [
+            BlocProvider<ReportCubit>(
+              create: (context) => getIt<ReportCubit>()..getAllDiagnose())
+          ]
         );
       case reportAppointmentRoute:
         return _materialRoute(

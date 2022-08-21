@@ -59,7 +59,6 @@ class ColectionName {
   static const String medicines = "medicines";
   static const String appointments = "appointments";
   static const String medicine_type = "medicine_type";
-
 }
 
 class DateFormatPattern {
@@ -86,10 +85,18 @@ List<DropdwonItems> listBloodType = [
 ];
 
 final List<String> reportPatientcolumns = [
-      LocaleKeys.kNo.tr(),
-      LocaleKeys.kGender.tr(),
-      LocaleKeys.kFirstname.tr(),
-      LocaleKeys.kLastName.tr(),
-      LocaleKeys.kDateOfBirth.tr(),
-      LocaleKeys.kRegisterDate.tr(),
-    ];
+  LocaleKeys.kNo.tr(),
+  LocaleKeys.kGender.tr(),
+  LocaleKeys.kFirstname.tr(),
+  LocaleKeys.kLastName.tr(),
+  LocaleKeys.kDateOfBirth.tr(),
+  LocaleKeys.kRegisterDate.tr(),
+];
+
+final List<String> reportDiagnoseColumns = [
+  LocaleKeys.kNo.tr(),
+ LocaleKeys.kDate.tr(),
+  LocaleKeys.kDeases.tr(),
+  LocaleKeys.kMedicine.tr(),
+  LocaleKeys.kDescription.tr(),
+];
