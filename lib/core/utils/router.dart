@@ -17,7 +17,7 @@ import 'package:eksouvan/features/reports/presentations/pages/report_diagnose_pa
 import 'package:eksouvan/features/reports/presentations/pages/report_page.dart';
 import 'package:eksouvan/features/reports/presentations/pages/report_patient_page.dart';
 import 'package:eksouvan/features/settings/presentation/cubit/setting_cubit.dart';
-import 'package:eksouvan/features/settings/presentation/pages/setting_medicine_page.dart';
+import 'package:eksouvan/features/settings/presentation/pages/medicines/setting_medicine_page.dart';
 import 'package:eksouvan/features/settings/presentation/pages/setting_page.dart';
 import 'package:eksouvan/features/settings/presentation/pages/setting_user_page.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +35,8 @@ import '../../features/diagnose/presentation/widgets/add_diagnose_success_widget
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/register/presentation/cubit/register_patient_cubit.dart';
 import '../../features/register/presentation/pages/register_patient_page.dart';
+import '../../features/settings/presentation/pages/medicines/list_medicine_page.dart';
+import '../../features/settings/presentation/pages/medicines/list_medicine_type_page.dart';
 import '../usecases/pdf_history_params.dart';
 import '../usecases/success_params.dart';
 import '../widgets/success_widget.dart';
@@ -68,6 +70,8 @@ class AppRoute {
   static const String settingRoute = "/setting";
   static const String settingUserRoute = "/settingUser";
   static const String settingMedicineRoute = "/settingMedicine";
+  static const String listMedicineRoute = "/listMedicine";
+  static const String listMedicineTypeRoute = "/listMedicineType";
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -224,9 +228,19 @@ class AppRoute {
         ]);
 
       case settingMedicineRoute:
-        return _materialRoute(const SettingMedicinePage(), providers: [
+        return _materialRoute(
+          const SettingMedicinePage(),
+        );
+      case listMedicineRoute:
+        return _materialRoute(const ListMedicinePage(), providers: [
           BlocProvider<SettingCubit>(
-            create: (context) => getIt<SettingCubit>()..getAllMedicine(),
+            create: (context) => getIt<SettingCubit>()..getAllMedicine()..getMedicineType(),
+          )
+        ]);
+      case listMedicineTypeRoute:
+        return _materialRoute(const ListMedicineTypePage(), providers: [
+          BlocProvider<SettingCubit>(
+            create: (context) => getIt<SettingCubit>()..getMedicineType(),
           )
         ]);
       default:

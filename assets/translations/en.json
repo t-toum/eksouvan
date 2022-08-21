@@ -91,6 +91,12 @@
     "kMedicineName":"Medicine name",
     "kMedicineType":"Medicine Type",
     "kSelectMedicineType":"Select medicine type",
-    "kWarnningSelect":"Please select at lease one item"
+    "kWarnningSelect":"Please select at lease one item",
+    "kListAllMedicine":"List all medicine",
+    "kListAllMedicineType":"List all medicine type",
+    "kAddMedicineType":"Add new medicine type",
+    "kMedicineTypeName":"Type name",
+    "kDeleteMessage":"Do you want to delete this item ?"
+
 
 }

@@ -13,6 +13,8 @@ abstract class SettingRemoteDatasource {
       {required String email, required String password});
   Future<dynamic> saveUser({required UserModel data});
   Future<List<MedicineTypeMedel>> getMedicineType();
+  Future<dynamic> addMedicineType({required MedicineTypeMedel data});
+  Future<bool> deleteMedicineType({required String id});
 }
 
 @LazySingleton(as: SettingRemoteDatasource)
@@ -53,6 +55,24 @@ class SettingRemoteDatasourceUmpl extends SettingRemoteDatasource {
   Future<List<MedicineTypeMedel>> getMedicineType() async {
     try {
       return await fireStoreService.getMedicineType();
+    } catch (error) {
+      throw ServerException(msg: error.toString());
+    }
+  }
+
+  @override
+  Future addMedicineType({required MedicineTypeMedel data}) async {
+    try {
+      return await fireStoreService.addMedicineType(data: data);
+    } catch (error) {
+      throw ServerException(msg: error.toString());
+    }
+  }
+
+  @override
+  Future<bool> deleteMedicineType({required String id}) async {
+    try {
+      return await fireStoreService.deleteMidicineType(uid: id);
     } catch (error) {
       throw ServerException(msg: error.toString());
     }

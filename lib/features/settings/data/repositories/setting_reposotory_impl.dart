@@ -3,6 +3,7 @@ import 'package:eksouvan/core/entities/user.dart';
 import 'package:eksouvan/core/error/exceptions.dart';
 import 'package:eksouvan/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
+import 'package:eksouvan/core/models/medicine_type_mode.dart';
 import 'package:eksouvan/core/models/user_model.dart';
 import 'package:eksouvan/features/settings/domain/repositories/setting_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -74,6 +75,27 @@ class SettingRepositoryImpl extends SettingRepository {
   Future<Either<Failure, List<MedicineType>>> getMedicineType() async {
     try {
       final result = await settingRemoteDatasource.getMedicineType();
+      return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(msg: error.msg));
+    }
+  }
+
+  @override
+  Future<Either<Failure, dynamic>> addMedicineType(
+      {required MedicineTypeMedel data}) async {
+    try {
+      final result = await settingRemoteDatasource.addMedicineType(data: data);
+      return Right(result);
+    } on ServerException catch (error) {
+      return Left(ServerFailure(msg: error.msg));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> deleteMedicineType({required String id}) async {
+    try {
+      final result = await settingRemoteDatasource.deleteMedicineType(id: id);
       return Right(result);
     } on ServerException catch (error) {
       return Left(ServerFailure(msg: error.msg));

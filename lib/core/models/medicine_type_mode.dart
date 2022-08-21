@@ -10,7 +10,8 @@ class MedicineTypeMedel extends MedicineType {
     String? description,
   }) : super(
           id: id,
-          medicineType: description,
+          medicineType: medicineType,
+          description: description,
         );
   factory MedicineTypeMedel.fromJson(Map<String, dynamic> json) =>
       _$MedicineTypeMedelFromJson(json);

@@ -4,7 +4,6 @@ import 'package:eksouvan/features/settings/presentation/cubit/setting_cubit.dart
 import 'package:eksouvan/features/settings/presentation/cubit/setting_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/utils/app_navigator.dart';
 import '../../../../../core/utils/dropdown_item.dart';
 import '../../../../../core/utils/field_keys.dart';
 import '../../../../../core/utils/form_builder_validator.dart';
@@ -12,8 +11,6 @@ import '../../../../../core/widgets/costom_dropdown.dart';
 import '../../../../../core/widgets/custom_textfield.dart';
 import '../../../../../core/widgets/custom_textfield_area.dart';
 import '../../../../../generated/locale_keys.g.dart';
-import '../medicine_type_widget.dart';
-import '../modal_widget.dart';
 
 class MedicineFrom extends StatelessWidget {
   const MedicineFrom({Key? key}) : super(key: key);
@@ -43,6 +40,7 @@ class MedicineFrom extends StatelessWidget {
           ),
           CustomDropdown(
             isRequired: true,
+            initialValue: cubit.pickedMedicine,
             labelText: LocaleKeys.kMedicineType.tr(),
             hintText: LocaleKeys.kSelectMedicineType.tr(),
             items: state.listMedicineType
@@ -55,18 +53,6 @@ class MedicineFrom extends StatelessWidget {
               FormBuilderValidators.required(
                   errorText: LocaleKeys.kWarnningSelect.tr())
             ]),
-            enabled: false,
-            onTap: () {
-              //Medicine Type
-              AppNavigator.openModel(
-                  chiled: BlocProvider<SettingCubit>.value(
-                value: cubit,
-                child: ModalWidget(
-                  body: MedicineWidget(),
-                  title: LocaleKeys.kSelectMedicineType.tr(),
-                ),
-              ));
-            },
           ),
           const SizedBox(
             height: 15,

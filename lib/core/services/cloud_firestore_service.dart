@@ -251,4 +251,16 @@ class CloudFireStoreService {
       throw error.toString();
     }
   }
+
+  Future<bool> deleteMidicineType({required String uid}) async {
+    try {
+      await firebaseFirestore
+          .collection(ColectionName.medicine_type)
+          .doc(uid)
+          .delete();
+      return true;
+    } on FirebaseException catch (error) {
+      throw error.toString();
+    }
+  }
 }
