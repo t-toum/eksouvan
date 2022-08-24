@@ -170,11 +170,16 @@ class SettingCubit extends Cubit<SettingState> {
   }
 
   String getMedicineTypeName({String? id}) {
+    String? name;
     if (id != null || id != "") {
-      var data = listMedicineType?.where((el) => el.id == id).first;
-      return data?.medicineType ?? '';
+      listMedicineType?.forEach((el) {
+        if (el.id == id) {
+          name = el.medicineType;
+        }
+      });
+      return name ?? '';
     } else {
-      return "";
+      return name ?? '';
     }
   }
 
