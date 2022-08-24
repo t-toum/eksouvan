@@ -103,7 +103,6 @@
     "kFirstname":"First name",
     "kRegisterDate":"Register Date",
     "kStartDate":"Start date",
-    "kEndDate":"End date"
-
-
+    "kEndDate":"End date",
+    "kUpdate":"Update"
 }

@@ -29,6 +29,11 @@ class CustomDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    T? init = initialValue;
+    if (initialValue != null && items.isNotEmpty) {
+      var value = items.where((el) => el.id == initialValue);
+      init = (value.isNotEmpty) ? initialValue : null;
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 0),
       child: Column(
@@ -70,7 +75,7 @@ class CustomDropdown<T> extends StatelessWidget {
                     borderSide: const BorderSide(color: AppColors.primaryColor),
                     borderRadius: BorderRadius.circular(8)),
               ),
-              initialValue: initialValue,
+              initialValue: init,
               validator: validator,
               allowClear: true,
               hint: Text(hintText ?? ''),

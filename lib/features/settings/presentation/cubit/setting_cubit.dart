@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:eksouvan/core/entities/medicine.dart';
 import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/models/medicine_type_mode.dart';
 import 'package:eksouvan/core/models/user_model.dart';
 import 'package:eksouvan/core/usecases/no_params.dart';
 import 'package:eksouvan/core/utils/app_navigator.dart';
 import 'package:eksouvan/core/utils/constants.dart';
+import 'package:eksouvan/core/utils/dropdown_item.dart';
 import 'package:eksouvan/core/utils/field_keys.dart';
 import 'package:eksouvan/core/utils/router.dart';
 import 'package:eksouvan/features/diagnose/domain/useases/add_new_medicine_usecase.dart';
@@ -20,11 +22,13 @@ import '../../../home/domain/usecases/get_logout_usecase.dart';
 import '../../domain/usecases/add_medicine_type_usecase.dart';
 import '../../domain/usecases/create_user_usecase.dart';
 import '../../domain/usecases/delete_medicine_type_usecase.dart';
+import '../../domain/usecases/delete_medicine_usecase.dart';
 import '../../domain/usecases/get_all_user_usecase.dart';
 import '../../domain/usecases/get_lang_usecase.dart';
 import '../../domain/usecases/get_medicine_type_usecase.dart';
 import '../../domain/usecases/save_user_usecase.dart';
 import '../../domain/usecases/set_lang_usecase.dart';
+import '../../domain/usecases/update_medicine_usecase.dart';
 
 @injectable
 class SettingCubit extends Cubit<SettingState> {
@@ -39,6 +43,8 @@ class SettingCubit extends Cubit<SettingState> {
   final AddMedicineTypeUsecase addMedicineTypeUsecase;
   final DeleteMedicineTypeUsecase deleteMedicineTypeUsecase;
   final AddNewMedicineUsecase addNewMedicineUsecase;
+  final UpdateMedicineUsecase updateMedicineUsecase;
+  final DeleteMedicineUsecase deleteMedicineUsecase;
   SettingCubit(
       this.getLogoutUsecase,
       this.getLanguageUsecase,
@@ -50,7 +56,9 @@ class SettingCubit extends Cubit<SettingState> {
       this.getMedicineTypeUsecase,
       this.addMedicineTypeUsecase,
       this.deleteMedicineTypeUsecase,
-      this.addNewMedicineUsecase)
+      this.addNewMedicineUsecase,
+      this.updateMedicineUsecase,
+      this.deleteMedicineUsecase)
       : super(const SettingState());
   bool lang = false;
   final formAddUserKey = GlobalKey<FormBuilderState>();
@@ -58,8 +66,8 @@ class SettingCubit extends Cubit<SettingState> {
   final medicineTypeKey = GlobalKey<FormBuilderState>();
   String? userUuid;
   Map<String, dynamic> formValue = {};
-  String? pickedMedicine;
   List<MedicineType>? listMedicineType;
+  Medicine? pickMedicine;
 
   Future<void> getLogout() async {
     emit(state.copyWith(dataStatus: DataStatus.loading));
@@ -194,26 +202,44 @@ class SettingCubit extends Cubit<SettingState> {
     });
   }
 
-  Future<void> onSaveMedicine() async {
+  Future<void> onSaveMedicine({bool? isUpdate}) async {
     if (medicineKey.currentState!.saveAndValidate()) {
-      emit(state.copyWith(dataStatus: DataStatus.loading));
+      // emit(state.copyWith(dataStatus: DataStatus.loading));
       Map<String, dynamic> formData = medicineKey.currentState?.value ?? {};
-      MedicineModel data = MedicineModel.fromJson(formData);
-      final result = await addNewMedicineUsecase(AddNewMedicineParams(data));
-      result.fold(
-          (error) => emit(
-              state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
-          (success) async {
-        emit(state.copyWith(dataStatus: DataStatus.success));
-        AppNavigator.goBack();
-        await getAllMedicine();
-      });
+
+      if (isUpdate == true) {
+        Map<String, dynamic> mapUpdate = {};
+        mapUpdate.addAll({...formData});
+        mapUpdate['docId'] = pickMedicine?.docId;
+        MedicineModel data = MedicineModel.fromJson(mapUpdate);
+        final result =
+            await updateMedicineUsecase(UpdateMedicineParams(data: data));
+        result.fold(
+            (error) => emit(state.copyWith(
+                dataStatus: DataStatus.failure,
+                error: error.msg)), (success) async {
+          emit(state.copyWith(dataStatus: DataStatus.success));
+          AppNavigator.goBack();
+          await getAllMedicine();
+        });
+      } else {
+        MedicineModel data = MedicineModel.fromJson(formData);
+        final result = await addNewMedicineUsecase(AddNewMedicineParams(data));
+        result.fold(
+            (error) => emit(state.copyWith(
+                dataStatus: DataStatus.failure,
+                error: error.msg)), (success) async {
+          emit(state.copyWith(dataStatus: DataStatus.success));
+          AppNavigator.goBack();
+          await getAllMedicine();
+        });
+      }
     }
   }
 
   Future<void> onSaveMedicineType() async {
     if (medicineTypeKey.currentState!.saveAndValidate()) {
-      emit(state.copyWith(dataStatus: DataStatus.loading));
+      // emit(state.copyWith(dataStatus: DataStatus.loading));
       Map<String, dynamic> formData = medicineTypeKey.currentState?.value ?? {};
       MedicineTypeMedel data = MedicineTypeMedel.fromJson(formData);
       final result = await addMedicineTypeUsecase(
@@ -240,5 +266,25 @@ class SettingCubit extends Cubit<SettingState> {
       emit(state.copyWith(dataStatus: DataStatus.success));
       await getMedicineType();
     });
+  }
+
+  Future<void> deleteMedicine({required String id}) async {
+    emit(state.copyWith(dataStatus: DataStatus.loading));
+    final result = await deleteMedicineUsecase(DeleteMedicineParams(id: id));
+    result.fold(
+        (error) => emit(
+            state.copyWith(dataStatus: DataStatus.failure, error: error.msg)),
+        (success) async {
+      emit(state.copyWith(dataStatus: DataStatus.success));
+      await getAllMedicine();
+    });
+  }
+
+  List<DropdwonItems> getListMedicineType({List? listData}) {
+    var list = listData?.map((data) {
+          return DropdwonItems(id: data.id, name: data.medicineType);
+        }).toList() ??
+        [];
+    return list;
   }
 }

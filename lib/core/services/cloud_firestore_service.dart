@@ -263,4 +263,28 @@ class CloudFireStoreService {
       throw error.toString();
     }
   }
+
+  Future<bool> updateMedicine({required MedicineModel data}) async {
+    try {
+      await firebaseFirestore
+          .collection(ColectionName.medicines)
+          .doc(data.docId)
+          .update(data.toJson());
+      return true;
+    } on FirebaseException catch (error) {
+      throw error.toString();
+    }
+  }
+
+  Future<bool> deleteMedicine({required String id}) async {
+    try {
+      await firebaseFirestore
+          .collection(ColectionName.medicines)
+          .doc(id)
+          .delete();
+      return true;
+    } on FirebaseException catch (error) {
+      throw error.toString();
+    }
+  }
 }

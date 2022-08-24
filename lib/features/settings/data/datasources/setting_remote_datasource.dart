@@ -1,4 +1,5 @@
 import 'package:eksouvan/core/error/exceptions.dart';
+import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/models/user_model.dart';
 import 'package:eksouvan/core/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,8 @@ abstract class SettingRemoteDatasource {
   Future<List<MedicineTypeMedel>> getMedicineType();
   Future<dynamic> addMedicineType({required MedicineTypeMedel data});
   Future<bool> deleteMedicineType({required String id});
+  Future<bool> updateMedicine({required MedicineModel data});
+  Future<bool> deleteMedicine({required String id});
 }
 
 @LazySingleton(as: SettingRemoteDatasource)
@@ -73,6 +76,24 @@ class SettingRemoteDatasourceUmpl extends SettingRemoteDatasource {
   Future<bool> deleteMedicineType({required String id}) async {
     try {
       return await fireStoreService.deleteMidicineType(uid: id);
+    } catch (error) {
+      throw ServerException(msg: error.toString());
+    }
+  }
+
+  @override
+  Future<bool> deleteMedicine({required String id}) async {
+    try {
+      return await fireStoreService.deleteMedicine(id: id);
+    } catch (error) {
+      throw ServerException(msg: error.toString());
+    }
+  }
+
+  @override
+  Future<bool> updateMedicine({required MedicineModel data}) async {
+    try {
+      return await fireStoreService.updateMedicine(data: data);
     } catch (error) {
       throw ServerException(msg: error.toString());
     }

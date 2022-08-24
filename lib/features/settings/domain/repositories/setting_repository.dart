@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:eksouvan/core/entities/medicine_type.dart';
 import 'package:eksouvan/core/error/failures.dart';
+import 'package:eksouvan/core/models/medicine_model.dart';
 import 'package:eksouvan/core/models/medicine_type_mode.dart';
 import 'package:eksouvan/core/models/user_model.dart';
 
@@ -17,4 +18,7 @@ abstract class SettingRepository {
   Future<Either<Failure, dynamic>> addMedicineType(
       {required MedicineTypeMedel data});
   Future<Either<Failure, bool>> deleteMedicineType({required String id});
+  Future<Either<Failure, bool>> deleteMedicine({required String id});
+  Future<Either<Failure, bool>> updateMedicine({required MedicineModel data});
+
 }

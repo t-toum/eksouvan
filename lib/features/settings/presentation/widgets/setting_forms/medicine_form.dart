@@ -28,6 +28,7 @@ class MedicineFrom extends StatelessWidget {
         children: [
           CustomTextField(
             isRequired: true,
+            initialValue: cubit.pickMedicine?.medicine,
             labelText: LocaleKeys.kMedicineName.tr(),
             name: 'medicine',
             validator: FormBuilderValidators.compose([
@@ -40,14 +41,10 @@ class MedicineFrom extends StatelessWidget {
           ),
           CustomDropdown(
             isRequired: true,
-            initialValue: cubit.pickedMedicine,
+            initialValue: cubit.pickMedicine?.type,
             labelText: LocaleKeys.kMedicineType.tr(),
             hintText: LocaleKeys.kSelectMedicineType.tr(),
-            items: state.listMedicineType
-                    ?.map((type) =>
-                        DropdwonItems(id: type.id, name: type.medicineType))
-                    .toList() ??
-                [],
+            items: cubit.getListMedicineType(listData: state.listMedicineType),
             name: FieldKeys.kMedicineType,
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(
@@ -58,6 +55,7 @@ class MedicineFrom extends StatelessWidget {
             height: 15,
           ),
           CustomTextFieldArea(
+            initialValue: cubit.pickMedicine?.description,
             labelText: LocaleKeys.kDescription.tr(),
             name: FieldKeys.kDescription,
           )

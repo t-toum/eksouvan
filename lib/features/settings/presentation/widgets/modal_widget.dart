@@ -50,11 +50,19 @@ class ModalWidget extends StatelessWidget {
                         ? const SizedBox()
                         : TextButton(
                             onPressed: onSave,
-                            child: Text(
-                              LocaleKeys.kOk.tr(),
-                              style: const TextStyle(
-                                  color: AppColors.primaryColor, fontSize: 20),
-                            ),
+                            child: (isUpdate == true)
+                                ? Text(
+                                    LocaleKeys.kUpdate.tr(),
+                                    style: const TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 20),
+                                  )
+                                : Text(
+                                    LocaleKeys.kOk.tr(),
+                                    style: const TextStyle(
+                                        color: AppColors.primaryColor,
+                                        fontSize: 20),
+                                  ),
                           )
                   ],
                 ),

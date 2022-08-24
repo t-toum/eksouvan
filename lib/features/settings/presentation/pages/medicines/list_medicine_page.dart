@@ -26,52 +26,80 @@ class ListMedicinePage extends StatelessWidget {
         );
       }
       return Scaffold(
-          appBar: AppBar(
-            title: Text(LocaleKeys.kListAllMedicine.tr()),
-            actions: [
-              IconButton(
-                onPressed: () {
+        appBar: AppBar(
+          title: Text(LocaleKeys.kListAllMedicine.tr()),
+          actions: [
+            IconButton(
+              onPressed: () {
+                cubit.pickMedicine = null;
+                AppNavigator.openModel(
+                    chiled: BlocProvider<SettingCubit>.value(
+                  value: cubit..getMedicineType(),
+                  child: ModalWidget(
+                    title: LocaleKeys.kAddMedicine.tr(),
+                    body: FormBuilder(
+                      key: cubit.medicineKey,
+                      child: const MedicineFrom(),
+                    ),
+                    onSave: () {
+                      cubit.onSaveMedicine();
+                    },
+                  ),
+                ));
+              },
+              icon: const Icon(Icons.add),
+            )
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: List.generate(state.listMedicine?.length ?? 0, (index) {
+              return ItemList(
+                onTap: () {
+                  cubit.pickMedicine = state.listMedicine?[index];
                   AppNavigator.openModel(
                       chiled: BlocProvider<SettingCubit>.value(
                     value: cubit..getMedicineType(),
                     child: ModalWidget(
+                      isUpdate: true,
                       title: LocaleKeys.kAddMedicine.tr(),
                       body: FormBuilder(
                         key: cubit.medicineKey,
                         child: const MedicineFrom(),
                       ),
                       onSave: () {
-                        cubit.onSaveMedicine();
+                        //onUpdate
+                        cubit.onSaveMedicine(isUpdate: true);
                       },
                     ),
                   ));
                 },
-                icon: const Icon(Icons.add),
-              )
-            ],
-          ),
-          // body: SingleChildScrollView(
-          //   child: Column(
-          //     children: List.generate(state.listMedicine?.length ?? 0, (index) {
-          //       return ItemList(
-          //         title: state.listMedicine?[index].medicine,
-          //         description: state.listMedicine?[index].description,
-          //         type: cubit.getMedicineTypeName(
-          //             id: state.listMedicine?[index].type),
-          //       );
-          //     }),
-          //   ),
-          // ),
-          body: Column(
-            children: List.generate(state.listMedicine?.length ?? 0, (index) {
-              return ItemList(
                 title: state.listMedicine?[index].medicine,
                 description: state.listMedicine?[index].description,
                 type: cubit.getMedicineTypeName(
                     id: state.listMedicine?[index].type),
+                trailing: InkWell(
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onTap: () {
+                    AppNavigator.openDialog(
+                      title: LocaleKeys.kWarning.tr(),
+                      content: LocaleKeys.kDeleteMessage.tr(),
+                      onPressed: () {
+                        AppNavigator.goBack();
+                        cubit.deleteMedicine(
+                            id: state.listMedicine?[index].docId ?? '');
+                      },
+                    );
+                  },
+                ),
               );
             }),
-          ));
+          ),
+        ),
+      );
     }));
   }
 }
